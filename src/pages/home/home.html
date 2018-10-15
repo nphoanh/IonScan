@@ -1,18 +1,47 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Home</ion-title>
+		<ion-buttons end> 
+			<button class="add" ion-button icon-only (tap)="addFolder()"> 
+				<ion-icon name="add"></ion-icon>
+			</button>
+		</ion-buttons> 
+	</ion-navbar>
+
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+	<ion-list>
+		<ion-item-sliding *ngFor="let folder of folders; let i=index">
+			<ion-item nopadding>
+				<ion-row>
+					<ion-col col-5>
+						<ion-icon class="md-folder" name="md-folder"></ion-icon>
+					</ion-col>
+					<ion-col class="itemfolder" >
+						<h1 class="titcard">{{folder.name}}</h1>
+						<p class="titcard">{{folder.date}}</p>
+						<p class="cate">{{folder.category}}</p>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+			<ion-item-options side="right">
+				<button ion-button class="upload" >
+					<img class="group" src="../../assets/imgs/upload.png" style="width: 20px; height: 20px;">
+				</button>
+				<button ion-button  class="export" color="secondary">
+					<img class="group" src="../../assets/imgs/export.png" style="width: 20px; height: 20px;">
+				</button>
+				<button ion-button  class="delete"  (click)="deleteFolder(folder.folderid)">
+					<img class="group" src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;">
+				</button>
+			</ion-item-options>
+		</ion-item-sliding>
+	</ion-list>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
 </ion-content>

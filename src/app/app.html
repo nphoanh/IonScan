@@ -1,16 +1,23 @@
-<ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-menu id="myMenu" [content]="content">
 
-  <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+  <ion-content class="menu">
+
+    <ion-list class="logo-menu">
+
+      <img class="logo-menu" src="../assets/imgs/logo-no.png" alt="logo" class="logo">
+
+      <ion-list-header class="logo-menu" *ngIf="auth.getEmail()">Hi, {{auth.getEmail()}}</ion-list-header>
+
+      <button class="logo-menu" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+
+      <ion-item class="logo-menu" (click)="logout()" *ngIf="auth.authenticated">
+        Log out
+      </ion-item>
+
     </ion-list>
+
   </ion-content>
 
 </ion-menu>

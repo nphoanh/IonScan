@@ -1,0 +1,25 @@
+<ion-content padding>
+
+  <img src="../../assets/imgs/logo-no.png" alt="logo" class="logo">
+
+  <ion-item>
+   <ion-input type="text" class="email" placeholder="Email" [(ngModel)]="user.email"></ion-input>
+ </ion-item>
+
+ <ion-item>
+   <ion-input type="password" class="password" placeholder="Mật khẩu" [(ngModel)]="user.password"></ion-input>
+ </ion-item>
+
+ <button ion-button round outline class="signup" (click)="login(user)">Đăng nhập</button>
+
+ <div class="login-footer">
+  <button class="signup" ion-button clear (click)="signup()">
+    Đăng ký
+  </button>
+  <button class="password" (click)="resetPwd()" class="password" ion-button clear>
+    Quên mật khẩu?
+  </button>
+</div>
+
+</ion-content>
+
