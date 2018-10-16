@@ -148,4 +148,18 @@ page-login {
 		color: white;
 	}
 
+	div#recaptcha-container {
+		margin-left: 15px;
+	}
+
+	ion-segment-button.segment-button.segment-activated {
+		font-size: 15px;
+		color: white;
+	}
+
+	outline.button-outline-md.button-round.button-round-md {
+    color: #67aaf9;
+    border-color: #67aaf9;
+}
+
 }

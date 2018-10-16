@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Toast } from '@ionic-native/toast';
@@ -20,8 +20,10 @@ export class ResetPage {
 		public navCtrl: NavController, 		
 		public navParams: NavParams,
 		private afAuth: AngularFireAuth,
-		private toast: Toast
+		private toast: Toast,
+		public menuCtrl:MenuController
 		) {
+		this.menuCtrl.enable(false, 'myMenu');
 	}
 
 	async resetPwd(user) {
