@@ -158,8 +158,18 @@ page-login {
 	}
 
 	outline.button-outline-md.button-round.button-round-md {
-    color: #67aaf9;
-    border-color: #67aaf9;
-}
+		color: #67aaf9;
+		border-color: #67aaf9;
+	}
+
+	button.signup.button.button-md.button-clear.button-clear-md {
+		color: white;
+		font-size: 17px;
+	}
+
+	button.password.button.button-md.button-clear.button-clear-md {
+		color: white;
+		font-size: 17px;
+	}
 
 }

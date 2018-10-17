@@ -25,7 +25,8 @@ export class LoginPage {
     public alertCtrl: AlertController,
     private afAuth: AngularFireAuth,
     private toast: Toast,
-    public menuCtrl:MenuController) {
+    public menuCtrl:MenuController,    
+    ) {
     this.menuCtrl.enable(false, 'myMenu');
   }
 
@@ -33,24 +34,28 @@ export class LoginPage {
     this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 
-  loginPhone(user){
-    const appVerifier = this.recaptchaVerifier;
-    const phoneNumberString = "+" + user.phone;
-    firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
-    .then( confirmationResult => {
-      let prompt = this.alertCtrl.create({
-        title: 'Nhập mã xác thực',
-        inputs: [{ name: 'confirmationCode', placeholder: 'Mã xác thực' }],
-        buttons: [
-        { text: 'Hủy',
-        handler: data => { console.log('Cancel clicked'); }
-      },
-      { text: 'Gửi',
-      handler: data => {
-        confirmationResult.confirm(data.confirmationCode)
-        .then(
-          () => this.navCtrl.setRoot(HomePage)
-          ).catch(function (error) {
+  async loginPhone(user){
+    try {
+      const appVerifier = this.recaptchaVerifier;
+      const phoneNumberString = "+" + user.phone;
+      await firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier).then( confirmationResult => {
+        let prompt = this.alertCtrl.create({
+          title: 'Nhập mã xác thực',
+          inputs: [{ name: 'confirmationCode', placeholder: 'Mã xác thực' }],
+          buttons: [
+          { text: 'Hủy',
+          handler: data => { console.log('Cancel clicked'); }
+        },
+        { text: 'Gửi',
+        handler: data => {
+          confirmationResult.confirm(data.confirmationCode)
+          .then(result => {
+            let phoneNumber = user.phone;
+            let phone = phoneNumber.substr(phoneNumber.lastIndexOf('+')+1);
+            let nameDBPhone = 'u' + phone;
+            this.navCtrl.setRoot(HomePage,{dataPhone:nameDBPhone});
+          }
+          ).catch(error => {
             this.toast.show(error, '5000', 'bottom').subscribe(
               toast => {
                 console.log(toast);
@@ -61,11 +66,22 @@ export class LoginPage {
       }
       ]
     });
-      prompt.present();
-    })
-    .catch(function (error) {
-      console.error("Chưa gửi SMS", error);
-    });
+        prompt.present();
+      }).catch(error => {
+        this.toast.show(error, '5000', 'bottom').subscribe(
+          toast => {
+            console.log(toast);
+          }
+          )
+      });           
+    }
+    catch(e) {
+      this.toast.show(e, '5000', 'bottom').subscribe(
+        toast => {
+          console.log(toast);
+        }
+        )
+    }
 
   }
 
@@ -76,7 +92,9 @@ export class LoginPage {
       let emails = user.email;
       let emailLower = emails.toLowerCase();
       if (users.emailVerified == true && emailLower == users.email) {
-        this.navCtrl.setRoot(HomePage);
+        let nameEmail = user.email;
+        let nameDB = nameEmail.substr(0,nameEmail.lastIndexOf('@'));
+        this.navCtrl.setRoot(HomePage,{data:nameDB});
       }
       if (users.emailVerified == false && emailLower == users.email) {
         this.toast.show('Email chưa được xác thực', '5000', 'bottom').subscribe(

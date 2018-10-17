@@ -1,0 +1,34 @@
+<ion-header>
+
+	<ion-navbar>
+		<ion-title>Add Folder</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+	<form (ngSubmit)="saveData()">
+
+		<ion-item >
+			<ion-label>Name</ion-label>
+			<ion-input [(ngModel)]="folder.date" name="folder">
+			</ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>Date</ion-label>
+			<ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="folder.date" name="date" required=""></ion-datetime>
+		</ion-item>
+		<ion-item>
+			<ion-label>Type</ion-label>
+			<ion-select [(ngModel)]="folder.type" name="type" required="">
+				<ion-option value="Identity Card">Identity Card</ion-option>
+				<ion-option value="Passport">Passport</ion-option>
+			</ion-select>
+		</ion-item>
+		<button ion-button type="submit" block>Save Data</button>
+	</form>
+
+</ion-content>

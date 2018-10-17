@@ -22,7 +22,7 @@
      <ion-item>
        <ion-input type="password" class="password" placeholder="Mật khẩu" [(ngModel)]="user.password"></ion-input>
      </ion-item>
-     <button ion-button round outline class="signin" (click)="login(user)">Đăng nhập</button>
+     <button ion-button round outline class="signin" (click)="login(user);">Đăng nhập</button>
    </ion-list>
 
    <ion-list *ngSwitchCase="'Điện thoại'">
@@ -30,7 +30,7 @@
        <ion-input type="number" class="phone" placeholder="84xxxxxxxxxx" [(ngModel)]="user.phone"></ion-input>
      </ion-item>
      
-     <button ion-button round outline class="signin" id="sign-in-button" (click)="loginPhone(user)">Đăng nhập</button>
+     <button ion-button round outline class="signin" id="sign-in-button" (click)="loginPhone(user);">Đăng nhập</button>
    </ion-list>
  </div>
 <div id="recaptcha-container"></div>

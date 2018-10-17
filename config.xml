@@ -94,5 +94,11 @@
     <plugin name="cordova-plugin-browsertab" spec="0.2.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="3.0.0" />
     <plugin name="cordova-universal-links-plugin" spec="https://github.com/nordnet/cordova-universal-links-plugin.git" />
+    <plugin name="cordova-plugin-camera-preview" spec="0.10.0" />
+    <plugin name="cordova-sqlite-storage" spec="2.5.0" />
+    <plugin name="cordova-plugin-file" spec="6.0.1" />
+    <plugin name="cordova-android-support-gradle-release" spec="^1.4.5">
+        <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
+    </plugin>
     <engine name="android" spec="7.1.1" />
 </widget>

@@ -10,6 +10,8 @@ import { ResetPage } from '../pages/reset/reset';
 import { AboutPage } from '../pages/about/about';
 import { IdentityPage } from '../pages/identity/identity';
 import { PassportPage } from '../pages/passport/passport';
+import { AddFolderPage } from '../pages/add-folder/add-folder';
+import { EditFolderPage } from '../pages/edit-folder/edit-folder';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -19,6 +21,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Toast } from '@ionic-native/toast';
 import { AuthService } from '../service/auth.service';
 import { Firebase } from '@ionic-native/firebase';
+import { CameraPreview } from '@ionic-native/camera-preview';
+import { SQLite } from '@ionic-native/sqlite';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,9 @@ import { Firebase } from '@ionic-native/firebase';
   ResetPage,
   AboutPage,
   IdentityPage,
-  PassportPage
+  PassportPage,
+  AddFolderPage,
+  EditFolderPage
   ],
   imports: [
   BrowserModule,
@@ -46,7 +52,9 @@ import { Firebase } from '@ionic-native/firebase';
   ResetPage,
   AboutPage,
   IdentityPage,
-  PassportPage
+  PassportPage,
+  AddFolderPage,
+  EditFolderPage
   ],
   providers: [
   StatusBar,
@@ -54,6 +62,8 @@ import { Firebase } from '@ionic-native/firebase';
   Toast,
   AuthService,
   Firebase,
+  CameraPreview,
+  SQLite,
   {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
