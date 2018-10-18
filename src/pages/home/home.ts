@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, MenuController, NavParams } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { AuthService } from '../../service/auth.service';
 
 import { AddFolderPage } from '../add-folder/add-folder';
 
@@ -11,24 +12,24 @@ import { AddFolderPage } from '../add-folder/add-folder';
 })
 export class HomePage {
 
-  data = this.navParams.get('data');
-  dataPhone = this.navParams.get('dataPhone');
-  datas:any = [];
+  data = this.auth.getEmail();
+  dataPhone = this.auth.getPhone();
+  folders:any = [];
   totalFolder = 0;
-  nameDB: any;
 
   constructor(public navCtrl: NavController,
     public menuCtrl:MenuController,
-    private navParams: NavParams,
-    private sqlite: SQLite
+    private sqlite: SQLite,
+    private auth: AuthService
     ) {
     this.menuCtrl.enable(true, 'myMenu');
     this.getData();
   }
 
-  getData(){
-    if (this.data != undefined) {
-      let nameDB = this.data + '.db';
+  getData(){    
+    if (this.data != null) {
+      let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
+      let nameDB = nameEmail + '.db';
       this.sqlite.create({
         name: nameDB,
         location: 'default'
@@ -38,9 +39,9 @@ export class HomePage {
         .catch(e => console.log(e));
         db.executeSql('SELECT * FROM folder ORDER BY folderid DESC', {} as any)
         .then(res => {
-          this.datas = [];
+          this.folders = [];
           for(var i=0; i<res.rows.length; i++) {
-            this.datas.push({folderid:res.rows.item(i).folderid,name:res.rows.item(i).name,date:res.rows.item(i).date,type:res.rows.item(i).type})
+            this.folders.push({folderid:res.rows.item(i).folderid,name:res.rows.item(i).name,date:res.rows.item(i).date,type:res.rows.item(i).type})
           }
         })
         .catch(e => console.log(e));
@@ -54,19 +55,21 @@ export class HomePage {
       }).catch(e => console.log(e));
     }
     else {
-      let nameDB = this.dataPhone + '.db';
+      let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
+      let nameDBPhone = 'u' + namePhone;
+      let nameDB = nameDBPhone + '.db';
       this.sqlite.create({
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY, name TEXT, date TEXT, type TEXT, UNIQUE (name))', {} as any)
+        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY, name TEXT, date TEXT, type TEXT)', {} as any)
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
         db.executeSql('SELECT * FROM folder ORDER BY folderid DESC', {} as any)
         .then(res => {
-          this.datas = [];
+          this.folders = [];
           for(var i=0; i<res.rows.length; i++) {
-            this.datas.push({folderid:res.rows.item(i).folderid,name:res.rows.item(i).name,date:res.rows.item(i).date,type:res.rows.item(i).type})
+            this.folders.push({folderid:res.rows.item(i).folderid,name:res.rows.item(i).name,date:res.rows.item(i).date,type:res.rows.item(i).type})            
           }
         })
         .catch(e => console.log(e));
@@ -79,22 +82,24 @@ export class HomePage {
         .catch(e => console.log(e));
       }).catch(e => console.log(e));
     }
-    
+
   }
 
+
   addFolder() {
-    if (this.data != undefined) { 
-      this.navCtrl.push(AddFolderPage,{data:this.data});
+    if (this.data != null) { 
+      this.navCtrl.push(AddFolderPage);
     }
     else {
-      this.navCtrl.push(AddFolderPage,{dataPhone:this.dataPhone});
+      this.navCtrl.push(AddFolderPage);
     }
     
   }
 
   deleteFolder(folderid) {
-    if (this.data != undefined) {
-      let nameDB = this.data + '.db';
+    if (this.data != null) {
+      let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
+      let nameDB = nameEmail + '.db';
       this.sqlite.create({
         name: nameDB,
         location: 'default'
@@ -108,7 +113,9 @@ export class HomePage {
       }).catch(e => console.log(e));
     }
     else {
-      let nameDB = this.dataPhone + '.db';
+      let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
+      let nameDBPhone = 'u' + namePhone;
+      let nameDB = nameDBPhone + '.db';
       this.sqlite.create({
         name: nameDB,
         location: 'default'

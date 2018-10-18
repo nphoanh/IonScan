@@ -40,6 +40,19 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.auth.afAuth.authState
+      .subscribe(
+        user => {
+          if (user) {
+            this.rootPage = HomePage;
+          } else {
+            this.rootPage = LoginPage;
+          }
+        },
+        () => {
+          this.rootPage = LoginPage;
+        }
+        );
     });
     
   }
@@ -53,7 +66,7 @@ export class MyApp {
   logout() {
     this.menu.close();
     this.auth.signOut();
-    this.nav.setRoot(LoginPage);
+    this.nav.setRoot(HomePage);
   }
 
   openPage(page) {

@@ -38,7 +38,7 @@ export class LoginPage {
     try {
       const appVerifier = this.recaptchaVerifier;
       const phoneNumberString = "+" + user.phone;
-      await firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier).then( confirmationResult => {
+      await firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier).then(confirmationResult => {
         let prompt = this.alertCtrl.create({
           title: 'Nhập mã xác thực',
           inputs: [{ name: 'confirmationCode', placeholder: 'Mã xác thực' }],
@@ -49,22 +49,9 @@ export class LoginPage {
         { text: 'Gửi',
         handler: data => {
           confirmationResult.confirm(data.confirmationCode)
-          .then(result => {
-            let phoneNumber = user.phone;
-            let phone = phoneNumber.substr(phoneNumber.lastIndexOf('+')+1);
-            let nameDBPhone = 'u' + phone;
-            this.navCtrl.setRoot(HomePage,{dataPhone:nameDBPhone});
-          }
-          ).catch(error => {
-            this.toast.show(error, '5000', 'bottom').subscribe(
-              toast => {
-                console.log(toast);
-              }
-              )
-          });
-        }
-      }
-      ]
+          .then(result => {this.navCtrl.setRoot(HomePage);
+          }).catch(error => {this.toast.show(error, '5000', 'bottom').subscribe(toast => {console.log(toast);})
+        });}}]
     });
         prompt.present();
       }).catch(error => {
@@ -92,9 +79,7 @@ export class LoginPage {
       let emails = user.email;
       let emailLower = emails.toLowerCase();
       if (users.emailVerified == true && emailLower == users.email) {
-        let nameEmail = user.email;
-        let nameDB = nameEmail.substr(0,nameEmail.lastIndexOf('@'));
-        this.navCtrl.setRoot(HomePage,{data:nameDB});
+        this.navCtrl.setRoot(HomePage);
       }
       if (users.emailVerified == false && emailLower == users.email) {
         this.toast.show('Email chưa được xác thực', '5000', 'bottom').subscribe(

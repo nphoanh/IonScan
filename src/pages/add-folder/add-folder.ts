@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Toast } from '@ionic-native/toast';
+import { AuthService } from '../../service/auth.service';
 
 @IonicPage()
 @Component({
@@ -11,23 +12,24 @@ import { Toast } from '@ionic-native/toast';
 export class AddFolderPage {
 
 	folder = { name:"", date:"", type:"" };
-	data = this.navParams.get('data');
-	dataPhone = this.navParams.get('dataPhone');
+	data = this.auth.getEmail();
+	dataPhone = this.auth.getPhone();
 
 	constructor(public navCtrl: NavController, 
-		public navParams: NavParams,
 		private sqlite: SQLite,
-		private toast: Toast) {
+		private toast: Toast,
+		private auth: AuthService) {
 	}
 
 	saveData() {
 		if (this.data != undefined) { 
-			let nameDB = this.data + '.db';
+			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
+			let nameDB = nameEmail + '.db';
 			this.sqlite.create({
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {
-				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?,?)',[this.data.name,this.data.date,this.data.type])
+				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?)',[this.folder.name,this.folder.date,this.folder.type])
 				.then(res => {
 					console.log(res);
 					this.toast.show('Folder saved', '5000', 'center').subscribe(
@@ -54,12 +56,14 @@ export class AddFolderPage {
 			});
 		}
 		else {
-			let nameDB = this.dataPhone + '.db';
+			let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
+			let nameDBPhone = 'u' + namePhone;
+			let nameDB = nameDBPhone + '.db';
 			this.sqlite.create({
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {
-				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?,?)',[this.data.name,this.data.date,this.data.type])
+				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?)',[this.folder.name,this.folder.date,this.folder.type])
 				.then(res => {
 					console.log(res);
 					this.toast.show('Folder saved', '5000', 'center').subscribe(
