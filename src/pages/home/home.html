@@ -37,6 +37,9 @@
 				<button ion-button  class="export" color="secondary">
 					<img class="group" src="../../assets/imgs/export.png" style="width: 20px; height: 20px;">
 				</button>
+				<button ion-button class="edit" >
+					<img class="group" src="../../assets/imgs/edit.png" (click)="editFolder(folder.folderid)" style="width: 20px; height: 20px;">
+				</button>
 				<button ion-button  class="delete"  (click)="deleteFolder(folder.folderid)">
 					<img class="group" src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;">
 				</button>

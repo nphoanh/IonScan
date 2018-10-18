@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController, NavParams } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 
 import { AddFolderPage } from '../add-folder/add-folder';
-
+import { EditFolderPage } from '../edit-folder/edit-folder';
 
 @Component({
 	selector: 'page-home',
@@ -23,6 +23,13 @@ export class HomePage {
     private auth: AuthService
     ) {
     this.menuCtrl.enable(true, 'myMenu');
+  }
+
+  ionViewDidLoad() {
+    this.getData();
+  }
+
+  ionViewWillEnter() {
     this.getData();
   }
 
@@ -128,6 +135,12 @@ export class HomePage {
         .catch(e => console.log(e));
       }).catch(e => console.log(e));
     }
+  }
+
+  editFolder(folderid) {
+    this.navCtrl.push(EditFolderPage, {
+      folderid:folderid
+    });
   }
 
 

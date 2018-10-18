@@ -11,7 +11,7 @@
 	<form (ngSubmit)="updateData()">
 		<ion-item>
 			<ion-label>Name</ion-label>
-			<ion-input [(ngModel)]="folder.date" name="name" required=""></ion-input>
+			<ion-input [(ngModel)]="folder.name" name="name" required=""></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>Date</ion-label>
@@ -25,7 +25,7 @@
 			</ion-select>
 		</ion-item>
 		
-		<ion-input type="hidden" [(ngModel)]="data.folderid" name="folderid"></ion-input>
+		<ion-input type="hidden" [(ngModel)]="folder.folderid" name="folderid"></ion-input>
 		<button ion-button type="submit" block>Update Data</button>
 	</form>
 
