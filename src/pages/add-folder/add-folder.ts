@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Toast } from '@ionic-native/toast';
 import { AuthService } from '../../service/auth.service';
+import { File } from '@ionic-native/file';
 
 @IonicPage()
 @Component({
@@ -18,11 +19,14 @@ export class AddFolderPage {
 	constructor(public navCtrl: NavController, 
 		private sqlite: SQLite,
 		private toast: Toast,
-		private auth: AuthService) {
+		private auth: AuthService,
+		public platform: Platform,
+		private file: File
+		) {
 	}
 
-	saveData() {
-		if (this.data != undefined) { 
+	saveFolder() {
+		if (this.data != null) { 
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let nameDB = nameEmail + '.db';
 			this.sqlite.create({
@@ -31,6 +35,22 @@ export class AddFolderPage {
 			}).then((db: SQLiteObject) => {
 				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?)',[this.folder.name,this.folder.date,this.folder.type])
 				.then(res => {
+					let path = this.file.externalRootDirectory + 'IonScan';
+					let name = this.folder.name + '.' + nameEmail;
+					this.platform.ready().then(() =>{
+						if(this.platform.is('android')) {
+							this.file.checkDir(path, name).then(response => {								
+								console.log('Folder existed '+response);
+							}).catch(err => {
+								console.log('Folder doesn\'t exist '+JSON.stringify(err));
+								this.file.createDir(path, name, false).then(response => {
+									console.log('Folder created '+response);
+								}).catch(err => {
+									console.log('Folder doesn\'t create '+JSON.stringify(err));
+								}); 
+							});
+						}
+					});  
 					console.log(res);
 					this.toast.show('Folder saved', '5000', 'center').subscribe(
 						toast => {
@@ -65,6 +85,22 @@ export class AddFolderPage {
 			}).then((db: SQLiteObject) => {
 				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?)',[this.folder.name,this.folder.date,this.folder.type])
 				.then(res => {
+					let path = this.file.externalRootDirectory + 'IonScan';
+					let name = this.folder.name + '.' + namePhone;
+					this.platform.ready().then(() =>{
+						if(this.platform.is('android')) {
+							this.file.checkDir(path, name).then(response => {								
+								console.log('Folder existed '+response);
+							}).catch(err => {
+								console.log('Folder doesn\'t exist '+JSON.stringify(err));
+								this.file.createDir(path, name, false).then(response => {
+									console.log('Folder created '+response);
+								}).catch(err => {
+									console.log('Folder doesn\'t create '+JSON.stringify(err));
+								}); 
+							});
+						}
+					});  
 					console.log(res);
 					this.toast.show('Folder saved', '5000', 'center').subscribe(
 						toast => {

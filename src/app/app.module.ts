@@ -23,6 +23,7 @@ import { AuthService } from '../service/auth.service';
 import { Firebase } from '@ionic-native/firebase';
 import { CameraPreview } from '@ionic-native/camera-preview';
 import { SQLite } from '@ionic-native/sqlite';
+import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { SQLite } from '@ionic-native/sqlite';
   Firebase,
   CameraPreview,
   SQLite,
+  File,
   {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

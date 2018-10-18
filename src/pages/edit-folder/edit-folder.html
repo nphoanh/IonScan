@@ -1,32 +1,32 @@
 <ion-header>
 
 	<ion-navbar>
-		<ion-title>Edit Folder</ion-title>
+		<ion-title>Chỉnh sửa thư mục</ion-title>
 	</ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
 
-	<form (ngSubmit)="updateData()">
+	<form (ngSubmit)="updatFolder(folderid)">
 		<ion-item>
-			<ion-label>Name</ion-label>
+			<ion-label>Tên</ion-label>
 			<ion-input [(ngModel)]="folder.name" name="name" required=""></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label>Date</ion-label>
-			<ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="folder.date" name="date" required=""></ion-datetime>
+			<ion-label>Ngày tháng</ion-label>
+			<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="folder.date" name="date" required=""></ion-datetime>
 		</ion-item>
 		<ion-item>
-			<ion-label>Type</ion-label>
+			<ion-label>Loại</ion-label>
 			<ion-select [(ngModel)]="folder.type" name="type" required="">
-				<ion-option value="Identity Card">Identity Card</ion-option>
-				<ion-option value="Passport">Passport</ion-option>
+				<ion-option value="Chứng minh thư">Chứng minh thư</ion-option>
+				<ion-option value="Hộ chiếu">Hộ chiếu</ion-option>
 			</ion-select>
 		</ion-item>
 		
 		<ion-input type="hidden" [(ngModel)]="folder.folderid" name="folderid"></ion-input>
-		<button ion-button type="submit" block>Update Data</button>
+		<button ion-button round type="submit">Chỉnh sửa thư mục</button>
 	</form>
 
 </ion-content>

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController } from 'ionic-angular';
+import { NavController, MenuController, Platform } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
+import { File } from '@ionic-native/file';
+import { Toast } from '@ionic-native/toast';
 
 import { AddFolderPage } from '../add-folder/add-folder';
 import { EditFolderPage } from '../edit-folder/edit-folder';
@@ -16,21 +18,43 @@ export class HomePage {
   dataPhone = this.auth.getPhone();
   folders:any = [];
   totalFolder = 0;
+  folder = { name:""};
 
   constructor(public navCtrl: NavController,
     public menuCtrl:MenuController,
     private sqlite: SQLite,
-    private auth: AuthService
+    private auth: AuthService,
+    public platform: Platform,
+    private toast: Toast,
+    private file: File
     ) {
     this.menuCtrl.enable(true, 'myMenu');
   }
 
   ionViewDidLoad() {
     this.getData();
+    this.createRootFolder();
   }
 
   ionViewWillEnter() {
     this.getData();
+  }
+
+  createRootFolder(){
+    this.platform.ready().then(() =>{
+      if(this.platform.is('android')) {
+        this.file.checkDir(this.file.externalRootDirectory, 'IonScan').then(response => {
+          console.log('Directory exists '+response);
+        }).catch(err => {
+          console.log('Directory doesn\'t exist '+JSON.stringify(err));
+          this.file.createDir(this.file.externalRootDirectory, 'IonScan', false).then(response => {
+            console.log('Directory create '+response);
+          }).catch(err => {
+            console.log('Directory no create '+JSON.stringify(err));
+          }); 
+        });
+      }
+    });  
   }
 
   getData(){    
@@ -89,7 +113,6 @@ export class HomePage {
         .catch(e => console.log(e));
       }).catch(e => console.log(e));
     }
-
   }
 
 
@@ -100,7 +123,6 @@ export class HomePage {
     else {
       this.navCtrl.push(AddFolderPage);
     }
-    
   }
 
   deleteFolder(folderid) {
@@ -111,8 +133,33 @@ export class HomePage {
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-        db.executeSql('DELETE FROM folder WHERE folderid=?', [folderid])
+        db.executeSql('SELECT name FROM folder WHERE folderid=?', [folderid])
         .then(res => {
+          if(res.rows.length > 0) {            
+            this.folder.name = res.rows.item(0).name;
+          }
+          let path = this.file.externalRootDirectory + 'IonScan';
+          let name = this.folder.name + '.' + nameEmail;
+          this.platform.ready().then(() =>{
+            if(this.platform.is('android')) {
+              this.file.removeRecursively(path, name).then(response => {
+                console.log('Folder deleted'+response);
+              }).catch(err => {
+                console.log('Folder doesn\'t delete '+JSON.stringify(err));          
+              });
+            }
+          });    
+        })
+        .catch(e => {
+          console.log(e);
+          this.toast.show(e, '5000', 'center').subscribe(
+            toast => {
+              console.log(toast);
+            }
+            );
+        });        
+        db.executeSql('DELETE FROM folder WHERE folderid=?', [folderid])
+        .then(res => {          
           console.log(res);
           this.getData();        
         })
@@ -127,6 +174,31 @@ export class HomePage {
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
+        db.executeSql('SELECT name FROM folder WHERE folderid=?', [folderid])
+        .then(res => {
+          if(res.rows.length > 0) {            
+            this.folder.name = res.rows.item(0).name;
+          }
+          let path = this.file.externalRootDirectory + 'IonScan';
+          let name = this.folder.name + '.' + namePhone;
+          this.platform.ready().then(() =>{
+            if(this.platform.is('android')) {
+              this.file.removeRecursively(path, name).then(response => {
+                console.log('Folder deleted'+response);
+              }).catch(err => {
+                console.log('Folder doesn\'t delete '+JSON.stringify(err));          
+              });
+            }
+          });    
+        })
+        .catch(e => {
+          console.log(e);
+          this.toast.show(e, '5000', 'center').subscribe(
+            toast => {
+              console.log(toast);
+            }
+            );
+        });        
         db.executeSql('DELETE FROM folder WHERE folderid=?', [folderid])
         .then(res => {
           console.log(res);
@@ -142,6 +214,5 @@ export class HomePage {
       folderid:folderid
     });
   }
-
 
 }
