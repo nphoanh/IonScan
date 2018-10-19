@@ -209,9 +209,10 @@ export class HomePage {
     }
   }
 
-  editFolder(folderid) {
+  editFolder(folderid,name) {
     this.navCtrl.push(EditFolderPage, {
-      folderid:folderid
+      folderid:folderid,
+      foldername:name
     });
   }
 

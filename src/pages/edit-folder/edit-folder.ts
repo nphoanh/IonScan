@@ -15,6 +15,7 @@ export class EditFolderPage {
 	folder = { folderid:0, name:"", date:"", type:"" };
 	data = this.auth.getEmail();
 	dataPhone = this.auth.getPhone();
+	foldername = this.navParams.get('foldername');
 
 	constructor(
 		public navCtrl: NavController, 
@@ -42,24 +43,9 @@ export class EditFolderPage {
 						this.folder.name = res.rows.item(0).name;
 						this.folder.date = res.rows.item(0).date;
 						this.folder.type = res.rows.item(0).type;					
-					}
+					}		
 				})
-				.catch(e => {
-					console.log(e);
-					this.toast.show(e, '5000', 'center').subscribe(
-						toast => {
-							console.log(toast);
-						}
-						);
-				});
-			}).catch(e => {
-				console.log(e);
-				this.toast.show(e, '5000', 'center').subscribe(
-					toast => {
-						console.log(toast);
-					}
-					);
-			});
+			})
 		}
 		else {
 			let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
@@ -96,7 +82,8 @@ export class EditFolderPage {
 			});
 			
 		}
-
+		let temp = this.folder.name;
+		console.log(temp);
 	}
 
 	updatFolder(folderid) {
@@ -109,6 +96,28 @@ export class EditFolderPage {
 			}).then((db: SQLiteObject) => {
 				db.executeSql('UPDATE folder SET name=?,date=?,type=? WHERE folderid=?',[this.folder.name,this.folder.date,this.folder.type,this.folder.folderid])
 				.then(res => {
+					this.platform.ready().then(() =>{
+						if(this.platform.is('android')) {
+							let path = this.file.externalRootDirectory + 'IonScan';
+							let name = this.folder.name + '.' + nameEmail;
+							let oldName = this.foldername + '.' + nameEmail;
+							this.file.checkDir(path, name).then(response => {
+								console.log('Folder existed '+response);
+							}).catch(err => {
+								console.log('Directory doesn\'t exist '+JSON.stringify(err));
+								this.file.copyDir(path, oldName, path, name).then(response => {
+									console.log('Folder changed'+response);
+									this.file.removeRecursively(path, oldName).then(response => {
+										console.log('Folder deleted'+response);
+									}).catch(err => {
+										console.log('Folder doesn\'t delete '+JSON.stringify(err));          
+									});
+								}).catch(err => {
+									console.log('Folder no change '+JSON.stringify(err));
+								}); 
+							});
+						}
+					});  
 					console.log(res);
 					this.toast.show('Folder updated', '5000', 'center').subscribe(
 						toast => {
@@ -143,6 +152,28 @@ export class EditFolderPage {
 			}).then((db: SQLiteObject) => {			
 				db.executeSql('UPDATE folder SET name=?,date=?,type=? WHERE folderid=?',[this.folder.name,this.folder.date,this.folder.type,this.folder.folderid])
 				.then(res => {
+					this.platform.ready().then(() =>{
+						if(this.platform.is('android')) {
+							let path = this.file.externalRootDirectory + 'IonScan';
+							let name = this.folder.name + '.' + namePhone;
+							let oldName = this.foldername + '.' + namePhone;
+							this.file.checkDir(path, name).then(response => {
+								console.log('Folder existed '+response);
+							}).catch(err => {
+								console.log('Directory doesn\'t exist '+JSON.stringify(err));
+								this.file.copyDir(path, oldName, path, name).then(response => {
+									console.log('Folder changed'+response);
+									this.file.removeRecursively(path, oldName).then(response => {
+										console.log('Folder deleted'+response);
+									}).catch(err => {
+										console.log('Folder doesn\'t delete '+JSON.stringify(err));          
+									});
+								}).catch(err => {
+									console.log('Folder no change '+JSON.stringify(err));
+								}); 
+							});
+						}
+					});  
 					console.log(res);
 					this.toast.show('Folder updated', '5000', 'center').subscribe(
 						toast => {
