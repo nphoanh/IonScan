@@ -52,7 +52,7 @@ export class LoginPage {
           .then(result => {this.navCtrl.setRoot(HomePage);
           }).catch(error => {this.toast.show(error, '5000', 'bottom').subscribe(toast => {console.log(toast);})
         });}}]
-    });
+        });
         prompt.present();
       }).catch(error => {
         this.toast.show(error, '5000', 'bottom').subscribe(

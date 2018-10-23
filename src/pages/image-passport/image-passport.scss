@@ -1,0 +1,61 @@
+page-image-passport {
+
+    ion-content.content.content-md {
+        background-color: white!important;
+    }
+
+    ion-icon.close.icon.icon-md.ion-md-close {
+        font-size: 25px;
+        color: #67aaf9;
+    }
+
+    ion-icon.done.icon.icon-md.ion-md-checkmark {
+        font-size: 25px;
+        color: #67aaf9;
+    }
+    label {
+        color: #67aaf9;
+    }
+
+    button.back-button.disable-hover.bar-button.bar-button-md.back-button-md.bar-button-default.bar-button-default-md.show-back-button {
+        color: white;
+    }
+
+    button.disable-hover.bar-button.bar-button-md.bar-button-outline.bar-button-outline-md.bar-button-round.bar-button-round-md {
+        color: white;
+        border-color: white;
+        border-radius: 18px;
+        padding: 17px;
+        font-weight: bold;
+    }
+ 
+    button.disable-hover.button.button-md.button-default.button-default-md.button-block.button-block-md {
+        background-color: white;
+        color: #67aaf9;
+        box-shadow: 0px 0px;
+    }
+
+
+    button.button-group {
+        background-color: white;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+// img#img {
+//     margin-top: -64px;
+// }
+
+#rectimg{
+    position: absolute;
+    left: 40px;
+    top: 86px;
+    width: 78%;
+    height: 40%;
+    z-index: 2;
+    // border-radius: 20px;
+    border: 5px solid rgba(255, 0, 0, 0.5);
+}
+
+}

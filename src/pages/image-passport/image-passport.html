@@ -1,0 +1,26 @@
+<ion-header>
+
+	<ion-navbar>
+		<ion-title>Ảnh hộ chiếu</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+	<img id="img" [src]="picture" *ngIf="picture" /> 
+	<div id="rectimg"></div>
+	<canvas id="canvas"></canvas>
+	
+</ion-content>
+
+<ion-footer>
+
+	<ion-grid class="button-group">
+		<ion-row>			
+			<button class="button-group"><ion-icon class="close" name="close"></ion-icon><br><label>Hủy</label></button>
+			<button class="button-group"><ion-icon class="done" name="checkmark"></ion-icon><br><label>Xong</label></button>
+		</ion-row>
+	</ion-grid>
+</ion-footer>

@@ -1,3 +1,65 @@
 page-passport {
+	
+	button.camera.fab.fab-md {
+		border: 3px solid #67aaf9;
+		background-color: #0d244c;
+	}
+
+	ion-icon.camera.icon.icon-md.ion-md-camera {
+		color: white;
+	}
+
+	ion-card.frame.card.card-md {
+		color: #DDDDDD;
+		height: 50%;
+		border: 5px solid white;
+		border-radius: 20px;
+		background-color: transparent;
+	}
+
+	ion-card.description.card.card-md {
+		height: 30%;
+		border: 5px solid white;
+		border-radius: 20px;
+		margin-top: 255px;
+	}
+
+	h2.description {
+		font-size: 19px;
+		text-align: left;
+	}
+
+	p.description {
+		text-align: left;
+		font-size: 15px;
+	}
+
+	ion-grid.description.grid {
+		margin-top: 10px;
+		margin-left: 5px;
+	}
+
+	button.disable-hover.bar-buttons.bar-buttons-md.bar-button.bar-button-md.bar-button-default.bar-button-default-md.bar-button-menutoggle.bar-button-menutoggle-md {
+		color: white;
+	}
+
+	button.bar-buttons.bar-buttons-md.bar-button.bar-button-md.bar-button-default.bar-button-default-md.bar-button-menutoggle.bar-button-menutoggle-md {
+		color: white;
+	}	
+
+	button.camera.fab.fab-md {
+		margin-top: -80px;
+	} 
+
+	#rect{
+		position: absolute;
+		left: 26px;
+		top: 26px;
+		width: 85%;
+		height: 40%;
+		z-index: 2;
+		// border-radius: 20px;
+		border: 5px solid rgba(255, 255, 255, 0.5);
+	}
 
 }

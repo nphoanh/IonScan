@@ -12,6 +12,7 @@ import { IdentityPage } from '../pages/identity/identity';
 import { PassportPage } from '../pages/passport/passport';
 import { AddFolderPage } from '../pages/add-folder/add-folder';
 import { EditFolderPage } from '../pages/edit-folder/edit-folder';
+import { ImagePassportPage } from '../pages/image-passport/image-passport';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,7 +37,8 @@ import { File } from '@ionic-native/file';
   IdentityPage,
   PassportPage,
   AddFolderPage,
-  EditFolderPage
+  EditFolderPage,
+  ImagePassportPage
   ],
   imports: [
   BrowserModule,
@@ -55,7 +57,8 @@ import { File } from '@ionic-native/file';
   IdentityPage,
   PassportPage,
   AddFolderPage,
-  EditFolderPage
+  EditFolderPage,
+  ImagePassportPage
   ],
   providers: [
   StatusBar,

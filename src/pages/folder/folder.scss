@@ -1,0 +1,77 @@
+page-folder {
+	button.add.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-default-md {
+		font-size: 15px;
+		color: white;
+		margin-right: 10px;
+	}
+
+	ion-icon.icon.icon-md.ion-md-image {
+		font-size: 100px;
+		margin-top: -13px;
+		color: lightgray;
+		margin-left: 10px;
+	}
+
+	ion-card-title.titcard.card-title.card-title-md {
+		text-align: left;
+		font-size: 20px;
+		color: #808080;
+		margin-top: -5px;
+		font-weight: bold;
+	}
+
+	p.titcard {
+		text-align: left !important;
+		font-size: 13px !important;
+		color: gray !important;
+	}
+
+	ion-card.folder.card.card-md {
+		margin-top: -6px;
+		height: 110px;
+	}
+
+	button.camera.fab.fab-md {
+		background-color: #cdecff;
+	}
+
+	ion-item.itemfolder.item.item-block.item-md {
+		height: 90px;
+		margin-top: 10px;
+	}
+
+	h1.titcard {
+		margin-top: 20px!important;
+		font-size: 18px;
+	}
+
+	button.upload.button.button-md.button-default.button-default-md {
+		background-color: #baffc9;
+		margin-top: 10px;
+		width: 68px;
+	}
+
+	button.edit.button.button-md.button-default.button-default-md {
+		background-color: #ffffba;
+		margin-top: 10px;
+		width: 62px;
+	}
+
+	button.delete.button.button-md.button-default.button-default-md {
+		background-color: #ffb3ba;
+		margin-top: 10px;
+		width: 62px;
+	}
+
+	label.itemfolder {
+		color: black;
+	}
+
+	ion-icon.icon.icon-md.ion-md-camera {
+		color: black;
+	}
+
+	ion-content.content.content-md {
+    background-color: white!important;
+}
+}

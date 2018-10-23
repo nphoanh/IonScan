@@ -6,7 +6,8 @@
 
       <img class="logo-menu" src="../assets/imgs/logo-no.png" alt="logo" class="logo">
 
-      <ion-list-header class="logo-menu" *ngIf="auth.getEmail()">Hi, {{auth.getEmail()}}</ion-list-header>
+      <ion-list-header class="logo-menu" *ngIf="auth.getEmail()">Chào, {{auth.getEmail()}}</ion-list-header>
+      <ion-list-header class="logo-menu" *ngIf="auth.getPhone()">Chào, {{auth.getPhone()}}</ion-list-header>
 
       <button class="logo-menu" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
