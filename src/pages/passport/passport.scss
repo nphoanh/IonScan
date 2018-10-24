@@ -51,15 +51,27 @@ page-passport {
 		margin-top: -80px;
 	} 
 
-	#rect{
-		position: absolute;
-		left: 26px;
-		top: 26px;
-		width: 85%;
-		height: 40%;
-		z-index: 2;
-		// border-radius: 20px;
-		border: 5px solid rgba(255, 255, 255, 0.5);
-	}
+
+#rect {
+
+	width: 85%;
+	height: 40%;
+	background-color: rgba(255, 255, 255, 0);
+
+	position: absolute; 
+	left: 26px;
+	top: 26px; 
+	margin: auto;
+
+	max-width: 100%;
+	max-height: 100%;
+	overflow: auto;
+
+	border-width: 20px;
+	border-style: solid;
+	border-image: url('../assets/imgs/border.png')50 round;
+	box-shadow: 0 0 500px 5000px rgba(0, 0, 0, 0.4);
+}
+
 
 }

@@ -27,7 +27,7 @@
     "@ionic-native/splash-screen": "~4.15.0",
     "@ionic-native/sqlite": "^4.15.0",
     "@ionic-native/status-bar": "~4.15.0",
-    "@ionic-native/toast": "^4.15.0",
+    "@ionic-native/toast": "^4.16.0",
     "@ionic/pro": "2.0.3",
     "@ionic/storage": "2.2.0",
     "angularfire2": "^5.0.2",
@@ -67,7 +67,6 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-x-toast": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
@@ -86,7 +85,8 @@
       "cordova-plugin-file": {},
       "cordova-android-support-gradle-release": {
         "ANDROID_SUPPORT_VERSION": "27.+"
-      }
+      },
+      "cordova-plugin-x-toast": {}
     },
     "platforms": [
       "android"

@@ -1,20 +1,7 @@
 page-image-passport {
 
     ion-content.content.content-md {
-        background-color: white!important;
-    }
-
-    ion-icon.close.icon.icon-md.ion-md-close {
-        font-size: 25px;
-        color: #67aaf9;
-    }
-
-    ion-icon.done.icon.icon-md.ion-md-checkmark {
-        font-size: 25px;
-        color: #67aaf9;
-    }
-    label {
-        color: #67aaf9;
+        background-color: white !important;
     }
 
     button.back-button.disable-hover.bar-button.bar-button-md.back-button-md.bar-button-default.bar-button-default-md.show-back-button {
@@ -28,13 +15,50 @@ page-image-passport {
         padding: 17px;
         font-weight: bold;
     }
- 
+
     button.disable-hover.button.button-md.button-default.button-default-md.button-block.button-block-md {
         background-color: white;
         color: #67aaf9;
         box-shadow: 0px 0px;
     }
 
+    ion-icon.filter.icon.icon-md.ion-md-color-wand {
+        font-size: 25px;
+        color: #67aaf9;
+    }
+
+    ion-icon.crop.icon.icon-md.ion-md-crop {
+        font-size: 25px;
+        color: #67aaf9;
+    }
+
+    ion-icon.rotate.icon.icon-md.ion-md-refresh {
+        font-size: 25px;
+        color: #67aaf9;
+    }
+
+    ion-icon.delete.icon.icon-md.ion-md-trash {
+        font-size: 25px;
+        color: #67aaf9;
+    }
+
+    ion-icon.save.icon.icon-md.ion-md-checkmark {
+        font-size: 25px;
+        color: #67aaf9;
+    }
+
+    .displayImage {
+        max-height: 460px;
+        max-width: 328px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    input.text-input.text-input-md {
+        margin-left: -10px;
+        border-bottom: 1px dotted white;
+    }
 
     button.button-group {
         background-color: white;
@@ -43,19 +67,19 @@ page-image-passport {
         margin-right: auto;
     }
 
-// img#img {
-//     margin-top: -64px;
-// }
+    label {
+        color: #67aaf9;
+    }
 
-#rectimg{
-    position: absolute;
-    left: 40px;
-    top: 86px;
-    width: 78%;
-    height: 40%;
-    z-index: 2;
-    // border-radius: 20px;
-    border: 5px solid rgba(255, 0, 0, 0.5);
-}
+    button.more.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-default-md {
+        color: white;
+        font-size: 20px;
+    }
+
+    button.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-default-md {
+        font-size: 20px;
+        color: white;
+        margin-right: 6px;
+    }
 
 }

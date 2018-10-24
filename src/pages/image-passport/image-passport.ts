@@ -16,10 +16,10 @@ export class ImagePassportPage {
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad ImagePassportPage');
-    this.crop();
+    // this.crop();
   }
 
-  crop(){
+  /*crop(){
     setTimeout(()=>{
       var rectimg = <HTMLDivElement>  document.getElementById('rectimg')  ;
       var img = <HTMLImageElement>  document.getElementById('img')  ;
@@ -72,7 +72,7 @@ export class ImagePassportPage {
       console.log(ctx);
     }, 0);
 
-  }
+  }*/
 
 
 }

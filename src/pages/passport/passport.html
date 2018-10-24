@@ -7,11 +7,11 @@
 		<ion-title>Hộ chiếu</ion-title>
 		<ion-buttons end>  
 			<button ion-button id="button_flash_off" style="visibility: hidden;" (tap)="flashModeOff();">
-			<ion-icon md="md-flash" style="color:black;"></ion-icon>	
-		</button>
-		<button ion-button id="button_flash_on" (tap)="flashModeOn();">
-			<ion-icon ios="ios-flash" md="md-flash" style="color:white;"></ion-icon>		
-		</button>
+				<ion-icon md="md-flash" style="color:black;"></ion-icon>	
+			</button>
+			<button ion-button id="button_flash_on" (tap)="flashModeOn();">
+				<ion-icon ios="ios-flash" md="md-flash" style="color:white;"></ion-icon>		
+			</button>
 		</ion-buttons> 
 	</ion-navbar>
 
@@ -39,6 +39,6 @@
 		<button class="camera" ion-fab (tap)="takePicture()"><ion-icon class="camera"  name="camera"></ion-icon></button>
 	</ion-fab>
 
-	<img id="img" [src]="capturedImage" *ngIf="capturedImage" /> 
-
+	<img id="img" [src]="pic" *ngIf="pic" /> 
+	<canvas id="canvas"></canvas>
 </ion-content>
