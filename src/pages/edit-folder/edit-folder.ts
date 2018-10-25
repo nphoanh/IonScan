@@ -12,7 +12,7 @@ import { File } from '@ionic-native/file';
 })
 export class EditFolderPage {
 
-	folder = { folderid:0, name:"", date:"", type:"" };
+	folder = { folderid:0, name:"", date:"", type:"", display:"yes" };
 	data = this.auth.getEmail();
 	dataPhone = this.auth.getPhone();
 	foldername = this.navParams.get('foldername');
@@ -42,7 +42,8 @@ export class EditFolderPage {
 						this.folder.folderid = res.rows.item(0).folderid;
 						this.folder.name = res.rows.item(0).name;
 						this.folder.date = res.rows.item(0).date;
-						this.folder.type = res.rows.item(0).type;					
+						this.folder.type = res.rows.item(0).type;
+						this.folder.display = res.rows.item(0).display;						
 					}		
 				})
 			})
@@ -61,7 +62,8 @@ export class EditFolderPage {
 						this.folder.folderid = res.rows.item(0).folderid;
 						this.folder.name = res.rows.item(0).name;
 						this.folder.date = res.rows.item(0).date;
-						this.folder.type = res.rows.item(0).type;					
+						this.folder.type = res.rows.item(0).type;		
+						this.folder.display = res.rows.item(0).display;				
 					}				
 				})
 				.catch(e => {
@@ -94,7 +96,7 @@ export class EditFolderPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {
-				db.executeSql('UPDATE folder SET name=?,date=?,type=? WHERE folderid=?',[this.folder.name,this.folder.date,this.folder.type,this.folder.folderid])
+				db.executeSql('UPDATE folder SET name=?,date=?,type=?,display=? WHERE folderid=?',[this.folder.name,this.folder.date,this.folder.type,this.folder.display,this.folder.folderid])
 				.then(res => {
 					this.platform.ready().then(() =>{
 						if(this.platform.is('android')) {
@@ -150,7 +152,7 @@ export class EditFolderPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {			
-				db.executeSql('UPDATE folder SET name=?,date=?,type=? WHERE folderid=?',[this.folder.name,this.folder.date,this.folder.type,this.folder.folderid])
+				db.executeSql('UPDATE folder SET name=?,date=?,type=?,display=? WHERE folderid=?',[this.folder.name,this.folder.date,this.folder.type,this.folder.display,this.folder.folderid])
 				.then(res => {
 					this.platform.ready().then(() =>{
 						if(this.platform.is('android')) {

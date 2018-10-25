@@ -12,7 +12,7 @@ import { File } from '@ionic-native/file';
 })
 export class AddFolderPage {
 
-	folder = { name:"", date:"", type:"" };
+	folder = { name:"", date:"", type:"", display:"yes" };
 	data = this.auth.getEmail();
 	dataPhone = this.auth.getPhone();
 
@@ -33,7 +33,7 @@ export class AddFolderPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {
-				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?)',[this.folder.name,this.folder.date,this.folder.type])
+				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?,?)',[this.folder.name,this.folder.date,this.folder.type,this.folder.display])
 				.then(res => {
 					let path = this.file.externalRootDirectory + 'IonScan';
 					let name = this.folder.name + '.' + nameEmail;
@@ -83,7 +83,7 @@ export class AddFolderPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {
-				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?)',[this.folder.name,this.folder.date,this.folder.type])
+				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?,?)',[this.folder.name,this.folder.date,this.folder.type,this.folder.display])
 				.then(res => {
 					let path = this.file.externalRootDirectory + 'IonScan';
 					let name = this.folder.name + '.' + namePhone;
