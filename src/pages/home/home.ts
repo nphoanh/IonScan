@@ -27,7 +27,7 @@ export class HomePage {
     public platform: Platform,
     private toast: Toast,
     private file: File
-    ) {
+    ) { 
     this.menuCtrl.enable(true, 'myMenu');
   }
 
@@ -48,6 +48,36 @@ export class HomePage {
         }).catch(err => {
           console.log('Directory doesn\'t exist '+JSON.stringify(err));
           this.file.createDir(this.file.externalRootDirectory, 'IonScan', false).then(response => {
+            console.log('Directory create '+response);
+          }).catch(err => {
+            console.log('Directory no create '+JSON.stringify(err));
+          }); 
+        });
+      }
+    });  
+    this.platform.ready().then(() =>{
+      if(this.platform.is('android')) {
+        let path = this.file.externalRootDirectory + 'IonScan';
+        this.file.checkDir(path, 'Identity Card').then(response => {
+          console.log('Directory exists '+response);
+        }).catch(err => {
+          console.log('Directory doesn\'t exist '+JSON.stringify(err));
+          this.file.createDir(path, 'Identity Card', false).then(response => {
+            console.log('Directory create '+response);
+          }).catch(err => {
+            console.log('Directory no create '+JSON.stringify(err));
+          }); 
+        });
+      }
+    });  
+    this.platform.ready().then(() =>{
+      if(this.platform.is('android')) {
+        let path = this.file.externalRootDirectory + 'IonScan';
+        this.file.checkDir(path, 'Passport').then(response => {
+          console.log('Directory exists '+response);
+        }).catch(err => {
+          console.log('Directory doesn\'t exist '+JSON.stringify(err));
+          this.file.createDir(path, 'Passport', false).then(response => {
             console.log('Directory create '+response);
           }).catch(err => {
             console.log('Directory no create '+JSON.stringify(err));

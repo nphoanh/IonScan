@@ -11,8 +11,6 @@ import { ImagePassportPage } from '../image-passport/image-passport';
 })
 export class PassportPage {
 
-  picture: any;
-
   constructor(public navCtrl: NavController, 
   	public navParams: NavParams,
   	private cameraPreview: CameraPreview
@@ -60,38 +58,27 @@ export class PassportPage {
       });
     }, (err) => {
       console.log(err);
-      this.picture = 'assets/img/test.jpg';
     });
 
   }
 
   crop(imageData, rect_width, rect_height, x_coord, y_coord, callback) {
-
     var image = new Image();
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');
-
     image.src = 'data:image/png;base64,' + imageData;
-
     image.onload = function() {
-
       var x_axis_scale = image.width / window.screen.width
       var y_axis_scale = image.height / window.screen.height
-
       var x_coord_int = x_coord * x_axis_scale;
       var y_coord_int = y_coord * y_axis_scale;
       var rect_width_int = rect_width * x_axis_scale;
       var rect_height_int = rect_height * y_axis_scale
-
       canvas.width = rect_width_int;
       canvas.height = rect_height_int;
-
       ctx.drawImage(image, x_coord_int, y_coord_int, rect_width_int, rect_height_int, 0, 0, rect_width_int, rect_height_int);   
-
       var cropped_img_base64 = canvas.toDataURL();
-
       callback(cropped_img_base64);
-      
       return cropped_img_base64;
     };
   };

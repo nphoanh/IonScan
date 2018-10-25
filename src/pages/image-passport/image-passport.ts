@@ -12,7 +12,6 @@ export class ImagePassportPage {
 
 	picture = this.navParams.get('picture');
 
-
 	constructor(public navCtrl: NavController, 
 		public navParams: NavParams) {
 	}
