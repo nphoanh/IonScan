@@ -68,18 +68,21 @@ export class HomePage {
       }).then((db: SQLiteObject) => {
          /* db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
         .then(res => console.log('DELETED TABLE'))
+        .catch(e => console.log(e));
+        db.executeSql('DROP TABLE IF EXISTS image', {} as any)
+        .then(res => console.log('DELETED image'))
         .catch(e => console.log(e));*/
-        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
+        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
 
-        db.executeSql('INSERT INTO folder VALUES ("1","Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate])
+        db.executeSql('INSERT INTO folder VALUES ("1","Identity",?,"Chứng minh thư","no")', [this.thisDate])
         .then(res => {
-          console.log('INSERT Chứng minh thư');
+          console.log('INSERT Identity');
           this.platform.ready().then(() =>{
             if(this.platform.is('android')) {
               let path = this.file.externalRootDirectory + 'IonScan';
-              let nameFolder = 'Chứng minh thư' + '.' + nameEmail;
+              let nameFolder = 'Identity' + '.' + nameEmail;
               this.file.checkDir(path, nameFolder).then(response => {
                 console.log('Directory exists '+response);
               }).catch(err => {
@@ -95,13 +98,13 @@ export class HomePage {
         })
         .catch(e => console.log(e));
 
-        db.executeSql('INSERT INTO folder VALUES ("2","Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate])
+        db.executeSql('INSERT INTO folder VALUES ("2","Passport",?,"Hộ chiếu","no")', [this.thisDate])
         .then(res => {
-          console.log('INSERT Hộ chiếu');
+          console.log('INSERT Passport');
           this.platform.ready().then(() =>{
             if(this.platform.is('android')) {
               let path = this.file.externalRootDirectory + 'IonScan';
-              let nameFolder = 'Hộ chiếu' + '.' + nameEmail;
+              let nameFolder = 'Passport' + '.' + nameEmail;
               this.file.checkDir(path, nameFolder).then(response => {
                 console.log('Directory exists '+response);
               }).catch(err => {
@@ -143,20 +146,23 @@ export class HomePage {
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-        /* db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
+        /*  db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
         .then(res => console.log('DELETED TABLE'))
-        .catch(e => console.log(e)); */
-        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
+        .catch(e => console.log(e));
+        db.executeSql('DROP TABLE IF EXISTS image', {} as any)
+        .then(res => console.log('DELETED image'))
+        .catch(e => console.log(e));*/
+       db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
 
-        db.executeSql('INSERT INTO folder VALUES ("1","Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate])
+        db.executeSql('INSERT INTO folder VALUES ("1","Identity",?,"Chứng minh thư","no")', [this.thisDate])
         .then(res => {
-          console.log('INSERT Chứng minh thư');
+          console.log('INSERT Identity');
           this.platform.ready().then(() =>{
             if(this.platform.is('android')) {
               let path = this.file.externalRootDirectory + 'IonScan';
-              let nameFolder = 'Chứng minh thư' + '.' + namePhone;
+              let nameFolder = 'Identity' + '.' + namePhone;
               this.file.checkDir(path, nameFolder).then(response => {
                 console.log('Directory exists '+response);
               }).catch(err => {
@@ -172,13 +178,13 @@ export class HomePage {
         })
         .catch(e => console.log(e));
 
-        db.executeSql('INSERT INTO folder VALUES ("2","Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate])
+        db.executeSql('INSERT INTO folder VALUES ("2","Passport",?,"Hộ chiếu","no")', [this.thisDate])
         .then(res => {
-          console.log('INSERT Hộ chiếu');
+          console.log('INSERT Passport');
           this.platform.ready().then(() =>{
             if(this.platform.is('android')) {
               let path = this.file.externalRootDirectory + 'IonScan';
-              let nameFolder = 'Hộ chiếu' + '.' + namePhone;
+              let nameFolder = 'Passport' + '.' + namePhone;
               this.file.checkDir(path, nameFolder).then(response => {
                 console.log('Directory exists '+response);
               }).catch(err => {
@@ -209,7 +215,7 @@ export class HomePage {
             this.totalFolder = parseInt(res.rows.item(0).totalFolder);
           }
         })
-        .catch(e => console.log(e));
+        .catch(e => console.log(e)); 
       }).catch(e => console.log(e));
     }
   }
