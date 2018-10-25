@@ -55,7 +55,7 @@ export class HomePage {
         });
       }
     });  
-    this.platform.ready().then(() =>{
+/*    this.platform.ready().then(() =>{
       if(this.platform.is('android')) {
         let path = this.file.externalRootDirectory + 'IonScan';
         this.file.checkDir(path, 'Identity Card').then(response => {
@@ -84,7 +84,7 @@ export class HomePage {
           }); 
         });
       }
-    });  
+    });  */
   }
 
   getData(){    
