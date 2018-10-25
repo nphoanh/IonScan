@@ -47,5 +47,9 @@ export class ImageIdentityPage {
 		src.delete(); M.delete();
 	}
 
+	saveImage(){
+		
+	}
+
 
 }

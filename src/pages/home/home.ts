@@ -19,7 +19,7 @@ export class HomePage {
   folders:any = [];
   totalFolder = 0;
   folder = { name:""};
-  myDate: String = new Date().toISOString();
+  thisDate: String = new Date().toISOString();
 
   constructor(public navCtrl: NavController,
     public menuCtrl:MenuController,
@@ -56,22 +56,6 @@ export class HomePage {
         });
       }
     });  
-/*    
-    this.platform.ready().then(() =>{
-      if(this.platform.is('android')) {
-        let path = this.file.externalRootDirectory + 'IonScan';
-        this.file.checkDir(path, 'Passport').then(response => {
-          console.log('Directory exists '+response);
-        }).catch(err => {
-          console.log('Directory doesn\'t exist '+JSON.stringify(err));
-          this.file.createDir(path, 'Passport', false).then(response => {
-            console.log('Directory create '+response);
-          }).catch(err => {
-            console.log('Directory no create '+JSON.stringify(err));
-          }); 
-        });
-      }
-    });  */
   }
 
   getData(){    
@@ -89,7 +73,7 @@ export class HomePage {
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
 
-        db.executeSql('INSERT INTO folder VALUES ("1","Chứng minh thư",?,"Chứng minh thư","no")', [this.myDate])
+        db.executeSql('INSERT INTO folder VALUES ("1","Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate])
         .then(res => {
           console.log('INSERT Chứng minh thư');
           this.platform.ready().then(() =>{
@@ -111,7 +95,7 @@ export class HomePage {
         })
         .catch(e => console.log(e));
 
-        db.executeSql('INSERT INTO folder VALUES ("2","Hộ chiếu",?,"Hộ chiếu","no")', [this.myDate])
+        db.executeSql('INSERT INTO folder VALUES ("2","Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate])
         .then(res => {
           console.log('INSERT Hộ chiếu');
           this.platform.ready().then(() =>{
@@ -166,7 +150,7 @@ export class HomePage {
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
 
-        db.executeSql('INSERT INTO folder VALUES ("1","Chứng minh thư",?,"Chứng minh thư","no")', [this.myDate])
+        db.executeSql('INSERT INTO folder VALUES ("1","Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate])
         .then(res => {
           console.log('INSERT Chứng minh thư');
           this.platform.ready().then(() =>{
@@ -188,7 +172,7 @@ export class HomePage {
         })
         .catch(e => console.log(e));
 
-        db.executeSql('INSERT INTO folder VALUES ("2","Hộ chiếu",?,"Hộ chiếu","no")', [this.myDate])
+        db.executeSql('INSERT INTO folder VALUES ("2","Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate])
         .then(res => {
           console.log('INSERT Hộ chiếu');
           this.platform.ready().then(() =>{

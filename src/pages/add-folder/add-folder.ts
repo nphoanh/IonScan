@@ -11,10 +11,12 @@ import { File } from '@ionic-native/file';
 	templateUrl: 'add-folder.html',
 })
 export class AddFolderPage {
-
-	folder = { name:"", date:"", type:"", display:"yes" };
+	
+	thisDate: String = new Date().toISOString();
+	folder = { name:"", date:this.thisDate, type:"", display:"yes" };
 	data = this.auth.getEmail();
 	dataPhone = this.auth.getPhone();
+	
 
 	constructor(public navCtrl: NavController, 
 		private sqlite: SQLite,
