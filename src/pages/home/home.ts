@@ -66,7 +66,7 @@ export class HomePage {
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-         /* db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
+       /*   db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
         .then(res => console.log('DELETED TABLE'))
         .catch(e => console.log(e));
         db.executeSql('DROP TABLE IF EXISTS image', {} as any)
@@ -146,13 +146,13 @@ export class HomePage {
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-        /*  db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
+     /*      db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
         .then(res => console.log('DELETED TABLE'))
         .catch(e => console.log(e));
         db.executeSql('DROP TABLE IF EXISTS image', {} as any)
         .then(res => console.log('DELETED image'))
         .catch(e => console.log(e));*/
-       db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
+      db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
 

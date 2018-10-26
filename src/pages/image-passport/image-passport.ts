@@ -84,21 +84,14 @@ export class ImagePassportPage {
                     let base = this.picture.substr(this.picture.lastIndexOf(',')+1);
                     let nameFile = this.image.name + '.' + 'png';
                     let type = 'image/png';
-                    if (this.image.name == null) {                        
-                        this.toast.show('Chưa nhập tên ảnh', '5000', 'center').subscribe(
-                            toast => {
-                                this.navCtrl.popToRoot();
-                            }
-                            );
-                    }
-                    else {
-                        this.savebase64AsFile(folderPath, nameFile, base, type); 
-                        this.toast.show('Lưu ảnh thành công', '5000', 'center').subscribe(
-                            toast => {
-                                this.navCtrl.popToRoot();
-                            }
-                            );                                       
-                    }
+                    console.log(this.image.name);
+                    this.savebase64AsFile(folderPath, nameFile, base, type); 
+                    this.toast.show('Lưu ảnh thành công', '5000', 'center').subscribe(
+                        toast => {
+                            this.navCtrl.popToRoot();
+                        }
+                        );                                       
+
                 })
                 .catch(e => console.log(e));
             }).catch(e => console.log(e));
@@ -122,21 +115,13 @@ export class ImagePassportPage {
                     let base = this.picture.substr(this.picture.lastIndexOf(',')+1);
                     let nameFile = this.image.name + '.' + 'png';
                     let type = 'image/png';
-                    if (this.image.name == null) {                        
-                        this.toast.show('Chưa nhập tên ảnh', '5000', 'center').subscribe(
-                            toast => {
-                                this.navCtrl.popToRoot();
-                            }
-                            );
-                    }
-                    else {
-                        this.savebase64AsFile(folderPath, nameFile, base, type); 
-                        this.toast.show('Lưu ảnh thành công', '5000', 'center').subscribe(
-                            toast => {
-                                this.navCtrl.popToRoot();
-                            }
-                            );                                       
-                    }                })
+                    this.savebase64AsFile(folderPath, nameFile, base, type); 
+                    this.toast.show('Lưu ảnh thành công', '5000', 'center').subscribe(
+                        toast => {
+                            this.navCtrl.popToRoot();
+                        }
+                        );                                       
+                })
                 .catch(e => console.log(e));
             }).catch(e => console.log(e));
         }

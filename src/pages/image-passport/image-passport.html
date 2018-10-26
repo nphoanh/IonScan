@@ -1,7 +1,7 @@
 <ion-header>
 
 	<ion-navbar>
-		<ion-input class="title" [(ngModel)]="image.name" type="text" placeholder="{{thisDate | date: 'HmmddMMyyyy'}}"></ion-input>
+		<ion-input class="title" [(ngModel)]="image.name" type="text" value=" {{ thisDate | date: 'HmmddMMyyyy'}}" placeholder="{{ thisDate | date: 'HmmddMMyyyy'}}"></ion-input>
 	</ion-navbar>
 
 </ion-header>
