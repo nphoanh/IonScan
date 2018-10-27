@@ -13,7 +13,9 @@ import { PassportPage } from '../pages/passport/passport';
 import { AddFolderPage } from '../pages/add-folder/add-folder';
 import { EditFolderPage } from '../pages/edit-folder/edit-folder';
 import { ImagePassportPage } from '../pages/image-passport/image-passport';
+import { InfoPassportPage } from '../pages/info-passport/info-passport';
 import { ImageIdentityPage } from '../pages/image-identity/image-identity';
+import { InfoIdentityPage } from '../pages/info-identity/info-identity';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -40,7 +42,9 @@ import { File } from '@ionic-native/file';
   AddFolderPage,
   EditFolderPage,
   ImagePassportPage,
-  ImageIdentityPage
+  ImageIdentityPage,
+  InfoPassportPage,
+  InfoIdentityPage
   ],
   imports: [
   BrowserModule,
@@ -61,7 +65,9 @@ import { File } from '@ionic-native/file';
   AddFolderPage,
   EditFolderPage,
   ImagePassportPage,
-  ImageIdentityPage
+  ImageIdentityPage,
+  InfoPassportPage,
+  InfoIdentityPage
   ],
   providers: [
   StatusBar,

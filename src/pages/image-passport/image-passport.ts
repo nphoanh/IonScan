@@ -5,6 +5,8 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { Toast } from '@ionic-native/toast';
 
+import { InfoPassportPage } from '../info-passport/info-passport';
+
 declare var cv: any;
 
 @IonicPage()
@@ -19,8 +21,7 @@ export class ImagePassportPage {
     dataPhone = this.auth.getPhone();
     thisDate: String = new Date().toISOString();
     images:any = [];
-    image = { name:"", date:this.thisDate };
-
+    image = { name:"", date:this.thisDate, path:"", base64:"", type:"image/png" };  
 
     constructor(public navCtrl: NavController, 
         private toast: Toast,
@@ -31,7 +32,55 @@ export class ImagePassportPage {
         private auth: AuthService,) {
     }
 
-    ionViewDidLoad() {
+    ionViewWillEnter() {
+        this.getData();  
+    }
+
+    getData(){
+        if (this.data != null) {
+            let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
+            let nameDB = nameEmail + '.db';
+            this.sqlite.create({
+                name: nameDB,
+                location: 'default'
+            }).then((db: SQLiteObject) => {
+                db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
+                .then(res => console.log('Create image table'))
+                .catch(e => console.log(e));
+
+                db.executeSql('SELECT * FROM image ORDER BY imageid DESC', {} as any)
+                .then(res => {
+                    this.images = [];
+                    for(var i=0; i<res.rows.length; i++) {
+                        this.images.push({imageid:res.rows.item(i).imageid,name:res.rows.item(i).name,date:res.rows.item(i).date,path:res.rows.item(i).path,base64:res.rows.item(i).base64,type:res.rows.item(i).type,folderid:res.rows.item(i).folderid})
+                    }
+                })
+                .catch(e => console.log(e));
+            }).catch(e => console.log(e));
+        }
+
+        else {
+            let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
+            let nameDBPhone = 'u' + namePhone;
+            let nameDB = nameDBPhone + '.db';
+            this.sqlite.create({
+                name: nameDB,
+                location: 'default'
+            }).then((db: SQLiteObject) => {
+                db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
+                .then(res => console.log('Create image table'))
+                .catch(e => console.log(e));
+
+                db.executeSql('SELECT * FROM image ORDER BY imageid DESC', {} as any)
+                .then(res => {
+                    this.images = [];
+                    for(var i=0; i<res.rows.length; i++) {
+                        this.images.push({imageid:res.rows.item(i).imageid,name:res.rows.item(i).name,date:res.rows.item(i).date,path:res.rows.item(i).path,base64:res.rows.item(i).base64,type:res.rows.item(i).type,folderid:res.rows.item(i).folderid})
+                    }
+                })
+                .catch(e => console.log(e));
+            }).catch(e => console.log(e));
+        }
     }
 
     savebase64AsFile(folderPath, fileName, base64, contentType){
@@ -66,65 +115,45 @@ export class ImagePassportPage {
     }
 
     saveImage(){
+        let pic = document.getElementById('img') as HTMLImageElement;
+        let src = pic.src;
+        let base = src.substr(src.lastIndexOf(',')+1);
+        let nameFile = this.image.name + '.' + 'png';
         if (this.data != null) { 
             let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
             let nameDB = nameEmail + '.db';
+            let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + nameEmail;            
+            
             this.sqlite.create({
                 name: nameDB,
                 location: 'default'
-            }).then((db: SQLiteObject) => {
-                db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, folderid, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
-                .then(res => console.log('Create image table'))
-                .catch(e => console.log(e));
-
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,"2")', [this.image.name,this.image.date])
+            }).then((db: SQLiteObject) => {                
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [nameFile,this.image.date,folderPath,base,this.image.type])
                 .then(res => {
-                    console.log('Insert image');   
-                    let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + nameEmail;
-                    let base = this.picture.substr(this.picture.lastIndexOf(',')+1);
-                    let nameFile = this.image.name + '.' + 'png';
-                    let type = 'image/png';
-                    console.log(this.image.name);
-                    this.savebase64AsFile(folderPath, nameFile, base, type); 
-                    this.toast.show('Lưu ảnh thành công', '5000', 'center').subscribe(
-                        toast => {
-                            this.navCtrl.popToRoot();
-                        }
-                        );                                       
-
+                    console.log('Insert image');  
+                    this.savebase64AsFile(folderPath, nameFile, base, this.image.type);                                                                          
                 })
-                .catch(e => console.log(e));
+                .catch(e => console.log(e));                
             }).catch(e => console.log(e));
         }
         else {
             let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
             let nameDBPhone = 'u' + namePhone;
             let nameDB = nameDBPhone + '.db';
+            let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + namePhone;
             this.sqlite.create({
                 name: nameDB,
                 location: 'default'
-            }).then((db: SQLiteObject) => {
-                db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, folderid INTEGER, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
-                .then(res => console.log('Create image table'))
-                .catch(e => console.log(e));
-
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,"2")', [this.image.name,this.image.date])
+            }).then((db: SQLiteObject) => {                
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [nameFile,this.image.date,folderPath,base,this.image.type])
                 .then(res => {
-                    console.log('INSERT Hộ chiếu');
-                    let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + namePhone;
-                    let base = this.picture.substr(this.picture.lastIndexOf(',')+1);
-                    let nameFile = this.image.name + '.' + 'png';
-                    let type = 'image/png';
-                    this.savebase64AsFile(folderPath, nameFile, base, type); 
-                    this.toast.show('Lưu ảnh thành công', '5000', 'center').subscribe(
-                        toast => {
-                            this.navCtrl.popToRoot();
-                        }
-                        );                                       
+                    console.log('Insert image');                       
+                    this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
                 })
                 .catch(e => console.log(e));
             }).catch(e => console.log(e));
-        }
+        }        
+        this.navCtrl.push(InfoPassportPage,{picture:src});   
     }
 
     rotateRight() {

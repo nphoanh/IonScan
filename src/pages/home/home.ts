@@ -33,12 +33,11 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.getData();
     this.createRootFolder();
   }
 
   ionViewWillEnter() {
-    this.getData();
+    this.getData();    
   }
 
   createRootFolder(){
@@ -66,7 +65,7 @@ export class HomePage {
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-       /*   db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
+      /*    db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
         .then(res => console.log('DELETED TABLE'))
         .catch(e => console.log(e));
         db.executeSql('DROP TABLE IF EXISTS image', {} as any)
@@ -146,7 +145,7 @@ export class HomePage {
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-     /*      db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
+        /*   db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
         .then(res => console.log('DELETED TABLE'))
         .catch(e => console.log(e));
         db.executeSql('DROP TABLE IF EXISTS image', {} as any)
@@ -220,6 +219,18 @@ export class HomePage {
     }
   }
 
+  editFolder(folderid,name) {
+    this.navCtrl.push(EditFolderPage, {
+      folderid:folderid,
+      foldername:name
+    });
+  }
+
+  moveToFolder(folderid){
+    this.navCtrl.push(EditFolderPage, {
+      folderid:folderid
+    });
+  }
 
   addFolder() {
     if (this.data != null) { 
@@ -312,13 +323,6 @@ export class HomePage {
         .catch(e => console.log(e));
       }).catch(e => console.log(e));
     }
-  }
-
-  editFolder(folderid,name) {
-    this.navCtrl.push(EditFolderPage, {
-      folderid:folderid,
-      foldername:name
-    });
   }
 
 }

@@ -1,0 +1,93 @@
+ <ion-header>
+
+ 	<ion-navbar>
+ 		<ion-title>Thông tin Chứng minh thư</ion-title>
+ 		<ion-buttons end> 
+ 			<button class="share" ion-button icon-only> 
+ 				Chia sẻ &nbsp;
+ 				<ion-icon name="share"></ion-icon>
+ 			</button>
+ 		</ion-buttons> 
+ 	</ion-navbar>
+
+ </ion-header>
+
+ <ion-content padding>
+
+ 	<ion-list>
+ 		<ion-item>	
+ 			<ion-row>
+ 				<ion-col col-4>
+ 					<img id="avatar" src="../assets/imgs/image.png" style="width: 80px; height: 80px;">
+ 				</ion-col>
+ 				<ion-col>
+ 					<h1 class="name">Họ tên</h1><br>
+ 					<p class="type">Việt Nam, Chứng minh thư</p>
+ 				</ion-col>
+ 			</ion-row>
+ 		</ion-item>
+ 		<ion-item>
+ 			<ion-row>
+ 				<ion-col col-4>
+ 					<h4 class="h4">Số CMND</h4>
+ 				</ion-col>
+ 				<ion-col>
+ 					<p class="info">1234</p> 					
+ 				</ion-col>
+ 			</ion-row>
+ 		</ion-item> 		
+ 		<ion-item>
+ 			<ion-row>
+ 				<ion-col col-4>
+ 					<h4 class="h4">Giới tính</h4>
+ 				</ion-col>
+ 				<ion-col>
+ 					<p class="info">Nữ</p>
+ 				</ion-col>
+ 			</ion-row>
+ 		</ion-item>
+ 		<ion-item>
+ 			<ion-row>
+ 				<ion-col col-4>
+ 					<h4 class="h4">Ngày sinh</h4>
+ 				</ion-col>
+ 				<ion-col>
+ 					<p class="info">01/01/2000</p>
+ 				</ion-col>
+ 			</ion-row>
+ 		</ion-item>
+ 		<ion-item>
+ 			<ion-row>
+ 				<ion-col col-4>
+ 					<h4 class="h4">Nơi sinh</h4>
+ 				</ion-col>
+ 				<ion-col>
+ 					<p  class="info">Việt Nam</p>
+ 				</ion-col>
+ 			</ion-row>
+ 		</ion-item>
+ 		<ion-item>
+ 			<ion-row>
+ 				<ion-col col-4>
+ 					<h4 class="h4">Điện thoại</h4>
+ 				</ion-col>
+ 				<ion-col>
+ 					<p class="info">0909090909</p>
+ 				</ion-col>
+ 			</ion-row> 			
+ 		</ion-item>
+ 		<ion-item>
+ 			<ion-row>
+ 				<ion-col col-4>
+ 					<h4 class="h4">Địa chỉ</h4>
+ 				</ion-col>
+ 				<ion-col>
+ 					<p class="info">Việt Nam</p>
+ 				</ion-col>
+ 			</ion-row>
+ 		</ion-item>
+ 	</ion-list>
+
+ 	<img id="img" [src]="picture" *ngIf="picture" /> 
+
+ </ion-content>
