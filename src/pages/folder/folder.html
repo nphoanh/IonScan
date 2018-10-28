@@ -1,62 +1,29 @@
 <ion-header>
 
 	<ion-navbar>
-		<ion-title>Folder's Name (10)</ion-title>
+		<ion-title>{{folder.name}} ({{totalImage}})</ion-title>
+		<ion-buttons end> 
+		<button class="add" ion-button icon-only (tap)="addImage()"> 
+			<ion-icon name="add"></ion-icon>
+		</button>
+	</ion-buttons> 
 	</ion-navbar>
-
+	
 </ion-header>
 
 <ion-content padding>
 
 	<ion-list>
 
-		<ion-item-sliding class="itemfolder" #item>
-			<ion-item class="itemfolder" (tap)="moveExportPage();">
+		<ion-item-sliding class="itemfolder" *ngFor="let image of images; let i=index">
+			<ion-item class="itemfolder">
 				<ion-row>
 					<ion-col col-5>
-						<ion-icon name="image"></ion-icon>
+						<img id="img" [src]="image.base64" style="width: 100px;height: 100px;" /> 
 					</ion-col>
 					<ion-col>
-						<h1 class="titcard">Name 1</h1>
-						<p class="titcard">dd/mm/yyyy</p>
-					</ion-col>
-				</ion-row>
-			</ion-item>
-			<ion-item-options side="right">
-				<button class="upload" ion-button><img src="../../assets/imgs/upload.png" style="width: 20px; height: 20px;"><br><label class="itemfolder">Upload</label></button>
-				<button class="edit" ion-button><img src="../../assets/imgs/edit.png" style="width: 20px; height: 20px;"><br><label class="itemfolder">Edit</label></button>
-				<button class="delete" ion-button><img src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;"><br><label class="itemfolder">Delete</label></button>
-			</ion-item-options>
-		</ion-item-sliding>
-
-		<ion-item-sliding class="itemfolder" #item>
-			<ion-item class="itemfolder" (tap)="moveExportPage();">
-				<ion-row>
-					<ion-col col-5>
-						<ion-icon name="image"></ion-icon>
-					</ion-col>
-					<ion-col>
-						<h1 class="titcard">Name 1</h1>
-						<p class="titcard">dd/mm/yyyy</p>
-					</ion-col>
-				</ion-row>
-			</ion-item>
-			<ion-item-options side="right">
-				<button class="upload" ion-button><img src="../../assets/imgs/upload.png" style="width: 20px; height: 20px;"><br><label class="itemfolder">Upload</label></button>
-				<button class="edit" ion-button><img src="../../assets/imgs/edit.png" style="width: 20px; height: 20px;"><br><label class="itemfolder">Edit</label></button>
-				<button class="delete" ion-button><img src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;"><br><label class="itemfolder">Delete</label></button>
-			</ion-item-options>
-		</ion-item-sliding>
-		
-		<ion-item-sliding class="itemfolder" #item>
-			<ion-item class="itemfolder" (tap)="moveExportPage();">
-				<ion-row>
-					<ion-col col-5>
-						<ion-icon name="image"></ion-icon>
-					</ion-col>
-					<ion-col>
-						<h1 class="titcard">Name 1</h1>
-						<p class="titcard">dd/mm/yyyy</p>
+						<h1 class="titcard">{{image.name}}</h1>
+						<p class="titcard">{{image.date | date: 'H:mm dd/MM/yyyy'}}</p>
 					</ion-col>
 				</ion-row>
 			</ion-item>

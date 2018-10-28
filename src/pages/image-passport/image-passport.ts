@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { File } from '@ionic-native/file';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
-import { Toast } from '@ionic-native/toast';
 
 import { InfoPassportPage } from '../info-passport/info-passport';
 
@@ -24,7 +23,6 @@ export class ImagePassportPage {
     image = { name:"", date:this.thisDate, path:"", base64:"", type:"image/png" };  
 
     constructor(public navCtrl: NavController, 
-        private toast: Toast,
         public navParams: NavParams,
         public platform: Platform,
         private file: File,
@@ -44,10 +42,6 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {
-                db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
-                .then(res => console.log('Create image table'))
-                .catch(e => console.log(e));
-
                 db.executeSql('SELECT * FROM image ORDER BY imageid DESC', {} as any)
                 .then(res => {
                     this.images = [];
@@ -66,11 +60,7 @@ export class ImagePassportPage {
             this.sqlite.create({
                 name: nameDB,
                 location: 'default'
-            }).then((db: SQLiteObject) => {
-                db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
-                .then(res => console.log('Create image table'))
-                .catch(e => console.log(e));
-
+            }).then((db: SQLiteObject) => {             
                 db.executeSql('SELECT * FROM image ORDER BY imageid DESC', {} as any)
                 .then(res => {
                     this.images = [];
@@ -81,20 +71,6 @@ export class ImagePassportPage {
                 .catch(e => console.log(e));
             }).catch(e => console.log(e));
         }
-    }
-
-    savebase64AsFile(folderPath, fileName, base64, contentType){
-        var DataBlob = this.b64toBlob(base64,contentType,512);
-        this.file.checkFile(folderPath, fileName).then(response => {
-            console.log('File exists '+response);
-        }).catch(err => {
-            console.log('File doesn\'t exist '+JSON.stringify(err));
-            this.file.writeFile(folderPath, fileName, DataBlob).then(response => {
-                console.log('File create '+response);
-            }).catch(err => {
-                console.log('File no create '+JSON.stringify(err));
-            }); 
-        });        
     }
 
     b64toBlob(b64Data, contentType, sliceSize) {
@@ -114,6 +90,20 @@ export class ImagePassportPage {
         return new Blob(byteArrays, {type: contentType});
     }
 
+    savebase64AsFile(folderPath, fileName, base64, contentType){
+        var DataBlob = this.b64toBlob(base64,contentType,512);
+        this.file.checkFile(folderPath, fileName).then(response => {
+            console.log('File exists '+response);
+        }).catch(err => {
+            console.log('File doesn\'t exist '+JSON.stringify(err));
+            this.file.writeFile(folderPath, fileName, DataBlob).then(response => {
+                console.log('File create '+response);
+            }).catch(err => {
+                console.log('File no create '+JSON.stringify(err));
+            }); 
+        });        
+    }    
+
     saveImage(){
         let pic = document.getElementById('img') as HTMLImageElement;
         let src = pic.src;
@@ -122,19 +112,18 @@ export class ImagePassportPage {
         if (this.data != null) { 
             let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
             let nameDB = nameEmail + '.db';
-            let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + nameEmail;            
-            
+            let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + nameEmail;                        
             this.sqlite.create({
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [nameFile,this.image.date,folderPath,base,this.image.type])
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type])
                 .then(res => {
                     console.log('Insert image');  
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type);                                                                          
                 })
                 .catch(e => console.log(e));                
-            }).catch(e => console.log(e));
+            }).catch(e => console.log(e));                    
         }
         else {
             let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
@@ -145,7 +134,7 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [nameFile,this.image.date,folderPath,base,this.image.type])
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type])
                 .then(res => {
                     console.log('Insert image');                       
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 

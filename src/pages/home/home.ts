@@ -5,6 +5,7 @@ import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
 import { Toast } from '@ionic-native/toast';
 
+import { FolderPage } from '../folder/folder';
 import { AddFolderPage } from '../add-folder/add-folder';
 import { EditFolderPage } from '../edit-folder/edit-folder';
 
@@ -65,7 +66,7 @@ export class HomePage {
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-      /*    db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
+       /*  db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
         .then(res => console.log('DELETED TABLE'))
         .catch(e => console.log(e));
         db.executeSql('DROP TABLE IF EXISTS image', {} as any)
@@ -135,6 +136,10 @@ export class HomePage {
           }
         })
         .catch(e => console.log(e));
+
+        db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
+        .then(res => console.log('Create image table'))
+        .catch(e => console.log(e));
       }).catch(e => console.log(e));
     }
     else {
@@ -151,7 +156,7 @@ export class HomePage {
         db.executeSql('DROP TABLE IF EXISTS image', {} as any)
         .then(res => console.log('DELETED image'))
         .catch(e => console.log(e));*/
-      db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
+        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
 
@@ -215,6 +220,10 @@ export class HomePage {
           }
         })
         .catch(e => console.log(e)); 
+
+        db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
+        .then(res => console.log('Create image table'))
+        .catch(e => console.log(e));
       }).catch(e => console.log(e));
     }
   }
@@ -226,9 +235,10 @@ export class HomePage {
     });
   }
 
-  moveToFolder(folderid){
-    this.navCtrl.push(EditFolderPage, {
-      folderid:folderid
+  moveToFolder(folderid,name){
+    this.navCtrl.push(FolderPage, {
+      folderid:folderid,      
+      foldername:name
     });
   }
 

@@ -18,7 +18,7 @@
 
 	<ion-list>
 		<ion-item-sliding *ngFor="let folder of folders; let i=index">
-			<ion-item nopadding>
+			<ion-item nopadding (tap)="moveToFolder(folder.folderid,folder.name);">
 				<ion-row>
 					<ion-col col-5>
 						<ion-icon class="md-folder" name="md-folder"></ion-icon>

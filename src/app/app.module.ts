@@ -12,10 +12,13 @@ import { IdentityPage } from '../pages/identity/identity';
 import { PassportPage } from '../pages/passport/passport';
 import { AddFolderPage } from '../pages/add-folder/add-folder';
 import { EditFolderPage } from '../pages/edit-folder/edit-folder';
+import { FolderPage } from '../pages/folder/folder';
 import { ImagePassportPage } from '../pages/image-passport/image-passport';
 import { InfoPassportPage } from '../pages/info-passport/info-passport';
 import { ImageIdentityPage } from '../pages/image-identity/image-identity';
 import { InfoIdentityPage } from '../pages/info-identity/info-identity';
+import { AddImagePassportPage } from '../pages/add-image-passport/add-image-passport';
+import { AddImageIdentityPage } from '../pages/add-image-identity/add-image-identity';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -44,7 +47,10 @@ import { File } from '@ionic-native/file';
   ImagePassportPage,
   ImageIdentityPage,
   InfoPassportPage,
-  InfoIdentityPage
+  InfoIdentityPage,
+  FolderPage,
+  AddImagePassportPage,
+  AddImageIdentityPage
   ],
   imports: [
   BrowserModule,
@@ -67,7 +73,10 @@ import { File } from '@ionic-native/file';
   ImagePassportPage,
   ImageIdentityPage,
   InfoPassportPage,
-  InfoIdentityPage
+  InfoIdentityPage,
+  FolderPage,
+  AddImagePassportPage,
+  AddImageIdentityPage
   ],
   providers: [
   StatusBar,
