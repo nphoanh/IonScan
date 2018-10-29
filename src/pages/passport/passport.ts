@@ -59,7 +59,6 @@ export class PassportPage {
     }, (err) => {
       console.log(err);
     });
-
   }
 
   crop(imageData, rect_width, rect_height, x_coord, y_coord, callback) {
@@ -100,4 +99,5 @@ export class PassportPage {
     var flash_mode = 'off';
     this.cameraPreview.setFlashMode(flash_mode);
   }
+  
 }

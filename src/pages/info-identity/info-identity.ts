@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the InfoIdentityPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-info-identity',
@@ -15,6 +8,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class InfoIdentityPage {
 
+	pictureFront = this.navParams.get('pictureFront');
+	pictureBack = this.navParams.get('pictureBack');
+	
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

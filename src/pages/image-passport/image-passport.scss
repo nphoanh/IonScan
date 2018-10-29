@@ -1,20 +1,20 @@
 page-image-passport {
 
-    .text-input::-moz-placeholder {
-      color: white;
-  }
-
-  .text-input:-ms-input-placeholder {
-      color: white;
-  }
-
-  .text-input::-webkit-input-placeholder {
-      text-indent: 0;
-      color: white;
-  }
-
   ion-content.content.content-md {
     background-color: white !important;
+}
+
+.text-input::-moz-placeholder {
+  color: white;
+}
+
+.text-input:-ms-input-placeholder {
+  color: white;
+}
+
+.text-input::-webkit-input-placeholder {
+  text-indent: 0;
+  color: white;
 }
 
 button.back-button.disable-hover.bar-button.bar-button-md.back-button-md.bar-button-default.bar-button-default-md.show-back-button {
@@ -33,31 +33,6 @@ button.disable-hover.button.button-md.button-default.button-default-md.button-bl
     background-color: white;
     color: #67aaf9;
     box-shadow: 0px 0px;
-}
-
-ion-icon.filter.icon.icon-md.ion-md-color-wand {
-    font-size: 25px;
-    color: #67aaf9;
-}
-
-ion-icon.crop.icon.icon-md.ion-md-crop {
-    font-size: 25px;
-    color: #67aaf9;
-}
-
-ion-icon.rotate.icon.icon-md.ion-md-refresh {
-    font-size: 25px;
-    color: #67aaf9;
-}
-
-ion-icon.delete.icon.icon-md.ion-md-trash {
-    font-size: 25px;
-    color: #67aaf9;
-}
-
-ion-icon.save.icon.icon-md.ion-md-checkmark {
-    font-size: 25px;
-    color: #67aaf9;
 }
 
 .displayImage {
@@ -84,11 +59,6 @@ label {
     color: #67aaf9;
 }
 
-button.more.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-default-md {
-    color: white;
-    font-size: 20px;
-}
-
 button.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-default-md {
     font-size: 20px;
     color: white;
@@ -109,4 +79,14 @@ img#img {
     max-width: 100%;
     max-height: 100%;
 }
+ion-icon.crop.icon.icon-md.ion-md-crop {
+    font-size: 25px;
+    color: #67aaf9;
+}
+
+ion-icon.save.icon.icon-md.ion-md-checkmark {
+    font-size: 25px;
+    color: #67aaf9;
+}
+
 }

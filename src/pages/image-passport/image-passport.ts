@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { File } from '@ionic-native/file';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
+import { Toast } from '@ionic-native/toast';
 
 import { InfoPassportPage } from '../info-passport/info-passport';
 
@@ -27,9 +28,10 @@ export class ImagePassportPage {
         private file: File,
         private sqlite: SQLite,
         private auth: AuthService,
+        private toast: Toast,
         ) {
     }
- 
+
     ionViewWillEnter() {
         this.getData();  
     }
@@ -52,7 +54,8 @@ export class ImagePassportPage {
                             path:res.rows.item(i).path,
                             base64:res.rows.item(i).base64,
                             type:res.rows.item(i).type,
-                            folderid:res.rows.item(i).folderid})
+                            folderid:res.rows.item(i).folderid
+                        })
                     }
                 }).catch(e => console.log('Select nothing from Image table: ' + e.message));
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));
@@ -76,7 +79,8 @@ export class ImagePassportPage {
                             path:res.rows.item(i).path,
                             base64:res.rows.item(i).base64,
                             type:res.rows.item(i).type,
-                            folderid:res.rows.item(i).folderid})
+                            folderid:res.rows.item(i).folderid
+                        })
                     }
                 }).catch(e => console.log('Select nothing from Image table: ' + e.message));
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));
@@ -118,9 +122,13 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type]).catch(e => console.log('Image didn\'t add to table: ' + e.message));                     
-            }).catch(e => console.log('SQLite didn\'t create: ' + e.message));         
-            this.savebase64AsFile(folderPath, nameFile, base, this.image.type);                     
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type]).then(res => {
+                    this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
+                    this.navCtrl.push(InfoPassportPage,{picture:src}); 
+                }).catch(e => {
+                    this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))
+                });                     
+            }).catch(e => console.log('SQLite didn\'t create: ' + e.message));                     
         }
 
         else {
@@ -132,11 +140,14 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type]).catch(e => console.log('Image didn\'t add to table: ' + e.message));                     
-            }).catch(e => console.log('SQLite didn\'t create: ' + e.message));         
-            this.savebase64AsFile(folderPath, nameFile, base, this.image.type);
-        }        
-        this.navCtrl.push(InfoPassportPage,{picture:src});   
+               db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type]).then(res => {
+                    this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
+                    this.navCtrl.push(InfoPassportPage,{picture:src}); 
+                }).catch(e => {
+                    this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))
+                });                     
+            }).catch(e => console.log('SQLite didn\'t create: ' + e.message));   
+        }                  
     }
 
     rotateRight() {

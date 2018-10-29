@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions } from '@ionic-native/camera-preview';
 
-import { ImageIdentityPage } from '../image-identity/image-identity';
+import { ImageIdentityBackPage } from '../image-identity-back/image-identity-back';
 
 @IonicPage()
 @Component({
-	selector: 'page-identity',
-	templateUrl: 'identity.html',
+	selector: 'page-identity-back',
+	templateUrl: 'identity-back.html',
 })
-export class IdentityPage {
-
+export class IdentityBackPage {
+rect = <HTMLDivElement> document.getElementById('rect');
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -20,6 +20,7 @@ export class IdentityPage {
 
 	ionViewDidLoad() {
 		this.initializeCamera();
+		console.log(this.rect.getBoundingClientRect());
 	}
 
 	initializeCamera(){
@@ -51,11 +52,13 @@ export class IdentityPage {
 		}
 		this.cameraPreview.takePicture(pictureOpts).then((imageData) => {  
 			var rect = <HTMLDivElement> document.getElementById('rect');
+			console.log(rect);
 			var rect_coords = rect.getBoundingClientRect();
+			console.log(rect_coords);
 			var x_coord = rect_coords.left, y_coord = rect_coords.top;
 			var rect_width = rect.offsetWidth, rect_height = rect.offsetHeight;
 			this.crop(imageData, rect_width, rect_height, x_coord, y_coord, cropped_img_base64 => {
-				this.navCtrl.push(ImageIdentityPage, {pictureFront:cropped_img_base64});
+				// this.navCtrl.push(ImageIdentityBackPage, {pictureFront:cropped_img_base64});
 			});
 		}, (err) => {
 			console.log(err);
@@ -102,4 +105,3 @@ export class IdentityPage {
 	}
 
 }
-

@@ -1,16 +1,15 @@
-page-passport {
-	
+page-identity-back {
 	button.camera.fab.fab-md {
 		border: 3px solid #67aaf9;
 		background-color: #0d244c;
 	}
-
+ 
 	ion-icon.camera.icon.icon-md.ion-md-camera {
 		color: white;
 	}
 
 	ion-card.frame.card.card-md {
-		color: #DDDDDD;
+		color: #DDDDDD; 
 		height: 50%;
 		border: 5px solid white;
 		border-radius: 20px;
@@ -18,7 +17,7 @@ page-passport {
 	}
 
 	ion-card.description.card.card-md {
-		height: 30%;
+		height: 33%;
 		border: 5px solid white;
 		border-radius: 20px;
 		margin-top: 255px;
@@ -72,5 +71,5 @@ page-passport {
 		box-shadow: 0 0 500px 5000px rgba(0, 0, 0, 0.4);
 	}
 
-
 }
+

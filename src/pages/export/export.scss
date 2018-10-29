@@ -1,16 +1,15 @@
 page-export {
-	button.export.disable-hover.button.button-md.button-outline.button-outline-md.button-round.button-round-md {
-		display: block;
-		width: 100%;
-		text-align: left;
+	
+	ion-content.content.content-md {
+		background-color: white !important;
 	}
 
-	button.export.disable-hover.button.button-md.button-default.button-default-md {
-		display: block;
-		font-size: 18px;
-		margin-top: 15px;
-		background-color: #67aaf9;
-		color: black;
-		height: 50px;
+	button#export {
+		color: #67aaf9;
+		border-color: #67aaf9;
+		border-radius: 10px;
+		font-size: 16px;
+		margin-bottom: 15px;
 	}
+
 }

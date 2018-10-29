@@ -1,7 +1,7 @@
  <ion-header>
 
  	<ion-navbar>
- 		<ion-title>Thông tin Chứng minh thư</ion-title>
+ 		<ion-title>Thông tin</ion-title>
  		<ion-buttons end> 
  			<button class="share" ion-button icon-only> 
  				Chia sẻ &nbsp;
@@ -22,18 +22,19 @@
  				</ion-col>
  				<ion-col>
  					<h1 class="name">Họ tên</h1><br>
- 					<p class="type">Việt Nam, Chứng minh thư</p>
+ 					<p class="type">Việt Nam, Hộ chiếu</p>
  				</ion-col>
  			</ion-row>
  		</ion-item>
  		<ion-item>
  			<ion-row>
  				<ion-col col-4>
- 					<h4 class="h4">Số CMND</h4>
+ 					<h4 class="h4">Số Seri</h4>
  				</ion-col>
  				<ion-col>
  					<p class="info">1234</p> 					
  				</ion-col>
+ 				<!-- <button class="edit">Sửa</button> -->
  			</ion-row>
  		</ion-item> 		
  		<ion-item>
@@ -44,6 +45,7 @@
  				<ion-col>
  					<p class="info">Nữ</p>
  				</ion-col>
+ 				<!-- <button class="edit">Sửa</button> -->
  			</ion-row>
  		</ion-item>
  		<ion-item>
@@ -54,6 +56,7 @@
  				<ion-col>
  					<p class="info">01/01/2000</p>
  				</ion-col>
+ 				<!-- <button class="edit">Sửa</button> -->
  			</ion-row>
  		</ion-item>
  		<ion-item>
@@ -64,6 +67,7 @@
  				<ion-col>
  					<p  class="info">Việt Nam</p>
  				</ion-col>
+ 				<!-- <button class="edit">Sửa</button> -->
  			</ion-row>
  		</ion-item>
  		<ion-item>
@@ -74,6 +78,7 @@
  				<ion-col>
  					<p class="info">0909090909</p>
  				</ion-col>
+ 				<!-- <button class="edit">Sửa</button> -->
  			</ion-row> 			
  		</ion-item>
  		<ion-item>
@@ -84,10 +89,12 @@
  				<ion-col>
  					<p class="info">Việt Nam</p>
  				</ion-col>
+ 				<!-- <button class="edit">Sửa</button> -->
  			</ion-row>
  		</ion-item>
  	</ion-list>
 
- 	<img id="img" [src]="picture" *ngIf="picture" /> 
+ 	<img id="img" [src]="pictureFront" *ngIf="pictureFront" /> 
+ 	<img id="img" [src]="pictureBack" *ngIf="pictureBack" /> 
 
  </ion-content>
