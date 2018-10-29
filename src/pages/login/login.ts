@@ -51,9 +51,9 @@ export class LoginPage {
           confirmationResult.confirm(data.confirmationCode)
           .then(result => {this.navCtrl.setRoot(HomePage);
           }).catch(error => {this.toast.show(error, '5000', 'bottom').subscribe(toast => {console.log(toast);})
-        });}}]
         });
-        prompt.present();
+        }}]
+      });prompt.present();
       }).catch(error => {
         this.toast.show(error, '5000', 'bottom').subscribe(
           toast => {
@@ -69,7 +69,6 @@ export class LoginPage {
         }
         )
     }
-
   }
 
   async login(user: User) {

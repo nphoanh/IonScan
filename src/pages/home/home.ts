@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController, Platform } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
-import { Toast } from '@ionic-native/toast';
 
 import { FolderPage } from '../folder/folder';
 import { AddFolderPage } from '../add-folder/add-folder';
@@ -21,210 +20,92 @@ export class HomePage {
   totalFolder = 0;
   folder = { name:""};
   thisDate: String = new Date().toISOString();
+  path = this.file.externalRootDirectory + 'IonScan';
 
   constructor(public navCtrl: NavController,
-    public menuCtrl:MenuController,
     private sqlite: SQLite,
     private auth: AuthService,
-    public platform: Platform,
-    private toast: Toast,
     private file: File
     ) { 
-    this.menuCtrl.enable(true, 'myMenu');
-  }
-
-  ionViewDidLoad() {
-    this.createRootFolder();
   }
 
   ionViewWillEnter() {
+    this.createRootFolder();
     this.getData();    
   }
 
   createRootFolder(){
-    this.platform.ready().then(() =>{
-      if(this.platform.is('android')) {
-        this.file.checkDir(this.file.externalRootDirectory, 'IonScan').then(response => {
-          console.log('Directory exists '+response);
-        }).catch(err => {
-          console.log('Directory doesn\'t exist '+JSON.stringify(err));
-          this.file.createDir(this.file.externalRootDirectory, 'IonScan', false).then(response => {
-            console.log('Directory create '+response);
-          }).catch(err => {
-            console.log('Directory no create '+JSON.stringify(err));
-          }); 
-        });
-      }
-    });  
+    this.file.createDir(this.file.externalRootDirectory, 'IonScan', false).catch(e => console.log('IonScan didn\'t create: ' + e.message)); 
   }
 
   getData(){    
     if (this.data != null) {
       let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
       let nameDB = nameEmail + '.db';
+      let identityFolder = 'Identity' + '.' + nameEmail;
+      let passportFolder = 'Passport' + '.' + nameEmail;
       this.sqlite.create({
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-       /*  db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
-        .then(res => console.log('DELETED TABLE'))
+         /* db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
+        .then(res => console.log('Deleted Folder table'))
         .catch(e => console.log(e));
         db.executeSql('DROP TABLE IF EXISTS image', {} as any)
-        .then(res => console.log('DELETED image'))
+        .then(res => console.log('Deleted Image table'))
         .catch(e => console.log(e));*/
-        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
-        .then(res => console.log('Executed SQL'))
-        .catch(e => console.log(e));
-
-        db.executeSql('INSERT INTO folder VALUES ("1","Identity",?,"Chứng minh thư","no")', [this.thisDate])
-        .then(res => {
-          console.log('INSERT Identity');
-          this.platform.ready().then(() =>{
-            if(this.platform.is('android')) {
-              let path = this.file.externalRootDirectory + 'IonScan';
-              let nameFolder = 'Identity' + '.' + nameEmail;
-              this.file.checkDir(path, nameFolder).then(response => {
-                console.log('Directory exists '+response);
-              }).catch(err => {
-                console.log('Directory doesn\'t exist '+JSON.stringify(err));
-                this.file.createDir(path, nameFolder, false).then(response => {
-                  console.log('Directory create '+response);
-                }).catch(err => {
-                  console.log('Directory no create '+JSON.stringify(err));
-                }); 
-              });
-            }
-          });  
-        })
-        .catch(e => console.log(e));
-
-        db.executeSql('INSERT INTO folder VALUES ("2","Passport",?,"Hộ chiếu","no")', [this.thisDate])
-        .then(res => {
-          console.log('INSERT Passport');
-          this.platform.ready().then(() =>{
-            if(this.platform.is('android')) {
-              let path = this.file.externalRootDirectory + 'IonScan';
-              let nameFolder = 'Passport' + '.' + nameEmail;
-              this.file.checkDir(path, nameFolder).then(response => {
-                console.log('Directory exists '+response);
-              }).catch(err => {
-                console.log('Directory doesn\'t exist '+JSON.stringify(err));
-                this.file.createDir(path, nameFolder, false).then(response => {
-                  console.log('Directory create '+response);
-                }).catch(err => {
-                  console.log('Directory no create '+JSON.stringify(err));
-                }); 
-              });
-            }
-          });  
-        })
-        .catch(e => console.log(e));
-
+       db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
+        db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, UNIQUE(name), FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any).catch(e => console.log('Image table didn\'t create: ' + e.message));
+        db.executeSql('INSERT INTO folder VALUES ("1","Identity",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
+        db.executeSql('INSERT INTO folder VALUES ("2","Passport",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
+        this.file.createDir(this.path, identityFolder, false).catch(e => console.log('Identity didn\'t add to device: ' + e.message));
+        this.file.createDir(this.path, passportFolder, false).catch(e => console.log('Passport didn\'t add to device: ' + e.message));
         db.executeSql('SELECT * FROM folder WHERE display="yes" ORDER BY folderid DESC', {} as any)
         .then(res => {
           this.folders = [];
           for(var i=0; i<res.rows.length; i++) {
             this.folders.push({folderid:res.rows.item(i).folderid,name:res.rows.item(i).name,date:res.rows.item(i).date,type:res.rows.item(i).type,display:res.rows.item(i).display})
           }
-        })
-        .catch(e => console.log(e));
-
+        }).catch(e => console.log('Select nothing from Folder table: ' + e.message));
         db.executeSql('SELECT COUNT(folderid) AS totalFolder FROM folder WHERE display="yes"', {} as any)
         .then(res => {
           if(res.rows.length>0) {
             this.totalFolder = parseInt(res.rows.item(0).totalFolder);
           }
-        })
-        .catch(e => console.log(e));
-
-        db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
-        .then(res => console.log('Create image table'))
-        .catch(e => console.log(e));
-      }).catch(e => console.log(e));
+        }).catch(e => console.log('Count nothing from Folder table: ' + e.message));
+      }).catch(e => console.log('SQLite didn\'t create SQLite: ' + e.message));
     }
+
     else {
       let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
       let nameDBPhone = 'u' + namePhone;
       let nameDB = nameDBPhone + '.db';
+      let identityFolder = 'Identity' + '.' + nameDBPhone;
+      let passportFolder = 'Passport' + '.' + nameDBPhone;
       this.sqlite.create({
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-        /*   db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
-        .then(res => console.log('DELETED TABLE'))
-        .catch(e => console.log(e));
-        db.executeSql('DROP TABLE IF EXISTS image', {} as any)
-        .then(res => console.log('DELETED image'))
-        .catch(e => console.log(e));*/
-        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes")', {} as any)
-        .then(res => console.log('Executed SQL'))
-        .catch(e => console.log(e));
-
-        db.executeSql('INSERT INTO folder VALUES ("1","Identity",?,"Chứng minh thư","no")', [this.thisDate])
-        .then(res => {
-          console.log('INSERT Identity');
-          this.platform.ready().then(() =>{
-            if(this.platform.is('android')) {
-              let path = this.file.externalRootDirectory + 'IonScan';
-              let nameFolder = 'Identity' + '.' + namePhone;
-              this.file.checkDir(path, nameFolder).then(response => {
-                console.log('Directory exists '+response);
-              }).catch(err => {
-                console.log('Directory doesn\'t exist '+JSON.stringify(err));
-                this.file.createDir(path, nameFolder, false).then(response => {
-                  console.log('Directory create '+response);
-                }).catch(err => {
-                  console.log('Directory no create '+JSON.stringify(err));
-                }); 
-              });
-            }
-          });  
-        })
-        .catch(e => console.log(e));
-
-        db.executeSql('INSERT INTO folder VALUES ("2","Passport",?,"Hộ chiếu","no")', [this.thisDate])
-        .then(res => {
-          console.log('INSERT Passport');
-          this.platform.ready().then(() =>{
-            if(this.platform.is('android')) {
-              let path = this.file.externalRootDirectory + 'IonScan';
-              let nameFolder = 'Passport' + '.' + namePhone;
-              this.file.checkDir(path, nameFolder).then(response => {
-                console.log('Directory exists '+response);
-              }).catch(err => {
-                console.log('Directory doesn\'t exist '+JSON.stringify(err));
-                this.file.createDir(path, nameFolder, false).then(response => {
-                  console.log('Directory create '+response);
-                }).catch(err => {
-                  console.log('Directory no create '+JSON.stringify(err));
-                }); 
-              });
-            }
-          });  
-        })
-        .catch(e => console.log(e));
-
+        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
+        db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, UNIQUE(name), FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any).catch(e => console.log('Image table didn\'t create: ' + e.message));
+        db.executeSql('INSERT INTO folder VALUES ("1","Identity",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
+        db.executeSql('INSERT INTO folder VALUES ("2","Passport",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
+        this.file.createDir(this.path, identityFolder, false).catch(e => console.log('Identity didn\'t add to device: ' + e.message));
+        this.file.createDir(this.path, passportFolder, false).catch(e => console.log('Identity didn\'t add to device: ' + e.message));
         db.executeSql('SELECT * FROM folder WHERE display="yes" ORDER BY folderid DESC', {} as any)
         .then(res => {
           this.folders = [];
           for(var i=0; i<res.rows.length; i++) {
             this.folders.push({folderid:res.rows.item(i).folderid,name:res.rows.item(i).name,date:res.rows.item(i).date,type:res.rows.item(i).type,display:res.rows.item(i).display})
           }
-        })
-        .catch(e => console.log(e));
-
+        }).catch(e => console.log('Select nothing from Folder table: ' + e.message));
         db.executeSql('SELECT COUNT(folderid) AS totalFolder FROM folder WHERE display="yes"', {} as any)
         .then(res => {
           if(res.rows.length>0) {
             this.totalFolder = parseInt(res.rows.item(0).totalFolder);
           }
-        })
-        .catch(e => console.log(e)); 
-
-        db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT, folderid, FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any)
-        .then(res => console.log('Create image table'))
-        .catch(e => console.log(e));
-      }).catch(e => console.log(e));
+        }).catch(e => console.log('Count nothing from Folder table: ' + e.message));
+      }).catch(e => console.log('SQLite didn\'t create SQLite: ' + e.message));
     }
   }
 
@@ -263,35 +144,17 @@ export class HomePage {
         .then(res => {
           if(res.rows.length > 0) {            
             this.folder.name = res.rows.item(0).name;
-          }
-          let path = this.file.externalRootDirectory + 'IonScan';
+          }          
           let name = this.folder.name + '.' + nameEmail;
-          this.platform.ready().then(() =>{
-            if(this.platform.is('android')) {
-              this.file.removeRecursively(path, name).then(response => {
-                console.log('Folder deleted'+response);
-              }).catch(err => {
-                console.log('Folder doesn\'t delete '+JSON.stringify(err));          
-              });
-            }
-          });    
-        })
-        .catch(e => {
-          console.log(e);
-          this.toast.show(e, '5000', 'center').subscribe(
-            toast => {
-              console.log(toast);
-            }
-            );
-        });        
-        db.executeSql('DELETE FROM folder WHERE folderid=?', [folderid])
-        .then(res => {          
-          console.log(res);
+          this.file.removeRecursively(this.path, name).catch(e => console.log('Folder didn\'t remove in device: ' + e.message));          
+        }).catch(e => console.log('Folder didn\'t remove: ' + e.message));
+
+        db.executeSql('DELETE FROM folder WHERE folderid=?', [folderid]).then(res => { 
           this.getData();        
-        })
-        .catch(e => console.log(e));
-      }).catch(e => console.log(e));
+        }).catch(e => console.log('Folder didn\'t remove in table: ' + e.message));
+      }).catch(e => console.log('SQLite didn\'t create: ' + e.message));
     }
+
     else {
       let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
       let nameDBPhone = 'u' + namePhone;
@@ -304,34 +167,14 @@ export class HomePage {
         .then(res => {
           if(res.rows.length > 0) {            
             this.folder.name = res.rows.item(0).name;
-          }
-          let path = this.file.externalRootDirectory + 'IonScan';
-          let name = this.folder.name + '.' + namePhone;
-          this.platform.ready().then(() =>{
-            if(this.platform.is('android')) {
-              this.file.removeRecursively(path, name).then(response => {
-                console.log('Folder deleted'+response);
-              }).catch(err => {
-                console.log('Folder doesn\'t delete '+JSON.stringify(err));          
-              });
-            }
-          });    
-        })
-        .catch(e => {
-          console.log(e);
-          this.toast.show(e, '5000', 'center').subscribe(
-            toast => {
-              console.log(toast);
-            }
-            );
-        });        
-        db.executeSql('DELETE FROM folder WHERE folderid=?', [folderid])
-        .then(res => {
-          console.log(res);
-          this.getData();  
-        })
-        .catch(e => console.log(e));
-      }).catch(e => console.log(e));
+          }          
+          let name = this.folder.name + '.' + nameDB;
+          this.file.removeRecursively(this.path, name).catch(e => console.log('Folder didn\'t remove in device: ' + e.message));          
+        }).catch(e => console.log('Folder didn\'t remove: ' + e.message));
+        db.executeSql('DELETE FROM folder WHERE folderid=?', [folderid]).then(res => { 
+          this.getData();        
+        }).catch(e => console.log('Folder didn\'t remove in table: ' + e.message));
+      }).catch(e => console.log('SQLite didn\'t create: ' + e.message));
     }
   }
 

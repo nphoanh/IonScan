@@ -10,6 +10,7 @@ import { ResetPage } from '../pages/reset/reset';
 import { AboutPage } from '../pages/about/about';
 import { IdentityPage } from '../pages/identity/identity';
 import { PassportPage } from '../pages/passport/passport';
+import { ExportPage } from '../pages/export/export';
 import { AddFolderPage } from '../pages/add-folder/add-folder';
 import { EditFolderPage } from '../pages/edit-folder/edit-folder';
 import { FolderPage } from '../pages/folder/folder';
@@ -50,7 +51,8 @@ import { File } from '@ionic-native/file';
   InfoIdentityPage,
   FolderPage,
   AddImagePassportPage,
-  AddImageIdentityPage
+  AddImageIdentityPage,
+  ExportPage
   ],
   imports: [
   BrowserModule,
@@ -76,7 +78,8 @@ import { File } from '@ionic-native/file';
   InfoIdentityPage,
   FolderPage,
   AddImagePassportPage,
-  AddImageIdentityPage
+  AddImageIdentityPage,
+  ExportPage
   ],
   providers: [
   StatusBar,

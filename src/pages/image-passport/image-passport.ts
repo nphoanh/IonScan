@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { File } from '@ionic-native/file';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
@@ -24,12 +24,12 @@ export class ImagePassportPage {
 
     constructor(public navCtrl: NavController, 
         public navParams: NavParams,
-        public platform: Platform,
         private file: File,
         private sqlite: SQLite,
-        private auth: AuthService,) {
+        private auth: AuthService,
+        ) {
     }
-
+ 
     ionViewWillEnter() {
         this.getData();  
     }
@@ -42,15 +42,20 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {
-                db.executeSql('SELECT * FROM image ORDER BY imageid DESC', {} as any)
-                .then(res => {
+                db.executeSql('SELECT * FROM image ORDER BY imageid DESC', {} as any).then(res => {
                     this.images = [];
                     for(var i=0; i<res.rows.length; i++) {
-                        this.images.push({imageid:res.rows.item(i).imageid,name:res.rows.item(i).name,date:res.rows.item(i).date,path:res.rows.item(i).path,base64:res.rows.item(i).base64,type:res.rows.item(i).type,folderid:res.rows.item(i).folderid})
+                        this.images.push({
+                            imageid:res.rows.item(i).imageid,
+                            name:res.rows.item(i).name,
+                            date:res.rows.item(i).date,
+                            path:res.rows.item(i).path,
+                            base64:res.rows.item(i).base64,
+                            type:res.rows.item(i).type,
+                            folderid:res.rows.item(i).folderid})
                     }
-                })
-                .catch(e => console.log(e));
-            }).catch(e => console.log(e));
+                }).catch(e => console.log('Select nothing from Image table: ' + e.message));
+            }).catch(e => console.log('SQLite didn\'t create: ' + e.message));
         }
 
         else {
@@ -61,15 +66,20 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {             
-                db.executeSql('SELECT * FROM image ORDER BY imageid DESC', {} as any)
-                .then(res => {
+                db.executeSql('SELECT * FROM image ORDER BY imageid DESC', {} as any).then(res => {
                     this.images = [];
                     for(var i=0; i<res.rows.length; i++) {
-                        this.images.push({imageid:res.rows.item(i).imageid,name:res.rows.item(i).name,date:res.rows.item(i).date,path:res.rows.item(i).path,base64:res.rows.item(i).base64,type:res.rows.item(i).type,folderid:res.rows.item(i).folderid})
+                        this.images.push({
+                            imageid:res.rows.item(i).imageid,
+                            name:res.rows.item(i).name,
+                            date:res.rows.item(i).date,
+                            path:res.rows.item(i).path,
+                            base64:res.rows.item(i).base64,
+                            type:res.rows.item(i).type,
+                            folderid:res.rows.item(i).folderid})
                     }
-                })
-                .catch(e => console.log(e));
-            }).catch(e => console.log(e));
+                }).catch(e => console.log('Select nothing from Image table: ' + e.message));
+            }).catch(e => console.log('SQLite didn\'t create: ' + e.message));
         }
     }
 
@@ -92,16 +102,7 @@ export class ImagePassportPage {
 
     savebase64AsFile(folderPath, fileName, base64, contentType){
         var DataBlob = this.b64toBlob(base64,contentType,512);
-        this.file.checkFile(folderPath, fileName).then(response => {
-            console.log('File exists '+response);
-        }).catch(err => {
-            console.log('File doesn\'t exist '+JSON.stringify(err));
-            this.file.writeFile(folderPath, fileName, DataBlob).then(response => {
-                console.log('File create '+response);
-            }).catch(err => {
-                console.log('File no create '+JSON.stringify(err));
-            }); 
-        });        
+        this.file.writeFile(folderPath, fileName, DataBlob).catch(e => console.log('File didn\'t save: ' + e.message));       
     }    
 
     saveImage(){
@@ -117,14 +118,11 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type])
-                .then(res => {
-                    console.log('Insert image');  
-                    this.savebase64AsFile(folderPath, nameFile, base, this.image.type);                                                                          
-                })
-                .catch(e => console.log(e));                
-            }).catch(e => console.log(e));                    
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type]).catch(e => console.log('Image didn\'t add to table: ' + e.message));                     
+            }).catch(e => console.log('SQLite didn\'t create: ' + e.message));         
+            this.savebase64AsFile(folderPath, nameFile, base, this.image.type);                     
         }
+
         else {
             let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
             let nameDBPhone = 'u' + namePhone;
@@ -134,13 +132,9 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type])
-                .then(res => {
-                    console.log('Insert image');                       
-                    this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
-                })
-                .catch(e => console.log(e));
-            }).catch(e => console.log(e));
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type]).catch(e => console.log('Image didn\'t add to table: ' + e.message));                     
+            }).catch(e => console.log('SQLite didn\'t create: ' + e.message));         
+            this.savebase64AsFile(folderPath, nameFile, base, this.image.type);
         }        
         this.navCtrl.push(InfoPassportPage,{picture:src});   
     }
@@ -171,7 +165,5 @@ export class ImagePassportPage {
         picture.src = canvasOutput.toDataURL();
         src.delete(); M.delete();
     }
-
-
 
 }

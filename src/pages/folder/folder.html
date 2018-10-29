@@ -19,7 +19,7 @@
 			<ion-item class="itemfolder">
 				<ion-row>
 					<ion-col col-5>
-						<img id="img" [src]="image.base64" style="width: 100px;height: 100px;" /> 
+						<img id="img" [src]="image.base64" style="width: 100px;height: 70px;" /> 
 					</ion-col>
 					<ion-col>
 						<h1 class="titcard">{{image.name}}</h1>
@@ -28,9 +28,12 @@
 				</ion-row>
 			</ion-item>
 			<ion-item-options side="right">
-				<button class="upload" ion-button><img src="../../assets/imgs/upload.png" style="width: 20px; height: 20px;"><br><label class="itemfolder">Upload</label></button>
-				<button class="edit" ion-button><img src="../../assets/imgs/edit.png" style="width: 20px; height: 20px;"><br><label class="itemfolder">Edit</label></button>
-				<button class="delete" ion-button><img src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;"><br><label class="itemfolder">Delete</label></button>
+				<button class="export" ion-button (tap)="exportImage();">
+					<img src="../../assets/imgs/export.png" style="width: 20px; height: 20px;">
+				</button>
+				<button class="delete" ion-button (tap)="deleteImage(image.imageid);">
+					<img src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;">
+				</button>
 			</ion-item-options>
 		</ion-item-sliding>
 

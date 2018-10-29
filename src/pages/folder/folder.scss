@@ -24,6 +24,7 @@ page-folder {
 		text-align: left !important;
 		font-size: 13px !important;
 		color: gray !important;
+		margin-top: 8px;
 	}
 
 	ion-card.folder.card.card-md {
@@ -41,27 +42,21 @@ page-folder {
 	}
 
 	h1.titcard {
-		margin-top: 20px!important;
+		margin-top: 10px !important;
 		font-size: 18px;
 	}
 
-	button.upload.button.button-md.button-default.button-default-md {
-		background-color: #baffc9;
-		margin-top: 10px;
-		width: 68px;
-	}
-
-	button.edit.button.button-md.button-default.button-default-md {
+	button.export.button.button-md.button-default.button-default-md {
 		background-color: #ffffba;
 		margin-top: 10px;
-		width: 62px;
 	}
 
 	button.delete.button.button-md.button-default.button-default-md {
 		background-color: #ffb3ba;
 		margin-top: 10px;
-		width: 62px;
 	}
+
+
 
 	label.itemfolder {
 		color: black;
@@ -72,6 +67,6 @@ page-folder {
 	}
 
 	ion-content.content.content-md {
-    background-color: white!important;
-}
+		background-color: white!important;
+	}
 }

@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { File } from '@ionic-native/file';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
-import { Toast } from '@ionic-native/toast';
 
 import { InfoIdentityPage } from '../info-identity/info-identity';
 
@@ -24,7 +23,6 @@ export class ImageIdentityPage {
 	image = { name:"", date:this.thisDate };
 
 	constructor(public navCtrl: NavController, 
-		private toast: Toast,
 		public navParams: NavParams,
 		public platform: Platform,
 		private file: File,
