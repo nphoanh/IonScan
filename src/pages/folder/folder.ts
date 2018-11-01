@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
+import { Observable } from 'rxjs/Observable';
+import { HTTP } from '@ionic-native/http';
 
 import { ExportPage } from '../export/export';
 import { AddImagePassportPage } from '../add-image-passport/add-image-passport';
@@ -15,6 +17,7 @@ import { AddImageIdentityPage } from '../add-image-identity/add-image-identity';
 })
 export class FolderPage {
 
+	datas: any;
 	data = this.auth.getEmail();
 	dataPhone = this.auth.getPhone();
 	totalImage = 0;
@@ -31,7 +34,19 @@ export class FolderPage {
 		private sqlite: SQLite,
 		private auth: AuthService,
 		private file: File,
+		private http: HTTP
 		) {
+		this.datas = this.http.get('http://app.mekosoft.vn/api/jsonws/vn-mekosoft-image2text-portlet.dataimage/upload-image-base64', {}, {})
+		.then(data => {
+			console.log(data.status);
+			console.log(data.data); 
+			console.log(data.headers);
+		})
+		.catch(error => {
+			console.log(error.status);
+			console.log(error.error); 
+			console.log(error.headers);
+		});
 	}
 
 	ionViewWillEnter() {
@@ -190,7 +205,8 @@ export class FolderPage {
 		}
 	}
 
-	exportImage() {
-		this.navCtrl.push(ExportPage);
+	exportImage(imageid) {
+		this.navCtrl.push(ExportPage,{imageid:imageid});
 	}
+
 }

@@ -14,7 +14,6 @@
 <ion-content padding>
 
 	<ion-list>
-
 		<ion-item-sliding class="itemfolder" *ngFor="let image of images; let i=index">
 			<ion-item class="itemfolder">
 				<ion-row>
@@ -28,7 +27,10 @@
 				</ion-row>
 			</ion-item>
 			<ion-item-options side="right">
-				<button class="export" ion-button (tap)="exportImage();">
+				<button class="upload" ion-button (tap)="uploadImage();">
+					<img src="../../assets/imgs/upload.png" style="width: 20px; height: 20px;">
+				</button>
+				<button class="export" ion-button (tap)="exportImage(image.imageid);">
 					<img src="../../assets/imgs/export.png" style="width: 20px; height: 20px;">
 				</button>
 				<button class="delete" ion-button (tap)="deleteImage(image.imageid);">

@@ -34,6 +34,10 @@ import { Firebase } from '@ionic-native/firebase';
 import { CameraPreview } from '@ionic-native/camera-preview';
 import { SQLite } from '@ionic-native/sqlite';
 import { File } from '@ionic-native/file';
+import { HttpClientModule } from '@angular/common/http';
+import { ImageServiceProvider } from '../providers/image-service/image-service';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { HTTP } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -56,10 +60,11 @@ import { File } from '@ionic-native/file';
   AddImageIdentityPage,
   ExportPage,
   IdentityBackPage,
-  ImageIdentityBackPage
+  ImageIdentityBackPage,
   ],
   imports: [
   BrowserModule,
+  HttpClientModule,
   IonicModule.forRoot(MyApp),
   AngularFireModule.initializeApp(FIREBASE_CONFIG),
   AngularFireAuthModule
@@ -85,7 +90,7 @@ import { File } from '@ionic-native/file';
   AddImageIdentityPage,
   ExportPage,
   IdentityBackPage,
-  ImageIdentityBackPage
+  ImageIdentityBackPage,
   ],
   providers: [
   StatusBar,
@@ -95,8 +100,11 @@ import { File } from '@ionic-native/file';
   Firebase,
   CameraPreview,
   SQLite,
+  SocialSharing,
   File,
-  {provide: ErrorHandler, useClass: IonicErrorHandler}
+  HTTP,
+  {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ImageServiceProvider
   ]
 })
 export class AppModule {}

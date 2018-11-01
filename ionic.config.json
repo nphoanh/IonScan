@@ -4,5 +4,11 @@
     "cordova": {}
   },
   "type": "ionic-angular",
-  "pro_id": "cbd31768"
+  "pro_id": "cbd31768",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://app.mekosoft.vn/api"
+    }
+  ]
 }
