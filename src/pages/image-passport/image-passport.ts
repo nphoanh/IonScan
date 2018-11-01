@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { File } from '@ionic-native/file';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
-import { Toast } from '@ionic-native/toast';
 
 import { InfoPassportPage } from '../info-passport/info-passport';
 
@@ -29,7 +28,6 @@ export class ImagePassportPage {
         private file: File,
         private sqlite: SQLite,
         private auth: AuthService,
-        private toast: Toast,
         ) {
     }
 
@@ -126,9 +124,7 @@ export class ImagePassportPage {
                 db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
                     this.navCtrl.push(InfoPassportPage,{picture:src}); 
-                }).catch(e => {
-                    this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))
-                });                     
+                }).catch(e => console.log('Image didn\'t insert: ' + e.message));                   
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));                     
         }
 
@@ -144,9 +140,7 @@ export class ImagePassportPage {
                 db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,"2")', [this.image.name,this.image.date,folderPath,src,this.image.type]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
                     this.navCtrl.push(InfoPassportPage,{picture:src}); 
-                }).catch(e => {
-                    this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))
-                });                     
+                }).catch(e => console.log('Image didn\'t insert: ' + e.message));                     
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));   
         }                  
     }

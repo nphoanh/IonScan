@@ -74,4 +74,36 @@ page-folder {
 		background-color: #baffc9;
 		margin-top: 10px;
 	} 
+
+	button.edit.button.button-md.button-default.button-default-md {
+		background-color: #ffdfba;
+		margin-top: 10px;
+	} 
+
+	ion-icon.icon.icon-md.ion-md-folder-open {
+		font-size: 22px;
+	}
+
+	ion-icon.icon.icon-md.ion-md-albums {
+		font-size: 22px;
+	}
+
+	button.folder-open.fab.fab-md.fab-in-list.fab-md-in-list.show {
+		padding-bottom: 25px;
+		padding-top: 25px;
+		padding-left: 25px;
+		padding-right: 25px;
+		margin-bottom: 0px; 
+		background-color: #fcf6bd;
+	}
+
+	button.albums.fab.fab-md.fab-in-list.fab-md-in-list.show {
+		padding-bottom: 25px;
+		padding-top: 25px;
+		padding-left: 25px;
+		padding-right: 25px;
+		margin-bottom: 0px; 
+		background-color: #fcb0b3;
+	}
+
 }

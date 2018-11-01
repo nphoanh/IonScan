@@ -31,13 +31,10 @@
 				</ion-row>
 			</ion-item>
 			<ion-item-options side="right">
-				<button ion-button class="upload" >
-					<img class="group" src="../../assets/imgs/upload.png" style="width: 20px; height: 20px;">
-				</button>
 				<button ion-button class="edit" >
 					<img class="group" src="../../assets/imgs/edit.png" (click)="editFolder(folder.folderid,folder.name)" style="width: 20px; height: 20px;">
 				</button>
-				<button ion-button  class="delete"  (click)="deleteFolder(folder.folderid)">
+				<button ion-button  class="delete" (click)="deleteFolder(folder.folderid)">
 					<img class="group" src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;">
 				</button>
 			</ion-item-options>

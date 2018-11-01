@@ -2,11 +2,6 @@
 
 	<ion-navbar>
 		<ion-title>{{folder.name}} ({{totalImage}})</ion-title>
-		<ion-buttons end> 
-		<button class="add" ion-button icon-only (tap)="addImage()"> 
-			<ion-icon name="add"></ion-icon>
-		</button>
-	</ion-buttons> 
 	</ion-navbar>
 	
 </ion-header>
@@ -24,6 +19,7 @@
 						<h1 class="titcard">{{image.name}}</h1>
 						<p class="titcard">{{image.date | date: 'H:mm dd/MM/yyyy'}}</p>
 					</ion-col>
+					<img id="img" *ngIf="hide" src="../../assets/imgs/check.png" style="width: 20px; height: 20px; ">
 				</ion-row>
 			</ion-item>
 			<ion-item-options side="right">
@@ -33,6 +29,9 @@
 				<button class="export" ion-button (tap)="exportImage(image.imageid);">
 					<img src="../../assets/imgs/export.png" style="width: 20px; height: 20px;">
 				</button>
+				<button class="edit" ion-button (tap)="editImage(image.imageid,image.name);">
+					<img src="../../assets/imgs/edit.png" style="width: 20px; height: 20px;">
+				</button>
 				<button class="delete" ion-button (tap)="deleteImage(image.imageid);">
 					<img src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;">
 				</button>
@@ -40,5 +39,13 @@
 		</ion-item-sliding>
 
 	</ion-list>
+
+	<ion-fab bottom right #fab>
+		<button ion-fab><ion-icon name="add"></ion-icon></button>
+		<ion-fab-list  side="top">
+			<button ion-fab class="folder-open" (click)='addImage();closeButton(fab);'><ion-icon name="folder-open"></ion-icon></button>
+			<button ion-fab class="albums" (click)='pickImage();closeButton(fab);'><ion-icon name="albums"></ion-icon></button>
+		</ion-fab-list>
+	</ion-fab>
 
 </ion-content>

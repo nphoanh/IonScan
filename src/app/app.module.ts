@@ -13,6 +13,7 @@ import { PassportPage } from '../pages/passport/passport';
 import { ExportPage } from '../pages/export/export';
 import { AddFolderPage } from '../pages/add-folder/add-folder';
 import { EditFolderPage } from '../pages/edit-folder/edit-folder';
+import { EditImagePage } from '../pages/edit-image/edit-image';
 import { FolderPage } from '../pages/folder/folder';
 import { ImagePassportPage } from '../pages/image-passport/image-passport';
 import { InfoPassportPage } from '../pages/info-passport/info-passport';
@@ -35,9 +36,10 @@ import { CameraPreview } from '@ionic-native/camera-preview';
 import { SQLite } from '@ionic-native/sqlite';
 import { File } from '@ionic-native/file';
 import { HttpClientModule } from '@angular/common/http';
-import { ImageServiceProvider } from '../providers/image-service/image-service';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { HTTP } from '@ionic-native/http';
+import { FileOpener } from '@ionic-native/file-opener';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { ImageProvider } from '../providers/image/image';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,7 @@ import { HTTP } from '@ionic-native/http';
   ExportPage,
   IdentityBackPage,
   ImageIdentityBackPage,
+  EditImagePage
   ],
   imports: [
   BrowserModule,
@@ -91,6 +94,7 @@ import { HTTP } from '@ionic-native/http';
   ExportPage,
   IdentityBackPage,
   ImageIdentityBackPage,
+  EditImagePage
   ],
   providers: [
   StatusBar,
@@ -101,10 +105,11 @@ import { HTTP } from '@ionic-native/http';
   CameraPreview,
   SQLite,
   SocialSharing,
+  FileOpener,
+  ImagePicker,
   File,
-  HTTP,
   {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ImageServiceProvider
+    ImageProvider
   ]
 })
 export class AppModule {}

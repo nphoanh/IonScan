@@ -1,7 +1,7 @@
 <ion-header>
 
 	<ion-navbar>
-		<ion-title>Nhập ảnh ({{totalImage}})</ion-title>		
+		<ion-title>Ảnh hộ chiếu ({{totalImage}})</ion-title>		
 	</ion-navbar>
 	
 </ion-header>
@@ -24,7 +24,10 @@
 			</ion-item>
 			<ion-item-options side="right">
 				<button ion-button class="export" (tap)="moveImage(image.imageid);">
-					<img class="group" src="../../assets/imgs/export.png" style="width: 20px; height: 20px;">
+					<img class="group" src="../../assets/imgs/add.png" style="width: 20px; height: 20px;">
+				</button>
+				<button class="delete" ion-button (tap)="deleteImage(image.imageid);">
+					<img src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;">
 				</button>
 			</ion-item-options>
 		</ion-item-sliding>

@@ -4,6 +4,9 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas';
+import { FileOpener } from '@ionic-native/file-opener';
 
 @IonicPage()
 @Component({
@@ -14,13 +17,12 @@ export class ExportPage {
 
 	message: string = null;
 	subject: string = null;
-	fileShare: string = null;
 	link: string = null;
 	imageid = this.navParams.get('imageid');
 	data = this.auth.getEmail();
 	dataPhone = this.auth.getPhone();
 	image = { imageid:"", name:"", date:"", path:"", base64:"", type:"image/png", folderid:"" }; 
-	path = this.file.externalRootDirectory + 'IonScan';
+	path = this.file.externalRootDirectory + 'IonScan' + '/' + 'Pdf' + '.';
 
 	constructor(
 		public navCtrl: NavController, 
@@ -28,13 +30,13 @@ export class ExportPage {
 		private sqlite: SQLite,
 		private auth: AuthService,
 		private file: File,
-		private socialSharing: SocialSharing
+		private socialSharing: SocialSharing,
+		private fileOpener: FileOpener
 		) {
 	}
 
 	ionViewDidLoad() {
 		this.getData(this.navParams.get("imageid"));
-		console.log(this.imageid);
 	}
 
 	getData(imageid){    
@@ -83,6 +85,36 @@ export class ExportPage {
 
 	shareImage(){
 		this.socialSharing.share(this.message,this.subject,this.image.base64,this.link).catch((e) => console.log("Share unsuccess: " +e));
+	}
+
+	generatePdf(){
+		// this.navCtrl.push(PdfPage,{imageid:this.imageid});
+		var imgData = this.image.base64;
+		var doc = new jsPDF();
+		doc.addImage(imgData, 'PNG', 10, 10);
+		let pdfOutput = doc.output();
+		let buffer = new ArrayBuffer(pdfOutput.length);
+		let array = new Uint8Array(buffer);
+		for (var i = 0; i < pdfOutput.length; i++) {
+			array[i] = pdfOutput.charCodeAt(i);
+		}
+		let namePdf = this.image.name + '.' + 'pdf';	
+
+		if (this.data != null) {
+			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
+			let pathPdf = this.path + nameEmail;
+			let filePdf = pathPdf + '/' + 	namePdf;
+			this.file.writeFile(pathPdf, namePdf, buffer).catch(e => console.log('File didn\'t save: ' + e.message));       	
+			this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
+		}
+		else {
+			let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
+			let nameDBPhone = 'u' + namePhone;
+			let pathPdf = this.path + nameDBPhone;
+			let filePdf = pathPdf + '/' + 	namePdf;
+			this.file.writeFile(pathPdf, namePdf, buffer).catch(e => console.log('File didn\'t save: ' + e.message));       
+			this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
+		}
 	}
 
 }
