@@ -1,0 +1,18 @@
+<ion-header>
+
+	<ion-navbar>
+		<ion-input class="title" [(ngModel)]="image.name" type="text" value="{{ thisDate | date: 'HmmddMMyyyy'}}" placeholder="{{ thisDate | date: 'HmmddMMyyyy'}}"></ion-input>
+		<ion-buttons end> 
+			<button ion-button icon-only (tap)="saveImage();"> 
+				<ion-icon name="checkmark"></ion-icon>
+			</button>
+		</ion-buttons> 
+	</ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+	<img id="img" [src]="picture" *ngIf="picture"/> 
+
+</ion-content>

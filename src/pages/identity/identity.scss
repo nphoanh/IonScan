@@ -3,7 +3,7 @@ page-identity {
 		border: 3px solid #67aaf9;
 		background-color: #0d244c;
 	}
- 
+	
 	ion-icon.camera.icon.icon-md.ion-md-camera {
 		color: white;
 	}
@@ -20,7 +20,7 @@ page-identity {
 		height: 33%;
 		border: 5px solid white;
 		border-radius: 20px;
-		margin-top: 255px;
+		margin-top: 270px;
 	}
 
 	h2.description {
@@ -50,15 +50,14 @@ page-identity {
 		margin-top: -80px;
 	} 
 
-
 	#rect {
-		width: 85%;
-		height: 40%;
+		width: 328px;
+		height: 240px;
 		background-color: rgba(255, 255, 255, 0);
 
 		position: absolute; 
-		left: 26px;
-		top: 26px; 
+		left: 16px;
+		top: 16px; 
 		margin: auto;
 
 		max-width: 100%;
@@ -70,5 +69,6 @@ page-identity {
 		border-image: url('../assets/imgs/border.png')50 round;
 		box-shadow: 0 0 500px 5000px rgba(0, 0, 0, 0.4);
 	}
+
 
 }

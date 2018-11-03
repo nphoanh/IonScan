@@ -11,16 +11,20 @@ import { AboutPage } from '../pages/about/about';
 import { IdentityPage } from '../pages/identity/identity';
 import { PassportPage } from '../pages/passport/passport';
 import { ExportPage } from '../pages/export/export';
+import { ImagePage } from '../pages/image/image';
+import { DocumentPage } from '../pages/document/document';
 import { AddFolderPage } from '../pages/add-folder/add-folder';
 import { EditFolderPage } from '../pages/edit-folder/edit-folder';
-import { EditImagePage } from '../pages/edit-image/edit-image';
 import { FolderPage } from '../pages/folder/folder';
+import { ImageDocumentPage } from '../pages/image-document/image-document';
 import { ImagePassportPage } from '../pages/image-passport/image-passport';
 import { InfoPassportPage } from '../pages/info-passport/info-passport';
 import { ImageIdentityPage } from '../pages/image-identity/image-identity';
+import { InfoDocumentPage } from '../pages/info-document/info-document';
 import { InfoIdentityPage } from '../pages/info-identity/info-identity';
 import { AddImagePassportPage } from '../pages/add-image-passport/add-image-passport';
 import { AddImageIdentityPage } from '../pages/add-image-identity/add-image-identity';
+import { AddImageDocumentPage } from '../pages/add-image-document/add-image-document';
 import { IdentityBackPage } from '../pages/identity-back/identity-back';
 import { ImageIdentityBackPage } from '../pages/image-identity-back/image-identity-back';
 
@@ -38,8 +42,8 @@ import { File } from '@ionic-native/file';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { FileOpener } from '@ionic-native/file-opener';
-import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageProvider } from '../providers/image/image';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -63,7 +67,11 @@ import { ImageProvider } from '../providers/image/image';
   ExportPage,
   IdentityBackPage,
   ImageIdentityBackPage,
-  EditImagePage
+  ImagePage,
+  DocumentPage,
+  ImageDocumentPage,
+  InfoDocumentPage,
+  AddImageDocumentPage
   ],
   imports: [
   BrowserModule,
@@ -94,7 +102,11 @@ import { ImageProvider } from '../providers/image/image';
   ExportPage,
   IdentityBackPage,
   ImageIdentityBackPage,
-  EditImagePage
+  ImagePage,
+  DocumentPage,
+  ImageDocumentPage,
+  InfoDocumentPage,
+  AddImageDocumentPage
   ],
   providers: [
   StatusBar,
@@ -106,8 +118,8 @@ import { ImageProvider } from '../providers/image/image';
   SQLite,
   SocialSharing,
   FileOpener,
-  ImagePicker,
   File,
+  Camera,
   {provide: ErrorHandler, useClass: IonicErrorHandler},
     ImageProvider
   ]

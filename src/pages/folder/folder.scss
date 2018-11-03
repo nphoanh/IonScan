@@ -56,8 +56,6 @@ page-folder {
 		margin-top: 10px;
 	}
 
-
-
 	label.itemfolder {
 		color: black;
 	}
@@ -104,6 +102,15 @@ page-folder {
 		padding-right: 25px;
 		margin-bottom: 0px; 
 		background-color: #fcb0b3;
+	}
+
+	button.fab.fab-md {
+		background-color: #67aaf9;
+	}
+
+	img#check {
+		float: right;
+		margin-top: -10px;
 	}
 
 }

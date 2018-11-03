@@ -6,10 +6,10 @@ import { File } from '@ionic-native/file';
 
 @IonicPage()
 @Component({
-	selector: 'page-add-image-identity',
-	templateUrl: 'add-image-identity.html',
+	selector: 'page-add-image-document',
+	templateUrl: 'add-image-document.html',
 })
-export class AddImageIdentityPage {
+export class AddImageDocumentPage {
 
 	data = this.auth.getEmail();
 	dataPhone = this.auth.getPhone();
@@ -40,7 +40,7 @@ export class AddImageIdentityPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {				
-				db.executeSql('SELECT * FROM image WHERE folderid=1 ORDER BY imageid DESC', {} as any).then(res => {
+				db.executeSql('SELECT * FROM image WHERE folderid=3 ORDER BY imageid DESC', {} as any).then(res => {
 					this.images = [];
 					for(var i=0; i<res.rows.length; i++) {
 						this.images.push({
@@ -50,11 +50,12 @@ export class AddImageIdentityPage {
 							path:res.rows.item(i).path,
 							base64:res.rows.item(i).base64,
 							type:res.rows.item(i).type,
+							upload:res.rows.item(i).upload,
 							folderid:res.rows.item(i).folderid
 						})
 					}
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
-				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=1', {} as any).then(res => {
+				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=3', {} as any).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
 					}
@@ -70,7 +71,7 @@ export class AddImageIdentityPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {				
-				db.executeSql('SELECT * FROM image WHERE folderid=1 ORDER BY imageid DESC', {} as any).then(res => {
+				db.executeSql('SELECT * FROM image WHERE folderid=3 ORDER BY imageid DESC', {} as any).then(res => {
 					this.images = [];
 					for(var i=0; i<res.rows.length; i++) {
 						this.images.push({
@@ -80,11 +81,12 @@ export class AddImageIdentityPage {
 							path:res.rows.item(i).path,
 							base64:res.rows.item(i).base64,
 							type:res.rows.item(i).type,
+							upload:res.rows.item(i).upload,
 							folderid:res.rows.item(i).folderid
 						})
 					}
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
-				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=1', {} as any).then(res => {
+				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=3', {} as any).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
 					}
@@ -120,7 +122,7 @@ export class AddImageIdentityPage {
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let nameDB = nameEmail + '.db';
 			let folderPathNew = this.file.externalRootDirectory + 'IonScan' + '/' + this.foldername + '.' + nameEmail;                        		
-			let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Identity' + '.' + nameEmail;                        			
+			let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + nameEmail;                        			
 			this.sqlite.create({
 				name: nameDB,
 				location: 'default'
@@ -152,7 +154,7 @@ export class AddImageIdentityPage {
 			let nameDBPhone = 'u' + namePhone;
 			let nameDB = nameDBPhone + '.db';
 			let folderPathNew = this.file.externalRootDirectory + 'IonScan' + '/' + this.foldername + '.' + nameDBPhone;                        
-			let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Identity' + '.' + nameDBPhone;                        
+			let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + nameDBPhone;                        
 			this.sqlite.create({
 				name: nameDB,
 				location: 'default'

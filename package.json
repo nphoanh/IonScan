@@ -20,6 +20,7 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@ionic-native/camera": "^4.16.0",
     "@ionic-native/camera-preview": "^4.15.0",
     "@ionic-native/core": "~4.15.0",
     "@ionic-native/file": "^4.15.0",
@@ -42,6 +43,7 @@
     "cordova-plugin-advanced-http": "2.0.1",
     "cordova-plugin-browsertab": "0.2.0",
     "cordova-plugin-buildinfo": "2.0.2",
+    "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-camera-preview": "0.10.0",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-device": "^2.0.2",
@@ -53,7 +55,6 @@
     "cordova-plugin-ionic-webview": "^2.2.0",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
-    "cordova-plugin-telerik-imagepicker": "2.2.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-plugin-x-socialsharing": "5.4.1",
     "cordova-plugin-x-toast": "2.7.0",
@@ -105,9 +106,7 @@
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-x-socialsharing": {},
       "cordova-plugin-file-opener2": {},
-      "cordova-plugin-telerik-imagepicker": {
-        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "your usage message"
-      }
+      "cordova-plugin-camera": {}
     },
     "platforms": [
       "android"

@@ -4,36 +4,37 @@ import { File } from '@ionic-native/file';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { Toast } from '@ionic-native/toast';
- 
-import { InfoPassportPage } from '../info-passport/info-passport';
+
+import { InfoDocumentPage } from '../info-document/info-document';
 
 declare var cv: any;
 
 @IonicPage()
 @Component({
-	selector: 'page-image-passport',
-	templateUrl: 'image-passport.html',
+	selector: 'page-image-document',
+	templateUrl: 'image-document.html',
 })
-export class ImagePassportPage {
+export class ImageDocumentPage {
 
 	picture = this.navParams.get('picture');
-    data = this.auth.getEmail();
-    dataPhone = this.auth.getPhone();
-    thisDate: String = new Date().toISOString();
-    images:any = [];
-    image = { name:"", date:this.thisDate, path:"", base64:"", type:"image/png", upload:0 };  
-    sortableContour = [];
+	data = this.auth.getEmail();
+	dataPhone = this.auth.getPhone();
+	thisDate: String = new Date().toISOString();
+	images:any = [];
+	image = { name:"", date:this.thisDate, path:"", base64:"", type:"image/png", upload:0 };  
+	sortableContour = [];
 
-    constructor(public navCtrl: NavController, 
-        public navParams: NavParams,
-        private file: File,
-        private sqlite: SQLite,
-        private auth: AuthService,
-        private toast: Toast,
-        ) {
-    }
+	constructor(
+		public navCtrl: NavController, 
+		public navParams: NavParams,
+		private file: File,
+		private sqlite: SQLite,
+		private auth: AuthService,
+		private toast: Toast,
+		) {
+	}
 
-    b64toBlob(b64Data, contentType, sliceSize) {
+	b64toBlob(b64Data, contentType, sliceSize) {
         var contentType = contentType || '';
         var sliceSize = sliceSize || 512;
         var byteCharacters = atob(b64Data.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
@@ -68,9 +69,9 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,2)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,3)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
-                    this.navCtrl.push(InfoPassportPage,{picture:src}); 
+                    this.navCtrl.push(InfoDocumentPage,{picture:src}); 
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));                     
         }
@@ -84,9 +85,9 @@ export class ImagePassportPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,2)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,3)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
-                    this.navCtrl.push(InfoPassportPage,{picture:src}); 
+                    this.navCtrl.push(InfoDocumentPage,{picture:src}); 
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));   
         }                  
@@ -178,5 +179,4 @@ export class ImagePassportPage {
         let picture = document.getElementById("img") as HTMLImageElement;
         picture.src = canvasOutput.toDataURL();
     }
-
 }

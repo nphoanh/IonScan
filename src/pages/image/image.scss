@@ -1,6 +1,5 @@
-page-image-passport {
-
-  ion-content.content.content-md {
+page-image {
+ion-content.content.content-md {
     background-color: white !important;
 }
 
@@ -83,18 +82,6 @@ ion-icon.crop.icon.icon-md.ion-md-crop {
 ion-icon.save.icon.icon-md.ion-md-checkmark {
     font-size: 25px;
     color: #67aaf9;
-}
-
-img#img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-canvas#canvasOutput {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 }

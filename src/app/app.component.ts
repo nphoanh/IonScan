@@ -9,6 +9,7 @@ import { LoginPage } from '../pages/login/login';
 import { AboutPage } from '../pages/about/about';
 import { IdentityPage } from '../pages/identity/identity';
 import { PassportPage } from '../pages/passport/passport';
+import { DocumentPage } from '../pages/document/document';
 
 @Component({
   templateUrl: 'app.html'
@@ -31,6 +32,7 @@ export class MyApp {
     { title: 'Lưu trữ', component: HomePage },
     { title: 'Chứng minh thư', component: IdentityPage },
     { title: 'Hộ chiếu', component: PassportPage },
+    { title: 'Tài liệu', component: DocumentPage },
     { title: 'Về chúng tôi', component: AboutPage },
     ];
 

@@ -105,7 +105,5 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="5.4.1" />
     <engine name="android" spec="7.1.1" />
     <plugin name="cordova-plugin-file-opener2" spec="2.0.19" />
-    <plugin name="cordova-plugin-telerik-imagepicker" spec="2.2.2">
-        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="your usage message" />
-    </plugin>
+    <plugin name="cordova-plugin-camera" spec="4.0.3" />
 </widget>

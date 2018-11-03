@@ -2,23 +2,23 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions } from '@ionic-native/camera-preview';
 
-import { ImagePassportPage } from '../image-passport/image-passport';
- 
+import { ImageDocumentPage } from '../image-document/image-document';
+
 @IonicPage()
 @Component({
-  selector: 'page-passport',
-  templateUrl: 'passport.html',
+  selector: 'page-document',
+  templateUrl: 'document.html',
 })
-export class PassportPage {
+export class DocumentPage {
 
   constructor(
-    public navCtrl: NavController, 
+  	public navCtrl: NavController, 
   	public navParams: NavParams,
   	private cameraPreview: CameraPreview
   	) {
   }
 
-  ionViewDidLoad() {
+ionViewDidLoad() {
     this.initializeCamera();
   }
 
@@ -55,7 +55,7 @@ export class PassportPage {
       var x_coord = rect_coords.left, y_coord = rect_coords.top;
       var rect_width = rect.offsetWidth, rect_height = rect.offsetHeight;
       this.crop(imageData, rect_width, rect_height, x_coord, y_coord, cropped_img_base64 => {
-        this.navCtrl.push(ImagePassportPage, {picture:cropped_img_base64});
+        this.navCtrl.push(ImageDocumentPage, {picture:cropped_img_base64});
       });
     }, (err) => {
       console.log(err);
@@ -101,4 +101,5 @@ export class PassportPage {
     this.cameraPreview.setFlashMode(flash_mode);
   }
   
+
 }

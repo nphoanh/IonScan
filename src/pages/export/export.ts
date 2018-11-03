@@ -5,7 +5,6 @@ import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import * as jsPDF from 'jspdf';
-import * as html2canvas from 'html2canvas';
 import { FileOpener } from '@ionic-native/file-opener';
 
 @IonicPage()
@@ -88,7 +87,6 @@ export class ExportPage {
 	}
 
 	generatePdf(){
-		// this.navCtrl.push(PdfPage,{imageid:this.imageid});
 		var imgData = this.image.base64;
 		var doc = new jsPDF();
 		doc.addImage(imgData, 'PNG', 10, 10);

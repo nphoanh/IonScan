@@ -17,9 +17,10 @@ export class AddImagePassportPage {
 	images:any = [];
 	folderid = this.navParams.get("folderid");
 	foldername = this.navParams.get('foldername');
-	image = { imageid:"", name:"", date:"", path:"", base64:"", type:"image/png", folderid:"" }; 
+	image = { imageid:"", name:"", date:"", path:"", base64:"", type:"image/png", upload:0, folderid:"" }; 
 
-	constructor(public navCtrl: NavController, 
+	constructor(
+		public navCtrl: NavController, 
 		public navParams: NavParams,
 		private sqlite: SQLite,
 		private auth: AuthService,
@@ -39,7 +40,7 @@ export class AddImagePassportPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {				
-				db.executeSql('SELECT * FROM image WHERE folderid="2" ORDER BY imageid DESC', {} as any).then(res => {
+				db.executeSql('SELECT * FROM image WHERE folderid=2 ORDER BY imageid DESC', {} as any).then(res => {
 					this.images = [];
 					for(var i=0; i<res.rows.length; i++) {
 						this.images.push({
@@ -49,11 +50,12 @@ export class AddImagePassportPage {
 							path:res.rows.item(i).path,
 							base64:res.rows.item(i).base64,
 							type:res.rows.item(i).type,
+							upload:res.rows.item(i).upload,
 							folderid:res.rows.item(i).folderid
 						})
 					}
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
-				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid="2"', {} as any).then(res => {
+				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=2', {} as any).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
 					}
@@ -69,7 +71,7 @@ export class AddImagePassportPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {				
-				db.executeSql('SELECT * FROM image WHERE folderid="2" ORDER BY imageid DESC', {} as any).then(res => {
+				db.executeSql('SELECT * FROM image WHERE folderid=2 ORDER BY imageid DESC', {} as any).then(res => {
 					this.images = [];
 					for(var i=0; i<res.rows.length; i++) {
 						this.images.push({
@@ -79,11 +81,12 @@ export class AddImagePassportPage {
 							path:res.rows.item(i).path,
 							base64:res.rows.item(i).base64,
 							type:res.rows.item(i).type,
+							upload:res.rows.item(i).upload,
 							folderid:res.rows.item(i).folderid
 						})
 					}
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
-				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid="2"', {} as any).then(res => {
+				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=2', {} as any).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
 					}
@@ -92,14 +95,34 @@ export class AddImagePassportPage {
 		}
 	}
 
+	b64toBlob(b64Data, contentType, sliceSize) {
+		var contentType = contentType || '';
+		var sliceSize = sliceSize || 512;
+		var byteCharacters = atob(b64Data.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
+		var byteArrays = [];
+		for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+			var slice = byteCharacters.slice(offset, offset + sliceSize);
+			var byteNumbers = new Array(slice.length);
+			for (var i = 0; i < slice.length; i++) {
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
+			var byteArray = new Uint8Array(byteNumbers);
+			byteArrays.push(byteArray);
+		}
+		return new Blob(byteArrays, {type: contentType});
+	}
+
+	savebase64AsFile(folderPath, fileName, base64, contentType){
+		var DataBlob = this.b64toBlob(base64,contentType,512);
+		this.file.writeFile(folderPath, fileName, DataBlob).catch(e => console.log('File didn\'t create: ' + e.message));		  
+	}    
+
 	moveImage(imageid){
 		if (this.data != null) {
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let nameDB = nameEmail + '.db';
 			let folderPathNew = this.file.externalRootDirectory + 'IonScan' + '/' + this.foldername + '.' + nameEmail;                        		
 			let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + nameEmail;                        			
-			console.log(folderPathNew);
-			console.log(folderPath);
 			this.sqlite.create({
 				name: nameDB,
 				location: 'default'
@@ -112,13 +135,16 @@ export class AddImagePassportPage {
 						this.image.path = res.rows.item(0).path;
 						this.image.base64 = res.rows.item(0).base64;
 						this.image.type = res.rows.item(0).type;
+						this.image.upload = res.rows.item(0).upload;
 						this.image.folderid = res.rows.item(0).folderid;						
 					}						
 					let nameFile = this.image.name + '.' + 'png';
 					let base = this.image.base64.substr(this.image.base64.lastIndexOf(',')+1);    
-					this.file.copyFile(folderPath, nameFile, folderPathNew, nameFile).catch(e => console.log('File didn\'t remove: ' + e.message));		  				
+					this.file.removeFile(folderPath, nameFile).catch(e => console.log('File didn\'t remove: ' + e.message));		  				
+					this.savebase64AsFile(folderPathNew, nameFile, base, this.image.type); 
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));		  				
-				db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?)', [this.image.name,this.image.date,folderPathNew,this.image.base64,this.image.type,this.folderid]).catch(e => console.log('Image didn\'t add to table: ' + e.message));				
+
+				db.executeSql('UPDATE image SET path=?,folderid=? WHERE imageid=?',[folderPathNew,this.folderid,imageid]).catch(e => console.log('Image didn\'t update: ' + e.message));
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
 			this.navCtrl.pop();
 		}
@@ -141,17 +167,21 @@ export class AddImagePassportPage {
 						this.image.path = res.rows.item(0).path;
 						this.image.base64 = res.rows.item(0).base64;
 						this.image.type = res.rows.item(0).type;
+						this.image.upload = res.rows.item(0).upload;
 						this.image.folderid = res.rows.item(0).folderid;						
 					}						
 					let nameFile = this.image.name + '.' + 'png';
 					let base = this.image.base64.substr(this.image.base64.lastIndexOf(',')+1);    
-					this.file.copyFile(folderPath, nameFile, folderPathNew, nameFile).catch(e => console.log('File didn\'t remove: ' + e.message));		  				
+					this.file.removeFile(folderPath, nameFile).catch(e => console.log('File didn\'t remove: ' + e.message));		  				
+					this.savebase64AsFile(folderPathNew, nameFile, base, this.image.type); 
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));		  				
-				db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?)', [this.image.name,this.image.date,folderPathNew,this.image.base64,this.image.type,this.folderid]).catch(e => console.log('Image didn\'t add to table: ' + e.message));				
+
+				db.executeSql('UPDATE image SET path=?,folderid=? WHERE imageid=?',[folderPathNew,this.folderid,imageid]).catch(e => console.log('Image didn\'t update: ' + e.message));
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
 			this.navCtrl.pop();
 		}
 	}
+
 
 	deleteImage(imageid){
 		if (this.data != null) {
@@ -172,8 +202,8 @@ export class AddImagePassportPage {
 						this.image.type = res.rows.item(0).type;
 						this.image.folderid = res.rows.item(0).folderid;						
 					}		         
-					let name = this.image.name + '.' + nameEmail;
-					this.file.removeRecursively(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
+					let name = this.image.name + '.' + 'png';
+					this.file.removeFile(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
 				}).catch(e => console.log('Image didn\'t remove: ' + e.message));
 				db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
 					this.getData();        
@@ -200,8 +230,8 @@ export class AddImagePassportPage {
 						this.image.type = res.rows.item(0).type;
 						this.image.folderid = res.rows.item(0).folderid;						
 					}		         
-					let name = this.image.name + '.' + nameDBPhone;
-					this.file.removeRecursively(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
+					let name = this.image.name + '.' + 'png';
+					this.file.removeFile(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
 				}).catch(e => console.log('Image didn\'t remove: ' + e.message));
 				db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
 					this.getData();        

@@ -3,13 +3,15 @@ import { IonicPage, NavController, NavParams, FabContainer } from 'ionic-angular
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
-import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageProvider } from '../../providers/image/image';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Toast } from '@ionic-native/toast';
 
 import { ExportPage } from '../export/export';
 import { AddImagePassportPage } from '../add-image-passport/add-image-passport';
 import { AddImageIdentityPage } from '../add-image-identity/add-image-identity';
-import { EditImagePage } from '../edit-image/edit-image';
+import { AddImageDocumentPage } from '../add-image-document/add-image-document';
+import { ImagePage } from '../image/image';
 
 @IonicPage()
 @Component({
@@ -23,13 +25,12 @@ export class FolderPage {
 	dataPhone = this.auth.getPhone();
 	totalImage = 0;
 	images:any = [];
-	image = { imageid:"", name:"", date:"", path:"", base64:"", type:"image/png", folderid:"" }; 
-	folder = { folderid:0, name:"", date:"", type:"", display:"yes" };
+	image = { imageid:"", name:"", date:"", path:"", base64:"", type:"image/png", upload:0, folderid:"" }; 
+	folder = { folderid:0, name:"", date:"", type:"" };
 	foldername = this.navParams.get('foldername');
 	folderid = this.navParams.get('folderid');
 	path = this.file.externalRootDirectory + 'IonScan';
 	photo = { albumId: '', id: '', title: '', url: '', thumbnailUrl: ''};
-	hide : boolean;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -37,8 +38,9 @@ export class FolderPage {
 		private sqlite: SQLite,
 		private auth: AuthService,
 		private file: File,
-		private imagePicker: ImagePicker,
-		public imageProvider: ImageProvider
+		public imageProvider: ImageProvider,
+		private camera: Camera,
+		private toast: Toast,
 		) {
 	}
 
@@ -59,11 +61,9 @@ export class FolderPage {
 						this.folder.folderid = res.rows.item(0).folderid;
 						this.folder.name = res.rows.item(0).name;
 						this.folder.date = res.rows.item(0).date;
-						this.folder.type = res.rows.item(0).type;
-						this.folder.display = res.rows.item(0).display;						
+						this.folder.type = res.rows.item(0).type;					
 					}		
 				}).catch(e => console.log('Select nothing from Folder table: ' + e.message));
-
 				db.executeSql('SELECT * FROM image WHERE folderid=? ORDER BY imageid DESC', [folderid]).then(res => {
 					this.images = [];
 					for(var i=0; i<res.rows.length; i++) {
@@ -74,10 +74,11 @@ export class FolderPage {
 							path:res.rows.item(i).path,
 							base64:res.rows.item(i).base64,
 							type:res.rows.item(i).type,
+							upload:res.rows.item(i).upload,
 							folderid:res.rows.item(i).folderid})
 					}
-				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
-
+					console.log(this.images);
+				}).catch(e => console.log('Select nothing from Image table: ' + e.message));				
 				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=? ', [folderid]).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
@@ -98,11 +99,9 @@ export class FolderPage {
 						this.folder.folderid = res.rows.item(0).folderid;
 						this.folder.name = res.rows.item(0).name;
 						this.folder.date = res.rows.item(0).date;
-						this.folder.type = res.rows.item(0).type;
-						this.folder.display = res.rows.item(0).display;						
+						this.folder.type = res.rows.item(0).type;					
 					}		
 				}).catch(e => console.log('Select nothing from Folder table: ' + e.message));
-
 				db.executeSql('SELECT * FROM image WHERE folderid=? ORDER BY imageid DESC', [folderid]).then(res => {
 					this.images = [];
 					for(var i=0; i<res.rows.length; i++) {
@@ -113,10 +112,10 @@ export class FolderPage {
 							path:res.rows.item(i).path,
 							base64:res.rows.item(i).base64,
 							type:res.rows.item(i).type,
+							upload:res.rows.item(i).upload,
 							folderid:res.rows.item(i).folderid})
 					}
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
-
 				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=? ', [folderid]).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
@@ -127,12 +126,17 @@ export class FolderPage {
 	}
 
 	addImage(){
-		console.log(this.folder.type);
 		if (this.folder.type=="Hộ chiếu") {
 			this.navCtrl.push(AddImagePassportPage,{
 				folderid:this.folderid,
 				foldername:this.foldername
-			});
+			});			
+		}
+		else if(this.folder.type=="Tài liệu") {
+			this.navCtrl.push(AddImageDocumentPage,{
+				folderid:this.folderid,
+				foldername:this.foldername
+			});	
 		}
 		else {
 			this.navCtrl.push(AddImageIdentityPage,{
@@ -159,14 +163,15 @@ export class FolderPage {
 						this.image.path = res.rows.item(0).path;
 						this.image.base64 = res.rows.item(0).base64;
 						this.image.type = res.rows.item(0).type;
+						this.image.upload = res.rows.item(0).upload;
 						this.image.folderid = res.rows.item(0).folderid;						
 					}		         
-					let name = this.image.name + '.' + nameEmail;
-					this.file.removeRecursively(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
+					let name = this.image.name + '.' + 'png';
+					this.file.removeFile(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
 				}).catch(e => console.log('Image didn\'t remove: ' + e.message));
 				db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
 					this.getData(this.folderid);        
-				}).catch(e => console.log('Folder didn\'t remove in table: ' + e.message));
+				}).catch(e => console.log('Image didn\'t remove in table: ' + e.message));
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
 		}
 
@@ -187,10 +192,11 @@ export class FolderPage {
 						this.image.path = res.rows.item(0).path;
 						this.image.base64 = res.rows.item(0).base64;
 						this.image.type = res.rows.item(0).type;
+						this.image.upload = res.rows.item(0).upload;
 						this.image.folderid = res.rows.item(0).folderid;						
 					}		         
-					let name = this.image.name + '.' + nameDBPhone;
-					this.file.removeRecursively(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
+					let name = this.image.name + '.' + 'png';
+					this.file.removeFile(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
 				}).catch(e => console.log('Image didn\'t remove: ' + e.message));
 				db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
 					this.getData(this.folderid);        
@@ -207,80 +213,56 @@ export class FolderPage {
 		fab.close();
 	}
 
-	uploadImage() {
+	uploadImage(imageid) {
 		this.imageProvider.addImage(this.photo).then((result) => {
-			this.hide = true;
+			if (this.data != null) {
+				let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
+				let nameDB = nameEmail + '.db';
+				this.sqlite.create({
+					name: nameDB,
+					location: 'default'
+				}).then((db: SQLiteObject) => {
+					db.executeSql('UPDATE image SET upload=? WHERE imageid=?',[1,imageid]).then(res => {      
+					}).catch(e => console.log('Image didn\'t upload in table: ' + e.message));					
+					this.getData(this.folderid);
+				}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
+			}
+			else {
+				let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
+				let nameDBPhone = 'u' + namePhone;
+				let nameDB = nameDBPhone + '.db';
+				this.sqlite.create({
+					name: nameDB,
+					location: 'default'
+				}).then((db: SQLiteObject) => {
+					db.executeSql('UPDATE image SET upload=? WHERE imageid=?',[1,imageid]).then(res => {      
+					}).catch(e => console.log('Image didn\'t upload in table: ' + e.message));
+					this.getData(this.folderid);
+				}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
+			}
+			this.toast.show('Tải ảnh thành công', '5000', 'bottom').subscribe(toast => console.log(toast));
 		}, (err) => {
 			console.log(err);
 		});
 	}
 
-	editImage(imageid,name){
-		this.navCtrl.push(EditImagePage,{
-			imageid:imageid,
-			imagename:name
-		});
-	}
-
-	b64toBlob(b64Data, contentType, sliceSize) {
-		var contentType = contentType || '';
-		var sliceSize = sliceSize || 512;
-		var byteCharacters = atob(b64Data.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
-		var byteArrays = [];
-		for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-			var slice = byteCharacters.slice(offset, offset + sliceSize);
-			var byteNumbers = new Array(slice.length);
-			for (var i = 0; i < slice.length; i++) {
-				byteNumbers[i] = slice.charCodeAt(i);
-			}
-			var byteArray = new Uint8Array(byteNumbers);
-			byteArrays.push(byteArray);
-		}
-		return new Blob(byteArrays, {type: contentType});
-	}
-
-	savebase64AsFile(folderPath, fileName, base64, contentType){
-		var DataBlob = this.b64toBlob(base64,contentType,512);
-		this.file.writeFile(folderPath, fileName, DataBlob).catch(e => console.log('File didn\'t save: ' + e.message));       
-	}    
-
 	pickImage() {
-		this.imagePicker.getPictures({
-			outputType: 1
-		}).then((results) => {
-			let base64 = results;
-			let nameFile = this.image.date + '.' + 'png';
-			if (this.data != null) { 
-				let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
-				let nameDB = nameEmail + '.db';
-				let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + this.foldername + '.' + nameEmail;                        
-				this.sqlite.create({
-					name: nameDB,
-					location: 'default'
-				}).then((db: SQLiteObject) => {                
-					db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?)', [this.image.date,this.image.date,folderPath,base64,this.image.type,this.folderid]).then(res => {
-						this.savebase64AsFile(folderPath, nameFile, base64, this.image.type); 
-						this.getData(this.folderid);
-					}).catch(e => console.log('Image didn\'t insert: ' + e.message));                    
-				}).catch(e => console.log('SQLite didn\'t create: ' + e.message));                     
-			}
-
-			else {
-				let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
-				let nameDBPhone = 'u' + namePhone;
-				let nameDB = nameDBPhone + '.db';
-				let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + this.foldername + '.' + nameDBPhone;                        
-				this.sqlite.create({
-					name: nameDB,
-					location: 'default'
-				}).then((db: SQLiteObject) => {                
-					db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?)', [this.image.date,this.image.date,folderPath,base64,this.image.type,this.folderid]).then(res => {
-						this.savebase64AsFile(folderPath, nameFile, base64, this.image.type); 
-						this.getData(this.folderid);
-					}).catch(e => console.log('Image didn\'t insert: ' + e.message));                    
-				}).catch(e => console.log('SQLite didn\'t create: ' + e.message));   
-			}                  
-		}, (err) => { });
+		const options: CameraOptions = {
+			quality: 100,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.PNG,
+			mediaType: this.camera.MediaType.PICTURE,
+			sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+			correctOrientation: true
+		}
+		this.camera.getPicture(options).then((imageData) => {
+			let base64 = 'data:image/jpeg;base64,' + imageData;
+			this.navCtrl.push(ImagePage,{
+				picture:base64,
+				folderid:this.folderid,
+				foldername:this.foldername
+			});
+		}, (err) => console.log('Image didn\'t pick: ' + err));
 	}
 
 }
