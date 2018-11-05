@@ -101,7 +101,6 @@
       "cordova-universal-links-plugin": {},
       "cordova-plugin-camera-preview": {},
       "cordova-sqlite-storage": {},
-      "cordova-plugin-file": {},
       "cordova-android-support-gradle-release": {
         "ANDROID_SUPPORT_VERSION": "27.+"
       },
@@ -109,7 +108,8 @@
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-x-socialsharing": {},
       "cordova-plugin-file-opener2": {},
-      "cordova-plugin-camera": {}
+      "cordova-plugin-camera": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "android"
