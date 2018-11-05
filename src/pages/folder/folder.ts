@@ -3,9 +3,10 @@ import { IonicPage, NavController, NavParams, FabContainer } from 'ionic-angular
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
-import { ImageProvider } from '../../providers/image/image';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Toast } from '@ionic-native/toast';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { NgProgress } from '@ngx-progressbar/core';
 
 import { ExportPage } from '../export/export';
 import { AddImagePassportPage } from '../add-image-passport/add-image-passport';
@@ -38,15 +39,29 @@ export class FolderPage {
 		private sqlite: SQLite,
 		private auth: AuthService,
 		private file: File,
-		public imageProvider: ImageProvider,
 		private camera: Camera,
 		private toast: Toast,
+		public httpClient: HttpClient,
+		public progress: NgProgress,
 		) {
 	}
 
 	ionViewWillEnter() {
 		this.getData(this.navParams.get("folderid"));
 	}
+
+
+/*	getImage(){		
+		this.progress.start();
+		this.httpClient.get("http://192.168.1.201:3000/images")
+		.subscribe(data => {
+			console.log(data);
+			this.progress.complete();
+		}, error => {
+			console.log(error);
+			this.progress.complete();
+		});
+	}*/
 
 	getData(folderid){    
 		if (this.data != null) {
@@ -77,7 +92,6 @@ export class FolderPage {
 							upload:res.rows.item(i).upload,
 							folderid:res.rows.item(i).folderid})
 					}
-					console.log(this.images);
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));				
 				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=? ', [folderid]).then(res => {
 					if(res.rows.length>0) {
@@ -214,36 +228,76 @@ export class FolderPage {
 	}
 
 	uploadImage(imageid) {
-		this.imageProvider.addImage(this.photo).then((result) => {
-			if (this.data != null) {
-				let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
-				let nameDB = nameEmail + '.db';
-				this.sqlite.create({
-					name: nameDB,
-					location: 'default'
-				}).then((db: SQLiteObject) => {
-					db.executeSql('UPDATE image SET upload=? WHERE imageid=?',[1,imageid]).then(res => {      
-					}).catch(e => console.log('Image didn\'t upload in table: ' + e.message));					
-					this.getData(this.folderid);
-				}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
-			}
-			else {
-				let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
-				let nameDBPhone = 'u' + namePhone;
-				let nameDB = nameDBPhone + '.db';
-				this.sqlite.create({
-					name: nameDB,
-					location: 'default'
-				}).then((db: SQLiteObject) => {
-					db.executeSql('UPDATE image SET upload=? WHERE imageid=?',[1,imageid]).then(res => {      
-					}).catch(e => console.log('Image didn\'t upload in table: ' + e.message));
-					this.getData(this.folderid);
-				}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
-			}
-			this.toast.show('Tải ảnh thành công', '5000', 'bottom').subscribe(toast => console.log(toast));
-		}, (err) => {
-			console.log(err);
-		});
+		this.progress.start();
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'content-type':  'application/json',
+				'authorization': 'my-auth-token'
+			})
+		};
+		if (this.data != null) {
+			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
+			let nameDB = nameEmail + '.db';
+			this.sqlite.create({
+				name: nameDB,
+				location: 'default'
+			}).then((db: SQLiteObject) => {
+				db.executeSql('SELECT * FROM image WHERE imageid=?', [imageid]).then(res => {
+					if(res.rows.length > 0) {
+						this.image.imageid = res.rows.item(0).imageid;
+						this.image.name = res.rows.item(0).name;
+						this.image.path = res.rows.item(0).path;	
+						this.image.base64 = res.rows.item(0).base64;						
+					}			
+					let postData = {	
+						'imageName' : this.image.name,
+						'base64' : this.image.base64
+					}
+					this.httpClient.post("https://jsonplaceholder.typicode.com/photos", postData, httpOptions)
+					.subscribe(data => {
+						this.progress.complete();
+						this.toast.show('Tải ảnh thành công', '5000', 'bottom').subscribe(toast => console.log(toast));
+						db.executeSql('UPDATE image SET upload=? WHERE imageid=?',[1,imageid]).catch(e => console.log('Image didn\'t upload in table: ' + e.message));					
+						this.getData(this.folderid);
+					}, error => {
+						this.progress.complete();
+						console.log(error);
+						this.toast.show(error, '5000', 'bottom').subscribe(toast => console.log(toast));				
+					});		
+				}).catch(e => console.log('Select nothing from Image table: ' + e.message));		  				
+			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
+		}
+		else {
+			let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
+			let nameDBPhone = 'u' + namePhone;
+			let nameDB = nameDBPhone + '.db';
+			this.sqlite.create({
+				name: nameDB,
+				location: 'default'
+			}).then((db: SQLiteObject) => {
+				db.executeSql('SELECT * FROM image WHERE imageid=?', [imageid]).then(res => {
+					if(res.rows.length > 0) {
+						this.image.imageid = res.rows.item(0).imageid;
+						this.image.name = res.rows.item(0).name;
+						this.image.base64 = res.rows.item(0).base64;						
+					}			
+					let postData = {
+						"imageName": this.image.name,
+						"base64": this.image.base64
+					}
+					this.httpClient.post("https://jsonplaceholder.typicode.com/photos", postData, httpOptions)
+					.subscribe(data => {
+						this.progress.complete();
+						this.toast.show('Tải ảnh thành công', '5000', 'bottom').subscribe(toast => console.log(toast));
+						db.executeSql('UPDATE image SET upload=? WHERE imageid=?',[1,imageid]).catch(e => console.log('Image didn\'t upload in table: ' + e.message));					
+						this.getData(this.folderid);
+					}, error => {
+						this.progress.complete();
+						this.toast.show(error, '5000', 'bottom').subscribe(toast => console.log(toast));				
+					});		
+				}).catch(e => console.log('Select nothing from Image table: ' + e.message));		
+			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
+		}
 	}
 
 	pickImage() {

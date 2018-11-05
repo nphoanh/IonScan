@@ -9,6 +9,7 @@
  			</button>
  		</ion-buttons> 
  	</ion-navbar>
+ 	<ng-progress [min]="0" [max]="1" [color]="'red'" [meteor]="true" [thick]="true" [spinner]="false"></ng-progress>
 
  </ion-header>
 
@@ -16,4 +17,15 @@
 
  	<img id="img" [src]="picture" *ngIf="picture" /> 
 
+<!--  	<button ion-button round (tap)="recognizeImage();">Đọc ảnh</button>
+
+<ion-card *ngIf="imageText">
+	<ion-card-header>
+		Kết quả
+	</ion-card-header>
+	<ion-card-content>
+		{{ imageText }}
+	</ion-card-content>
+</ion-card>
+ -->
  </ion-content>

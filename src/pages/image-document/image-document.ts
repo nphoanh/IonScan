@@ -23,18 +23,34 @@ export class ImageDocumentPage {
 	images:any = [];
 	image = { name:"", date:this.thisDate, path:"", base64:"", type:"image/png", upload:0 };  
 	sortableContour = [];
+    hide : boolean = false;
 
-	constructor(
-		public navCtrl: NavController, 
-		public navParams: NavParams,
-		private file: File,
-		private sqlite: SQLite,
-		private auth: AuthService,
-		private toast: Toast,
-		) {
-	}
+    constructor(
+        public navCtrl: NavController, 
+        public navParams: NavParams,
+        private file: File,
+        private sqlite: SQLite,
+        private auth: AuthService,
+        private toast: Toast,
+        ) {
+    }
 
-	b64toBlob(b64Data, contentType, sliceSize) {
+    hideDiv(){
+        this.hide = true;
+    }
+
+    BW(){
+        let src = cv.imread('canvasInput');
+        let dst = new cv.Mat();
+        let low = new cv.Mat(src.rows, src.cols, src.type(), [0, 0, 0, 0]);
+        let high = new cv.Mat(src.rows, src.cols, src.type(), [150, 150, 150, 255]);
+        cv.inRange(src, low, high, dst);
+        cv.threshold(dst, dst, 100, 255, cv.THRESH_BINARY_INV);
+        cv.imshow('canvasOutput', dst);
+        src.delete(); dst.delete(); low.delete(); high.delete();
+    }
+
+    b64toBlob(b64Data, contentType, sliceSize) {
         var contentType = contentType || '';
         var sliceSize = sliceSize || 512;
         var byteCharacters = atob(b64Data.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
@@ -96,7 +112,7 @@ export class ImageDocumentPage {
     rotateRight() {
         let src = cv.imread('img');
         let dsize = new cv.Size(src.rows, src.cols);         
-        let center = new cv.Point(src.cols/2, src.cols/2); 
+        let center = new cv.Point(src.rows/2, src.rows/2); 
         let M = cv.getRotationMatrix2D(center, -90, 1);
         cv.warpAffine(src, src, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
         cv.imshow('canvasOutput', src);
@@ -109,7 +125,7 @@ export class ImageDocumentPage {
     rotateLeft() {
         let src = cv.imread('img');
         let dsize = new cv.Size(src.rows, src.cols);
-        let center = new cv.Point(src.rows/2, src.rows/2); 
+        let center = new cv.Point(src.cols/2, src.cols/2); 
         let M = cv.getRotationMatrix2D(center, 90, 1);
         cv.warpAffine(src, src, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
         cv.imshow('canvasOutput', src);
@@ -178,5 +194,81 @@ export class ImageDocumentPage {
         var canvasOutput = document.getElementById('canvasOutput') as HTMLCanvasElement;
         let picture = document.getElementById("img") as HTMLImageElement;
         picture.src = canvasOutput.toDataURL();
+    }
+
+    light(){
+        let origin = document.getElementById('origin') as HTMLDivElement;
+        let light = document.getElementById('light') as HTMLDivElement;
+        let gray = document.getElementById('gray') as HTMLDivElement;
+        let bw = document.getElementById('bw') as HTMLDivElement;
+        origin.style.borderStyle = "none";
+        origin.style.borderColor = "none";
+        origin.style.borderWidth = "0px";
+        gray.style.borderStyle = "none";
+        gray.style.borderColor = "none";
+        gray.style.borderWidth = "0px";
+        bw.style.borderStyle = "none";
+        bw.style.borderColor = "none";
+        bw.style.borderWidth = "0px";
+        light.style.borderStyle = "solid";
+        light.style.borderColor = "black";
+        light.style.borderWidth = "1px";
+    }
+
+    origin(){
+        let origin = document.getElementById('origin') as HTMLDivElement;
+        let light = document.getElementById('light') as HTMLDivElement;
+        let gray = document.getElementById('gray') as HTMLDivElement;
+        let bw = document.getElementById('bw') as HTMLDivElement;
+        light.style.borderStyle = "none";
+        light.style.borderColor = "none";
+        light.style.borderWidth = "0px";
+        gray.style.borderStyle = "none";
+        gray.style.borderColor = "none";
+        gray.style.borderWidth = "0px";
+        bw.style.borderStyle = "none";
+        bw.style.borderColor = "none";
+        bw.style.borderWidth = "0px";
+        origin.style.borderStyle = "solid";
+        origin.style.borderColor = "black";
+        origin.style.borderWidth = "1px";
+    }
+    
+    gray(){
+        let origin = document.getElementById('origin') as HTMLDivElement;
+        let light = document.getElementById('light') as HTMLDivElement;
+        let gray = document.getElementById('gray') as HTMLDivElement;
+        let bw = document.getElementById('bw') as HTMLDivElement;
+        origin.style.borderStyle = "none";
+        origin.style.borderColor = "none";
+        origin.style.borderWidth = "0px";
+        light.style.borderStyle = "none";
+        light.style.borderColor = "none";
+        light.style.borderWidth = "0px";
+        bw.style.borderStyle = "none";
+        bw.style.borderColor = "none";
+        bw.style.borderWidth = "0px";
+        gray.style.borderStyle = "solid";
+        gray.style.borderColor = "black";
+        gray.style.borderWidth = "1px";
+    }
+
+    bw(){
+        let origin = document.getElementById('origin') as HTMLDivElement;
+        let light = document.getElementById('light') as HTMLDivElement;
+        let gray = document.getElementById('gray') as HTMLDivElement;
+        let bw = document.getElementById('bw') as HTMLDivElement;
+        origin.style.borderStyle = "none";
+        origin.style.borderColor = "none";
+        origin.style.borderWidth = "0px";
+        gray.style.borderStyle = "none";
+        gray.style.borderColor = "none";
+        gray.style.borderWidth = "0px";
+        light.style.borderStyle = "none";
+        light.style.borderColor = "none";
+        light.style.borderWidth = "0px";
+        bw.style.borderStyle = "solid";
+        bw.style.borderColor = "black";
+        bw.style.borderWidth = "1px";
     }
 }

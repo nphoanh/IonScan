@@ -42,8 +42,8 @@ import { File } from '@ionic-native/file';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { FileOpener } from '@ionic-native/file-opener';
-import { ImageProvider } from '../providers/image/image';
 import { Camera } from '@ionic-native/camera';
+import { NgProgressModule } from '@ngx-progressbar/core';
 
 @NgModule({
   declarations: [
@@ -76,6 +76,7 @@ import { Camera } from '@ionic-native/camera';
   imports: [
   BrowserModule,
   HttpClientModule,
+  NgProgressModule.forRoot(),
   IonicModule.forRoot(MyApp),
   AngularFireModule.initializeApp(FIREBASE_CONFIG),
   AngularFireAuthModule
@@ -120,8 +121,7 @@ import { Camera } from '@ionic-native/camera';
   FileOpener,
   File,
   Camera,
-  {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ImageProvider
+  {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

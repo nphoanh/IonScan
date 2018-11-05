@@ -89,9 +89,34 @@ page-image-identity {
 		margin-right: 6px;
 	} 
 
-	img#img {
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-	}
+	img#filter {
+    width: 78px;
+    height: 65px;
+    margin-top: 5px;
+}
+label.filter {
+    text-align: center !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 5px;
+    color: black;
+}
+div#filter {
+    background-color: #D3D3D3;
+    margin-left: -16px;
+    margin-right: -16px;
+    margin-top: -26px;
+}
+
+div#origin {
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
+
+ion-icon.filter.icon.icon-md.ion-md-color-wand {
+    font-size: 25px;
+    color: #67aaf9;
+}
 }

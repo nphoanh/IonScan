@@ -1,18 +1,72 @@
-<!--
-  Generated template for the ImageDocumentPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>image-document</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-input class="title" [(ngModel)]="image.name" type="text" value="{{ thisDate | date: 'HmmddMMyyyy'}}" placeholder="{{ thisDate | date: 'HmmddMMyyyy'}}"></ion-input>
+	</ion-navbar>
 
-</ion-header>
-
+</ion-header> 
 
 <ion-content padding>
 
+	<img id="img" [src]="picture" *ngIf="picture" /> 
+	<div id="filter" *ngIf='hide'>
+		<ion-grid>
+			<ion-row>
+				<div id="origin" (tap)="origin();">
+					<ion-col>
+						<img id="filter" src="../../assets/imgs/origin.jpg" >
+						<br><label class="filter" id="filter-origin">Gốc</label>
+					</ion-col>
+				</div>
+				<div id="light" (tap)="light();">
+					<ion-col>
+						<img id="filter" src="../../assets/imgs/lighten.png" >
+						<br><label class="filter" id="filter-light">Sáng</label>
+					</ion-col>
+				</div>
+				<div id="gray" (tap)="gray();">
+					<ion-col>
+						<img id="filter" src="../../assets/imgs/gray.jpg" >
+						<br><label class="filter" id="filter-gray">Xám</label>
+					</ion-col>
+				</div>
+				<div id="bw" (tap)="bw();">
+					<ion-col>
+						<img id="filter" src="../../assets/imgs/bw.jpg" >
+						<br><label class="filter" id="filter-bw">Trắng đen</label>
+					</ion-col>
+				</div>
+			</ion-row>
+		</ion-grid>
+	</div>
+		<canvas id="canvasOutput" style="visibility: hidden;"></canvas>
 </ion-content>
+
+<ion-footer>
+
+	<ion-grid class="button-group">
+		<ion-row>
+			<button class="button-group" (tap)="crop();">
+				<ion-icon class="crop" name="crop"></ion-icon>
+				<br><label>Cắt</label>
+			</button>
+			<button class="button-group" (tap)="hideDiv();">
+				<ion-icon class="filter" name="color-wand"></ion-icon>
+				<br><label>Lọc</label>
+			</button>
+			<button class="button-group" (tap)="rotateLeft();">
+				<img class="rotate" src="../../assets/imgs/rotate_left.png" style="width: 25px; height: 25px;">
+				<br><label>Trái</label>
+			</button>			
+			<button class="button-group" (tap)="rotateRight();">
+				<img class="rotate" src="../../assets/imgs/rotate_right.png" style="width: 25px; height: 25px;">
+				<br><label>Phải</label>
+			</button>	
+			<button class="button-group" (tap)="saveImage();">
+				<ion-icon class="save" name="checkmark"></ion-icon>
+				<br><label>Xong</label>
+			</button>
+		</ion-row>
+	</ion-grid>
+
+</ion-footer>

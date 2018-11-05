@@ -8,7 +8,8 @@
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "http://app.mekosoft.vn/api"
+      "proxyUrl": "http://localhost:3000/"
     }
-  ]
+  ],
+  "type": "ionic-angular"
 }

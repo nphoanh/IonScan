@@ -1,5 +1,10 @@
 page-info-document {
-	ion-content.content.content-md {
+	 ion-content.content.content-md {
 		background-color: white !important;
+	} 
+
+	button.share.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-default-md {
+		color: white;
+		font-size: 15px;
 	}
 }

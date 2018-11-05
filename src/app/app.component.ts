@@ -40,7 +40,7 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.backgroundColorByHexString('#67aaf0');
       this.splashScreen.hide();
       this.auth.afAuth.authState
       .subscribe(

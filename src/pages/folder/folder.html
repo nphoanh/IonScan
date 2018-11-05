@@ -3,7 +3,7 @@
 	<ion-navbar>
 		<ion-title>{{folder.name}} ({{totalImage}})</ion-title>
 	</ion-navbar>
-	
+	<ng-progress class="folder" [min]="0" [max]="1" [color]="'red'" [meteor]="true" [thick]="true" [spinner]="false"></ng-progress>
 </ion-header>
 
 <ion-content padding>

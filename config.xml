@@ -103,7 +103,7 @@
     <allow-navigation href="http://192.168.1.22:8100" sessionid="f478e949" />
     <plugin name="cordova-plugin-advanced-http" spec="2.0.1" />
     <plugin name="cordova-plugin-x-socialsharing" spec="5.4.1" />
-    <engine name="android" spec="7.1.1" />
     <plugin name="cordova-plugin-file-opener2" spec="2.0.19" />
     <plugin name="cordova-plugin-camera" spec="4.0.3" />
+    <engine name="android" spec="7.1.1" />
 </widget>
