@@ -68,12 +68,12 @@ export class ImageIdentityPage {
         if (this.data != null) { 
             let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
             let nameDB = nameEmail + '.db';
-            let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Identity' + '.' + nameEmail;                        
+            let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Chứng minh thư' + '.' + nameEmail;                        
             this.sqlite.create({
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,1)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,4)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
                     this.navCtrl.push(IdentityBackPage,{pictureFront:src}); 
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
@@ -84,12 +84,12 @@ export class ImageIdentityPage {
             let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
             let nameDBPhone = 'u' + namePhone;
             let nameDB = nameDBPhone + '.db';
-            let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Identity' + '.' + namePhone;
+            let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Chứng minh thư' + '.' + namePhone;
             this.sqlite.create({
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,1)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,4)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
                     this.navCtrl.push(IdentityBackPage,{pictureFront:src}); 
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   

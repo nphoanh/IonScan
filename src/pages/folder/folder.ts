@@ -27,7 +27,7 @@ export class FolderPage {
 	totalImage = 0;
 	images:any = [];
 	image = { imageid:"", name:"", date:"", path:"", base64:"", type:"image/png", upload:0, folderid:"" }; 
-	folder = { folderid:0, name:"", date:"", type:"" };
+	folder = { folderid:0, name:"", date:"", type:"", display:"" };
 	foldername = this.navParams.get('foldername');
 	folderid = this.navParams.get('folderid');
 	path = this.file.externalRootDirectory + 'IonScan';
@@ -76,7 +76,8 @@ export class FolderPage {
 						this.folder.folderid = res.rows.item(0).folderid;
 						this.folder.name = res.rows.item(0).name;
 						this.folder.date = res.rows.item(0).date;
-						this.folder.type = res.rows.item(0).type;					
+						this.folder.type = res.rows.item(0).type;	
+						this.folder.display = res.rows.item(0).display;					
 					}		
 				}).catch(e => console.log('Select nothing from Folder table: ' + e.message));
 				db.executeSql('SELECT * FROM image WHERE folderid=? ORDER BY imageid DESC', [folderid]).then(res => {
@@ -113,7 +114,8 @@ export class FolderPage {
 						this.folder.folderid = res.rows.item(0).folderid;
 						this.folder.name = res.rows.item(0).name;
 						this.folder.date = res.rows.item(0).date;
-						this.folder.type = res.rows.item(0).type;					
+						this.folder.type = res.rows.item(0).type;
+						this.folder.display = res.rows.item(0).display;						
 					}		
 				}).catch(e => console.log('Select nothing from Folder table: ' + e.message));
 				db.executeSql('SELECT * FROM image WHERE folderid=? ORDER BY imageid DESC', [folderid]).then(res => {

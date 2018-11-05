@@ -101,7 +101,7 @@ export class ExportPage {
 		if (this.data != null) {
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let pathPdf = this.path + nameEmail;
-			let filePdf = pathPdf + '/' + 	namePdf;
+			let filePdf = pathPdf + '/' + namePdf;
 			this.file.writeFile(pathPdf, namePdf, buffer).catch(e => console.log('File didn\'t save: ' + e.message));       	
 			this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
 		}
@@ -109,7 +109,7 @@ export class ExportPage {
 			let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
 			let nameDBPhone = 'u' + namePhone;
 			let pathPdf = this.path + nameDBPhone;
-			let filePdf = pathPdf + '/' + 	namePdf;
+			let filePdf = pathPdf + '/' + namePdf;
 			this.file.writeFile(pathPdf, namePdf, buffer).catch(e => console.log('File didn\'t save: ' + e.message));       
 			this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
 		}

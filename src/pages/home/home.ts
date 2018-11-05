@@ -32,43 +32,18 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
-    this.createRootFolder();
     this.getData();    
-  }
-
-  createRootFolder(){
-    this.file.createDir(this.file.externalRootDirectory, 'IonScan', false).catch(e => console.log('IonScan didn\'t create: ' + e.message)); 
   }
 
   getData(){    
     if (this.data != null) {
       let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
       let nameDB = nameEmail + '.db';
-      let identityFolder = 'Chứng minh thư' + '.' + nameEmail;
-      let passportFolder = 'Hộ chiếu' + '.' + nameEmail;
-      let documentFolder = 'Tài liệu' + '.' + nameEmail;
-      let pdfFolder = 'Pdf' + '.' + nameEmail;
       this.sqlite.create({
         name: nameDB,
         location: 'default'
-      }).then((db: SQLiteObject) => {
-        /*db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
-        .then(res => console.log('Deleted Folder table'))
-        .catch(e => console.log(e));
-        db.executeSql('DROP TABLE IF EXISTS image', {} as any)
-        .then(res => console.log('Deleted Image table'))
-        .catch(e => console.log(e));*/
-       /* db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
-        db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT DEFAULT "image/png", upload INTEGER DEFAULT 0, folderid, UNIQUE(name), FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any).catch(e => console.log('Image table didn\'t create: ' + e.message));
-        db.executeSql('INSERT INTO folder VALUES (4,"Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
-        db.executeSql('INSERT INTO folder VALUES (3,"Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
-        db.executeSql('INSERT INTO folder VALUES (2,"Tài liệu",?,"Tài liệu","no")', [this.thisDate]).catch(e => console.log('Document didn\'t add to table: ' + e.message));
-        db.executeSql('INSERT INTO folder VALUES (1,"Pdf",?,"Pdf","no")', [this.thisDate]).catch(e => console.log('Pdf didn\'t add to table: ' + e.message));
-        this.file.createDir(this.path, identityFolder, false).catch(e => console.log('Identity didn\'t add to device: ' + e.message));
-        this.file.createDir(this.path, passportFolder, false).catch(e => console.log('Passport didn\'t add to device: ' + e.message));
-        this.file.createDir(this.path, documentFolder, false).catch(e => console.log('Passport didn\'t add to device: ' + e.message));
-        this.file.createDir(this.path, pdfFolder, false).catch(e => console.log('Pdf didn\'t add to device: ' + e.message));
-        */db.executeSql('SELECT * FROM folder ORDER BY folderid DESC', {} as any)
+      }).then((db: SQLiteObject) => {       
+        db.executeSql('SELECT * FROM folder ORDER BY folderid DESC', {} as any)
         .then(res => {
           this.folders = [];
           for(var i=0; i<res.rows.length; i++) {
@@ -94,24 +69,10 @@ export class HomePage {
       let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
       let nameDBPhone = 'u' + namePhone;
       let nameDB = nameDBPhone + '.db';
-      let identityFolder = 'Identity' + '.' + nameDBPhone;
-      let passportFolder = 'Passport' + '.' + nameDBPhone;
-      let documentFolder = 'Document' + '.' + nameDBPhone;
-      let pdfFolder = 'Pdf' + '.' + nameDBPhone;
       this.sqlite.create({
         name: nameDB,
         location: 'default'
       }).then((db: SQLiteObject) => {
-        db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
-        db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT DEFAULT "image/png", upload INTEGER DEFAULT 0, folderid, UNIQUE(name), FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any).catch(e => console.log('Image table didn\'t create: ' + e.message));
-        db.executeSql('INSERT INTO folder VALUES (4,"Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
-        db.executeSql('INSERT INTO folder VALUES (3,"Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
-        db.executeSql('INSERT INTO folder VALUES (2,"Tài liệu",?,"Tài liệu","no")', [this.thisDate]).catch(e => console.log('Document didn\'t add to table: ' + e.message));
-        db.executeSql('INSERT INTO folder VALUES (1,"Pdf",?,"Pdf","no")', [this.thisDate]).catch(e => console.log('Pdf didn\'t add to table: ' + e.message));
-        this.file.createDir(this.path, identityFolder, false).catch(e => console.log('Identity didn\'t add to device: ' + e.message));
-        this.file.createDir(this.path, passportFolder, false).catch(e => console.log('Passport didn\'t add to device: ' + e.message));
-        this.file.createDir(this.path, documentFolder, false).catch(e => console.log('Passport didn\'t add to device: ' + e.message));
-        this.file.createDir(this.path, pdfFolder, false).catch(e => console.log('Pdf didn\'t add to device: ' + e.message));
         db.executeSql('SELECT * FROM folder ORDER BY folderid DESC', {} as any)
         .then(res => {
           this.folders = [];

@@ -37,7 +37,7 @@
 
 	</ion-list>
 
-	<ion-fab bottom right #fab>
+	<ion-fab bottom right #fab *ngIf='folder.display!="no"'>
 		<button ion-fab><ion-icon name="add"></ion-icon></button>
 		<ion-fab-list  side="top">
 			<button ion-fab class="folder-open" (click)='addImage();closeButton(fab);'><ion-icon name="folder-open"></ion-icon></button>
