@@ -21,15 +21,18 @@
 						<img id="check" *ngIf="image.upload!=0" src="../../assets/imgs/check.png" style="width: 20px; height: 20px; ">
 					</ion-col>					
 				</ion-row>			
+				<button ion-button outline class="delete-no" (tap)="deleteImage(image.imageid);" *ngIf='folder.display=="no"'>
+					<img class="group" src="../../assets/imgs/delete-2.png" style="width: 20px; height: 20px;">
+				</button>
 			</ion-item>
 			<ion-item-options side="right">
-				<button class="upload" ion-button (tap)="uploadImage(image.imageid);">
+				<button class="upload" ion-button (tap)="uploadImage(image.imageid);" *ngIf='folder.display!="no"'>
 					<img src="../../assets/imgs/upload.png" style="width: 20px; height: 20px;">
 				</button>
-				<button class="export" ion-button (tap)="exportImage(image.imageid);">
+				<button class="export" ion-button (tap)="exportImage(image.imageid);" *ngIf='folder.display!="no"'>
 					<img src="../../assets/imgs/export.png" style="width: 20px; height: 20px;">
 				</button>
-				<button class="delete" ion-button (tap)="deleteImage(image.imageid);">
+				<button class="delete" ion-button (tap)="deleteImage(image.imageid);" *ngIf='folder.display!="no"'>
 					<img src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;">
 				</button>
 			</ion-item-options>

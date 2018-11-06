@@ -3,6 +3,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
+import { Toast } from '@ionic-native/toast';
 
 @IonicPage()
 @Component({
@@ -20,7 +21,8 @@ export class AddFolderPage {
 	constructor(public navCtrl: NavController, 
 		private sqlite: SQLite,
 		private auth: AuthService,
-		private file: File
+		private file: File,
+		private toast: Toast,
 		) {
 	}
 
@@ -35,7 +37,7 @@ export class AddFolderPage {
 			}).then((db: SQLiteObject) => {
 				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?,?)',[this.folder.name,this.folder.date,this.folder.type,this.folder.display]).then(res => {					
 					let name = this.folder.name + '.' + nameEmail;
-					this.file.createDir(path, name, false).catch(e => console.log('Folder didn\'t add to device: ' + e.message));					
+					this.file.createDir(path, name, false).catch(e => { this.toast.show('Trùng tên thư mục', '5000', 'bottom').subscribe(toast => console.log(toast))});
 					this.navCtrl.popToRoot();
 				}).catch(e => console.log('Folder didn\'t add to table: ' + e.message));					
 			}).catch(e => console.log('SQLite didn\'t create SQLite: ' + e.message));	
@@ -52,7 +54,7 @@ export class AddFolderPage {
 			}).then((db: SQLiteObject) => {
 				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?,?)',[this.folder.name,this.folder.date,this.folder.type,this.folder.display]).then(res => {					
 					let name = this.folder.name + '.' + nameDBPhone;
-					this.file.createDir(path, name, false).catch(e => console.log('Folder didn\'t add to device: ' + e.message));					
+					this.file.createDir(path, name, false).catch(e => { this.toast.show('Trùng tên thư mục', '5000', 'bottom').subscribe(toast => console.log(toast))});					
 					this.navCtrl.popToRoot();
 				}).catch(e => console.log('Folder didn\'t add to table: ' + e.message));					
 			}).catch(e => console.log('SQLite didn\'t create SQLite: ' + e.message));	

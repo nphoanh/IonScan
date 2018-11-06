@@ -74,7 +74,7 @@ export class ImageDocumentPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,2)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,1)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
                     this.navCtrl.push(InfoDocumentPage,{picture:src}); 
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
@@ -90,7 +90,7 @@ export class ImageDocumentPage {
                 name: nameDB,
                 location: 'default'
             }).then((db: SQLiteObject) => {                
-                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,2)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
+                db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,1)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
                     this.navCtrl.push(InfoDocumentPage,{picture:src}); 
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   

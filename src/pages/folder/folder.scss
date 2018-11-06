@@ -5,6 +5,16 @@ page-folder {
 		margin-right: 10px;
 	}
 
+	button.delete-no.disable-hover.button.button-md.button-outline.button-outline-md.item-button {
+		float: right;
+		margin-top: -67px !important;
+		height: 40px;
+		border-radius: 46px;
+		width: 40px;
+		margin-right: 2px;
+		border-color: #ffb3ba;
+	}
+
 	ion-fab[bottom] {
 		bottom: 25px;
 		margin-right: 10px;

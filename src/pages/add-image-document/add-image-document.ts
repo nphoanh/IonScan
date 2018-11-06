@@ -40,7 +40,7 @@ export class AddImageDocumentPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {				
-				db.executeSql('SELECT * FROM image WHERE folderid=3 ORDER BY imageid DESC', {} as any).then(res => {
+				db.executeSql('SELECT * FROM image WHERE folderid=1 ORDER BY imageid DESC', {} as any).then(res => {
 					this.images = [];
 					for(var i=0; i<res.rows.length; i++) {
 						this.images.push({
@@ -55,7 +55,7 @@ export class AddImageDocumentPage {
 						})
 					}
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
-				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=3', {} as any).then(res => {
+				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=1', {} as any).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
 					}
@@ -71,7 +71,7 @@ export class AddImageDocumentPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {				
-				db.executeSql('SELECT * FROM image WHERE folderid=3 ORDER BY imageid DESC', {} as any).then(res => {
+				db.executeSql('SELECT * FROM image WHERE folderid=1 ORDER BY imageid DESC', {} as any).then(res => {
 					this.images = [];
 					for(var i=0; i<res.rows.length; i++) {
 						this.images.push({
@@ -86,7 +86,7 @@ export class AddImageDocumentPage {
 						})
 					}
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
-				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=3', {} as any).then(res => {
+				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=1', {} as any).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
 					}
@@ -122,7 +122,7 @@ export class AddImageDocumentPage {
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let nameDB = nameEmail + '.db';
 			let folderPathNew = this.file.externalRootDirectory + 'IonScan' + '/' + this.foldername + '.' + nameEmail;                        		
-			let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + nameEmail;                        			
+			let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Tài liệu' + '.' + nameEmail;                        			
 			this.sqlite.create({
 				name: nameDB,
 				location: 'default'
@@ -154,7 +154,7 @@ export class AddImageDocumentPage {
 			let nameDBPhone = 'u' + namePhone;
 			let nameDB = nameDBPhone + '.db';
 			let folderPathNew = this.file.externalRootDirectory + 'IonScan' + '/' + this.foldername + '.' + nameDBPhone;                        
-			let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Passport' + '.' + nameDBPhone;                        
+			let folderPath = this.file.externalRootDirectory + 'IonScan' + '/' + 'Tài liệu' + '.' + nameDBPhone;                        
 			this.sqlite.create({
 				name: nameDB,
 				location: 'default'
@@ -181,65 +181,4 @@ export class AddImageDocumentPage {
 			this.navCtrl.pop();
 		}
 	}
-
-
-	deleteImage(imageid){
-		if (this.data != null) {
-			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
-			let nameDB = nameEmail + '.db';
-			this.sqlite.create({
-				name: nameDB,
-				location: 'default'
-			}).then((db: SQLiteObject) => {
-				db.executeSql('SELECT * FROM image WHERE imageid=?', [imageid])
-				.then(res => {
-					if(res.rows.length > 0) {
-						this.image.imageid = res.rows.item(0).imageid;
-						this.image.name = res.rows.item(0).name;
-						this.image.date = res.rows.item(0).date;
-						this.image.path = res.rows.item(0).path;
-						this.image.base64 = res.rows.item(0).base64;
-						this.image.type = res.rows.item(0).type;
-						this.image.folderid = res.rows.item(0).folderid;						
-					}		         
-					let name = this.image.name + '.' + 'png';
-					this.file.removeFile(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
-				}).catch(e => console.log('Image didn\'t remove: ' + e.message));
-				db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
-					this.getData();        
-				}).catch(e => console.log('Folder didn\'t remove in table: ' + e.message));
-			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
-		}
-
-		else {
-			let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
-			let nameDBPhone = 'u' + namePhone;
-			let nameDB = nameDBPhone + '.db';
-			this.sqlite.create({
-				name: nameDB,
-				location: 'default'
-			}).then((db: SQLiteObject) => {
-				db.executeSql('SELECT * FROM image WHERE imageid=?', [imageid])
-				.then(res => {
-					if(res.rows.length > 0) {
-						this.image.imageid = res.rows.item(0).imageid;
-						this.image.name = res.rows.item(0).name;
-						this.image.date = res.rows.item(0).date;
-						this.image.path = res.rows.item(0).path;
-						this.image.base64 = res.rows.item(0).base64;
-						this.image.type = res.rows.item(0).type;
-						this.image.folderid = res.rows.item(0).folderid;						
-					}		         
-					let name = this.image.name + '.' + 'png';
-					this.file.removeFile(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
-				}).catch(e => console.log('Image didn\'t remove: ' + e.message));
-				db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
-					this.getData();        
-				}).catch(e => console.log('Folder didn\'t remove in table: ' + e.message));
-			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
-		}
-	}
-
-
-
 }

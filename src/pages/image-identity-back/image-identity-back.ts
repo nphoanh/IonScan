@@ -74,7 +74,7 @@ export class ImageIdentityBackPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {                
-				db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,4)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
+				db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,3)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
 					this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
 					this.navCtrl.push(InfoIdentityPage,{
 						pictureFront:this.pictureFront,
@@ -93,7 +93,7 @@ export class ImageIdentityBackPage {
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {                
-				db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,4)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
+				db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,3)', [this.image.name,this.image.date,folderPath,src,this.image.type,this.image.upload]).then(res => {
 					this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
 					this.navCtrl.push(InfoIdentityPage,{
 						pictureFront:this.pictureFront,

@@ -80,10 +80,9 @@ export class LoginPage {
             }).then((db: SQLiteObject) => {
               db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
               db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT DEFAULT "image/png", upload INTEGER DEFAULT 0, folderid, UNIQUE(name), FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any).catch(e => console.log('Image table didn\'t create: ' + e.message));
-              db.executeSql('INSERT INTO folder VALUES (4,"Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
-              db.executeSql('INSERT INTO folder VALUES (3,"Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
-              db.executeSql('INSERT INTO folder VALUES (2,"Tài liệu",?,"Tài liệu","no")', [this.thisDate]).catch(e => console.log('Document didn\'t add to table: ' + e.message));
-              db.executeSql('INSERT INTO folder VALUES (1,"Pdf",?,"Pdf","no")', [this.thisDate]).catch(e => console.log('Pdf didn\'t add to table: ' + e.message));
+              db.executeSql('INSERT INTO folder VALUES (3,"Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
+              db.executeSql('INSERT INTO folder VALUES (2,"Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
+              db.executeSql('INSERT INTO folder VALUES (1,"Tài liệu",?,"Tài liệu","no")', [this.thisDate]).catch(e => console.log('Document didn\'t add to table: ' + e.message));
               this.file.createDir(this.path, identityFolder, false).catch(e => console.log('Identity didn\'t add to device: ' + e.message));
               this.file.createDir(this.path, passportFolder, false).catch(e => console.log('Passport didn\'t add to device: ' + e.message));
               this.file.createDir(this.path, documentFolder, false).catch(e => console.log('Passport didn\'t add to device: ' + e.message));
@@ -129,7 +128,7 @@ export class LoginPage {
           name: nameDB,
           location: 'default'
         }).then((db: SQLiteObject) => {
-          /*db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
+        /*  db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
           .then(res => console.log('Deleted Folder table'))
           .catch(e => console.log(e));
           db.executeSql('DROP TABLE IF EXISTS image', {} as any)
@@ -137,10 +136,9 @@ export class LoginPage {
           .catch(e => console.log(e)); */
           db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
           db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT DEFAULT "image/png", upload INTEGER DEFAULT 0, folderid, UNIQUE(name), FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any).catch(e => console.log('Image table didn\'t create: ' + e.message));
-          db.executeSql('INSERT INTO folder VALUES (4,"Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
-          db.executeSql('INSERT INTO folder VALUES (3,"Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
-          db.executeSql('INSERT INTO folder VALUES (2,"Tài liệu",?,"Tài liệu","no")', [this.thisDate]).catch(e => console.log('Document didn\'t add to table: ' + e.message));
-          db.executeSql('INSERT INTO folder VALUES (1,"Pdf",?,"Pdf","no")', [this.thisDate]).catch(e => console.log('Pdf didn\'t add to table: ' + e.message));
+          db.executeSql('INSERT INTO folder VALUES (3,"Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
+          db.executeSql('INSERT INTO folder VALUES (2,"Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
+          db.executeSql('INSERT INTO folder VALUES (1,"Tài liệu",?,"Tài liệu","no")', [this.thisDate]).catch(e => console.log('Document didn\'t add to table: ' + e.message));
           this.file.createDir(this.path, identityFolder, false).catch(e => console.log('Identity didn\'t add to device: ' + e.message));
           this.file.createDir(this.path, passportFolder, false).catch(e => console.log('Passport didn\'t add to device: ' + e.message));
           this.file.createDir(this.path, documentFolder, false).catch(e => console.log('Document didn\'t add to device: ' + e.message));

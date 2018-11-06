@@ -1,8 +1,18 @@
 page-add-image-identity {
-button.add.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-default-md {
+	button.add.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-default-md {
 		font-size: 15px;
 		color: white;
 		margin-right: 10px;
+	}
+
+	button.export.disable-hover.item-button.button.button-md.button-outline.button-outline-md {
+		float: right;
+		margin-top: -67px !important;
+		height: 40px;
+		border-radius: 46px;
+		width: 40px;
+		margin-right: 2px;
+		border-color: #aed2fc;
 	}
 
 	ion-icon.icon.icon-md.ion-md-image {
@@ -57,7 +67,7 @@ button.add.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-
 		background-color: white!important;
 	}
 
-		button.delete.button.button-md.button-default.button-default-md {
+	button.delete.button.button-md.button-default.button-default-md {
 		background-color: #ffb3ba;
 		margin-top: 10px;
 	}

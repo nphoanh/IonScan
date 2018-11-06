@@ -1,7 +1,7 @@
 <ion-header>
 
 	<ion-navbar>
-		<ion-title>Ảnh chứng minh thư({{totalImage}})</ion-title>		
+		<ion-title>Ảnh chứng minh thư ({{totalImage}})</ion-title>		
 	</ion-navbar>
 	
 </ion-header>
@@ -21,15 +21,10 @@
 						<p class="titcard-pass">{{image.date | date: 'H:mm dd/MM/yyyy'}}</p>		
 					</ion-col>			
 				</ion-row>
+				<button ion-button outline class="export" (tap)="moveImage(image.imageid);">
+					<img class="group" src="../../assets/imgs/add-2.png" style="width: 20px; height: 20px;">
+				</button>
 			</ion-item>
-			<ion-item-options side="right">
-				<button ion-button class="export" (tap)="moveImage(image.imageid);">
-					<img class="group" src="../../assets/imgs/add.png" style="width: 20px; height: 20px;">
-				</button>
-				<button class="delete" ion-button (tap)="deleteImage(image.imageid);">
-					<img src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;">
-				</button>
-			</ion-item-options>
 		</ion-item-sliding>
 
 	</ion-list>
