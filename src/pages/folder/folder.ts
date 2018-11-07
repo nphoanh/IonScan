@@ -13,6 +13,7 @@ import { AddImagePassportPage } from '../add-image-passport/add-image-passport';
 import { AddImageIdentityPage } from '../add-image-identity/add-image-identity';
 import { AddImageDocumentPage } from '../add-image-document/add-image-document';
 import { ImagePage } from '../image/image';
+import { CropEditPage } from '../crop-edit/crop-edit';
 
 @IonicPage()
 @Component({
@@ -319,6 +320,15 @@ export class FolderPage {
 				foldername:this.foldername
 			});
 		}, (err) => console.log('Image didn\'t pick: ' + err));
+	}
+
+	editImage(imageid,name,path,base64){
+		this.navCtrl.push(CropEditPage,{
+			imageid:imageid,
+			imagename:name,
+			path:path,
+			base64:base64
+		});
 	}
 
 }

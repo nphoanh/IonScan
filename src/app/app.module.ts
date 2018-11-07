@@ -16,8 +16,10 @@ import { DocumentPage } from '../pages/document/document';
 import { AddFolderPage } from '../pages/add-folder/add-folder';
 import { EditFolderPage } from '../pages/edit-folder/edit-folder';
 import { FolderPage } from '../pages/folder/folder';
+import { EditImagePage } from '../pages/edit-image/edit-image';
 import { ImageDocumentPage } from '../pages/image-document/image-document';
 import { ImagePassportPage } from '../pages/image-passport/image-passport';
+import { CropPassportPage } from '../pages/crop-passport/crop-passport';
 import { InfoPassportPage } from '../pages/info-passport/info-passport';
 import { ImageIdentityPage } from '../pages/image-identity/image-identity';
 import { InfoDocumentPage } from '../pages/info-document/info-document';
@@ -27,6 +29,11 @@ import { AddImageIdentityPage } from '../pages/add-image-identity/add-image-iden
 import { AddImageDocumentPage } from '../pages/add-image-document/add-image-document';
 import { IdentityBackPage } from '../pages/identity-back/identity-back';
 import { ImageIdentityBackPage } from '../pages/image-identity-back/image-identity-back';
+import { CropDocumentPage } from '../pages/crop-document/crop-document';
+import { CropIdentityPage } from '../pages/crop-identity/crop-identity';
+import { CropIdentityBackPage } from '../pages/crop-identity-back/crop-identity-back';
+import { CropEditPage } from '../pages/crop-edit/crop-edit';
+import { CropImagePage } from '../pages/crop-image/crop-image';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -71,7 +78,14 @@ import { NgProgressModule } from '@ngx-progressbar/core';
   DocumentPage,
   ImageDocumentPage,
   InfoDocumentPage,
-  AddImageDocumentPage
+  AddImageDocumentPage,
+  EditImagePage,
+  CropPassportPage,
+  CropDocumentPage,
+  CropIdentityPage,
+  CropIdentityBackPage,
+  CropEditPage,
+  CropImagePage
   ],
   imports: [
   BrowserModule,
@@ -107,7 +121,14 @@ import { NgProgressModule } from '@ngx-progressbar/core';
   DocumentPage,
   ImageDocumentPage,
   InfoDocumentPage,
-  AddImageDocumentPage
+  AddImageDocumentPage,
+  EditImagePage,
+  CropPassportPage,
+  CropDocumentPage,
+  CropIdentityPage,
+  CropIdentityBackPage,
+  CropEditPage,
+  CropImagePage
   ],
   providers: [
   StatusBar,

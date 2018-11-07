@@ -23,7 +23,6 @@ export class ImageIdentityPage {
     images:any = [];
     image = { name:"", date:this.thisDate, path:"", base64:"", type:"image/png", upload:0 };  
     sortableContour = [];
-    hide : boolean = false;
 
     constructor(public navCtrl: NavController, 
         public navParams: NavParams,
@@ -32,10 +31,6 @@ export class ImageIdentityPage {
         private auth: AuthService,
         private toast: Toast,
         ) {
-    }
-
-    hideDiv(){
-        this.hide = true;
     }
     
     b64toBlob(b64Data, contentType, sliceSize) {
@@ -61,7 +56,7 @@ export class ImageIdentityPage {
     }    
 
     saveImage(){
-        let pic = document.getElementById('img') as HTMLImageElement;
+        let pic = document.getElementById('img') as HTMLImageElement;  
         let src = pic.src;
         let base = src.substr(src.lastIndexOf(',')+1);
         let nameFile = this.image.name + '.' + 'png';
@@ -79,7 +74,6 @@ export class ImageIdentityPage {
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));                     
         }
-
         else {
             let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
             let nameDBPhone = 'u' + namePhone;
@@ -94,7 +88,7 @@ export class ImageIdentityPage {
                     this.navCtrl.push(IdentityBackPage,{pictureFront:src}); 
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));   
-        }                  
+        }                    
     }
 
     rotateRight() {
@@ -104,10 +98,11 @@ export class ImageIdentityPage {
         let M = cv.getRotationMatrix2D(center, -90, 1);
         cv.warpAffine(src, src, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
         cv.imshow('canvasOutput', src);
-        src.delete(); M.delete();
-        var canvasOutput = document.getElementById('canvasOutput') as HTMLCanvasElement;
+        let canvasOutput = document.getElementById('canvasOutput') as HTMLCanvasElement;
         let picture = document.getElementById("img") as HTMLImageElement;
-        picture.src = canvasOutput.toDataURL();
+        picture.style.visibility = "hidden";
+        canvasOutput.style.visibility = "";
+        src.delete(); M.delete(); 
     }
 
     rotateLeft() {
@@ -117,10 +112,11 @@ export class ImageIdentityPage {
         let M = cv.getRotationMatrix2D(center, 90, 1);
         cv.warpAffine(src, src, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
         cv.imshow('canvasOutput', src);
-        src.delete(); M.delete();
         var canvasOutput = document.getElementById('canvasOutput') as HTMLCanvasElement;
         let picture = document.getElementById("img") as HTMLImageElement;
-        picture.src = canvasOutput.toDataURL();
+        picture.style.visibility = "hidden";
+        canvasOutput.style.visibility = "";
+        src.delete(); M.delete(); 
     }
 
     crop() {
@@ -220,6 +216,13 @@ export class ImageIdentityPage {
         origin.style.borderStyle = "solid";
         origin.style.borderColor = "black";
         origin.style.borderWidth = "1px";
+        let src = cv.imread('img');        
+        cv.imshow('canvasOutput', src);
+        let canvasOutput = document.getElementById('canvasOutput') as HTMLCanvasElement;
+        let picture = document.getElementById("img") as HTMLImageElement;
+        picture.style.visibility = "hidden";
+        canvasOutput.style.visibility = "";
+        src.delete(); 
     }
     
     gray(){

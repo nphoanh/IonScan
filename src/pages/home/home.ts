@@ -42,7 +42,13 @@ export class HomePage {
       this.sqlite.create({
         name: nameDB,
         location: 'default'
-      }).then((db: SQLiteObject) => {       
+      }).then((db: SQLiteObject) => {   
+       /* db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
+        .then(res => console.log('Deleted Folder table'))
+        .catch(e => console.log(e));
+        db.executeSql('DROP TABLE IF EXISTS image', {} as any)
+        .then(res => console.log('Deleted Image table'))
+        .catch(e => console.log(e));     */
         db.executeSql('SELECT * FROM folder ORDER BY folderid DESC', {} as any)
         .then(res => {
           this.folders = [];

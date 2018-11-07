@@ -35,7 +35,7 @@ export class ImagePage {
         ) {
     }
 
-      hideDiv(){
+    hideDiv(){
         this.hide = true;
     }
 

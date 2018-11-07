@@ -128,12 +128,6 @@ export class LoginPage {
           name: nameDB,
           location: 'default'
         }).then((db: SQLiteObject) => {
-        /*  db.executeSql('DROP TABLE IF EXISTS folder', {} as any)
-          .then(res => console.log('Deleted Folder table'))
-          .catch(e => console.log(e));
-          db.executeSql('DROP TABLE IF EXISTS image', {} as any)
-          .then(res => console.log('Deleted Image table'))
-          .catch(e => console.log(e)); */
           db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
           db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT DEFAULT "image/png", upload INTEGER DEFAULT 0, folderid, UNIQUE(name), FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any).catch(e => console.log('Image table didn\'t create: ' + e.message));
           db.executeSql('INSERT INTO folder VALUES (3,"Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));

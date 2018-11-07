@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions } from '@ionic-native/camera-preview';
 
-import { ImageDocumentPage } from '../image-document/image-document';
+import { CropDocumentPage } from '../crop-document/crop-document';
 
 @IonicPage()
 @Component({
@@ -55,7 +55,7 @@ ionViewDidLoad() {
       var x_coord = rect_coords.left, y_coord = rect_coords.top;
       var rect_width = rect.offsetWidth, rect_height = rect.offsetHeight;
       this.crop(imageData, rect_width, rect_height, x_coord, y_coord, cropped_img_base64 => {
-        this.navCtrl.push(ImageDocumentPage, {picture:cropped_img_base64});
+        this.navCtrl.push(CropDocumentPage, {picture:cropped_img_base64});
       });
     }, (err) => {
       console.log(err);

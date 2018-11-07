@@ -22,7 +22,8 @@ export class EditFolderPage {
 		public navParams: NavParams,
 		private sqlite: SQLite,
 		private auth: AuthService,
-		private file: File) {
+		private file: File
+		) {
 		this.getCurrentFolder(navParams.get("folderid"));
 	}
 
@@ -69,7 +70,7 @@ export class EditFolderPage {
 		}
 	}
 
-	updatFolder(folderid) {
+	updateFolder(folderid) {
 		if (this.data != null) {
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let nameDB = nameEmail + '.db'; 

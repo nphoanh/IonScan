@@ -6,6 +6,7 @@ import { File } from '@ionic-native/file';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import * as jsPDF from 'jspdf';
 import { FileOpener } from '@ionic-native/file-opener';
+import { NgProgress } from '@ngx-progressbar/core';
 
 @IonicPage()
 @Component({
@@ -30,7 +31,8 @@ export class ExportPage {
 		private auth: AuthService,
 		private file: File,
 		private socialSharing: SocialSharing,
-		private fileOpener: FileOpener
+		private fileOpener: FileOpener,
+		public progress: NgProgress,
 		) {
 	}
 
@@ -87,6 +89,7 @@ export class ExportPage {
 	}
 
 	generatePdf(){
+		this.progress.start();
 		var imgData = this.image.base64;
 		var doc = new jsPDF();
 		doc.addImage(imgData, 'PNG', 10, 10);
@@ -101,18 +104,29 @@ export class ExportPage {
 		if (this.data != null) {
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let pathPdf = this.path + nameEmail;
-			let filePdf = pathPdf + '/' + namePdf;
-			this.file.writeFile(pathPdf, namePdf, buffer).catch(e => console.log('File didn\'t save: ' + e.message));       	
-			this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
+			let filePdf = pathPdf + '/' + 	namePdf;
+			this.file.checkFile(pathPdf, namePdf).then(e=> {
+				this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
+			}).catch(err => {
+				this.file.writeFile(pathPdf, namePdf, buffer).then( e => {
+					this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
+				}).catch(err => console.log('File didn\'t save: ' + err.message));       	
+			});
 		}
 		else {
 			let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
 			let nameDBPhone = 'u' + namePhone;
 			let pathPdf = this.path + nameDBPhone;
-			let filePdf = pathPdf + '/' + namePdf;
-			this.file.writeFile(pathPdf, namePdf, buffer).catch(e => console.log('File didn\'t save: ' + e.message));       
-			this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
+			let filePdf = pathPdf + '/' + 	namePdf;
+			this.file.checkFile(pathPdf, namePdf).then(e=> {
+				this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
+			}).catch(err => {
+				this.file.writeFile(pathPdf, namePdf, buffer).then( e => {
+					this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
+				}).catch(err => console.log('File didn\'t save: ' + err.message));       	
+			});
 		}
+		this.progress.complete();
 	}
 
 }

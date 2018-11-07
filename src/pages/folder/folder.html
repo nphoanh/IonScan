@@ -3,14 +3,14 @@
 	<ion-navbar>
 		<ion-title>{{folder.name}} ({{totalImage}})</ion-title>
 	</ion-navbar>
-	<ng-progress class="folder" [min]="0" [max]="1" [color]="'red'" [meteor]="true" [thick]="true" [spinner]="false"></ng-progress>
+	<ng-progress class="folder" [min]="0" [max]="1" [color]="'red'" [meteor]="true" [thick]="true" [spinner]="true"></ng-progress>
 </ion-header>
 
 <ion-content padding>
 
 	<ion-list>
 		<ion-item-sliding class="itemfolder" *ngFor="let image of images; let i=index">
-			<ion-item class="itemfolder">
+			<ion-item class="itemfolder" (tap)="editImage(image.imageid,image.name,image.path,image.base64);">
 				<ion-row>
 					<ion-col col-5>
 						<img id="img" [src]="image.base64" style="width: 100px;height: 70px;" /> 
@@ -21,9 +21,6 @@
 						<img id="check" *ngIf="image.upload!=0" src="../../assets/imgs/check.png" style="width: 20px; height: 20px; ">
 					</ion-col>					
 				</ion-row>			
-				<button ion-button outline class="delete-no" (tap)="deleteImage(image.imageid);" *ngIf='folder.display=="no"'>
-					<img class="group" src="../../assets/imgs/delete-2.png" style="width: 20px; height: 20px;">
-				</button>
 			</ion-item>
 			<ion-item-options side="right">
 				<button class="upload" ion-button (tap)="uploadImage(image.imageid);" *ngIf='folder.display!="no"'>
@@ -31,10 +28,10 @@
 				</button>
 				<button class="export" ion-button (tap)="exportImage(image.imageid);" *ngIf='folder.display!="no"'>
 					<img src="../../assets/imgs/export.png" style="width: 20px; height: 20px;">
-				</button>
-				<button class="delete" ion-button (tap)="deleteImage(image.imageid);" *ngIf='folder.display!="no"'>
+				</button>		
+				<button class="delete" ion-button (tap)="deleteImage(image.imageid);">
 					<img src="../../assets/imgs/delete.png" style="width: 20px; height: 20px;">
-				</button>
+				</button>			
 			</ion-item-options>
 		</ion-item-sliding>
 
