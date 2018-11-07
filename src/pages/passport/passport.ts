@@ -50,7 +50,7 @@ export class PassportPage {
       quality: 100
     }
     this.cameraPreview.takePicture(pictureOpts).then((imageData) => {  
-      var rect = <HTMLDivElement>  document.getElementById('rect');
+      var rect = <HTMLDivElement>  document.getElementById('rectPassport');
       var rect_coords = rect.getBoundingClientRect();
       var x_coord = rect_coords.left, y_coord = rect_coords.top;
       var rect_width = rect.offsetWidth, rect_height = rect.offsetHeight;

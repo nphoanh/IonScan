@@ -8,9 +8,14 @@
 
 <ion-content padding>
 
-	<img id="img" [src]="picture" *ngIf="picture"/> 
-	<canvas id="canvasOutput" style="visibility: hidden;"></canvas>
-	<div id="filter" *ngIf='hide'>
+	<canvas id="canvasOutputDoc"></canvas>
+	
+	<img id="imgDoc" [src]="picture" *ngIf="picture" style="visibility: hidden;"/> 
+
+</ion-content>
+
+<ion-footer>
+<div id="filter" *ngIf='hide'>
 		<ion-grid>
 			<ion-row>
 				<div id="origin" (tap)="origin();">
@@ -40,11 +45,6 @@
 			</ion-row>
 		</ion-grid>
 	</div>
-
-</ion-content>
-
-<ion-footer>
-
 	<ion-grid class="button-group">
 		<ion-row>
 			<button class="button-group" (tap)="showDiv()" (press)="hideDiv()">

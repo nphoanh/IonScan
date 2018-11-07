@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { ImagePassportPage } from '../image-passport/image-passport';
-
+ 
 declare var cv: any;
 
 @IonicPage()

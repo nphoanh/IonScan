@@ -200,6 +200,4 @@ export class ImagePassportPage {
         cv.imshow('canvasOutputPassport', dst);
         src.delete(); dst.delete(); 
     }
-
-
 }

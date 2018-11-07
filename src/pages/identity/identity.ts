@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions } from '@ionic-native/camera-preview';
 
-import { ImageIdentityPage } from '../image-identity/image-identity';
+import { CropIdentityPage } from '../crop-identity/crop-identity';
 
 @IonicPage()
 @Component({
@@ -55,7 +55,7 @@ export class IdentityPage {
 			var x_coord = rect_coords.left, y_coord = rect_coords.top;
 			var rect_width = rect.offsetWidth, rect_height = rect.offsetHeight;
 			this.crop(imageData, rect_width, rect_height, x_coord, y_coord, cropped_img_base64 => {
-				this.navCtrl.push(ImageIdentityPage, {pictureFront:cropped_img_base64});
+				this.navCtrl.push(CropIdentityPage, {pictureFront:cropped_img_base64});
 			});
 		}, (err) => {
 			console.log(err);

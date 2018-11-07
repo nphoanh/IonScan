@@ -98,10 +98,9 @@ label.filter {
     color: black;
 }
 div#filter {
-    background-color: #D3D3D3;
-    margin-left: -16px;
-    margin-right: -16px;
-    margin-top: -26px;
+    border-bottom-color: #D3D3D3;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
 }
 
 div#origin {
@@ -113,5 +112,11 @@ div#origin {
 ion-icon.filter.icon.icon-md.ion-md-color-wand {
     font-size: 25px;
     color: #67aaf9;
+}
+
+canvas#canvasOutputPick {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 }

@@ -104,12 +104,6 @@ page-image-identity {
 	}
 	div#filter {
 		background-color: #D3D3D3;
-		margin-left: -16px;
-		margin-right: -16px;
-		margin-top: 223px !important;
-		display: block;
-		z-index: 1;
-		    position: fixed;
 	}
 
 	div#origin {
@@ -123,10 +117,9 @@ page-image-identity {
 		color: #67aaf9;
 	}
 
-	canvas#canvasOutput {
+	canvas#canvasOutputIdentity {
 		display: block;
 		margin-left: auto;
 		margin-right: auto;
-		margin-top: -245px !important;
 	}
 }

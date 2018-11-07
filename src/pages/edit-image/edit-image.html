@@ -1,16 +1,20 @@
 <ion-header>
 
 	<ion-navbar>
-		<ion-input class="title" [(ngModel)]="image.name" type="text" value={{imagename}} placeholder={{imagename}}></ion-input>
+		<ion-input class="title" [(ngModel)]="image.name" type="text" value="{{imagename}}" placeholder="{{imagename}}"></ion-input>
 	</ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
 
-	<img id="img" [src]="picture" *ngIf="picture"/> 
-	<canvas id="canvasOutput" style="visibility: hidden;"></canvas>
-	<div id="filter" *ngIf='hide'>
+	<canvas id="canvasOutputEdit"></canvas>	
+	<img id="imgEdit" [src]="picture" *ngIf="picture" style="visibility: hidden;"/> 
+
+</ion-content>
+
+<ion-footer>
+<div id="filter" *ngIf='hide'>
 		<ion-grid>
 			<ion-row>
 				<div id="origin" (tap)="origin();">
@@ -40,11 +44,6 @@
 			</ion-row>
 		</ion-grid>
 	</div>
-
-</ion-content>
-
-<ion-footer>
-
 	<ion-grid class="button-group">
 		<ion-row>
 			<button class="button-group" (tap)="showDiv()" (press)="hideDiv()">
@@ -59,7 +58,7 @@
 				<img class="rotate" src="../../assets/imgs/rotate_right.png" style="width: 25px; height: 25px;">
 				<br><label>Phải</label>
 			</button>	
-			<button class="button-group" (tap)="saveImage();">
+			<button class="button-group" (tap)="updateImage();">
 				<ion-icon class="save" name="checkmark"></ion-icon>
 				<br><label>Xong</label>
 			</button>

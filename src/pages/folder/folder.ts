@@ -7,12 +7,12 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Toast } from '@ionic-native/toast';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgProgress } from '@ngx-progressbar/core';
-
+ 
 import { ExportPage } from '../export/export';
 import { AddImagePassportPage } from '../add-image-passport/add-image-passport';
 import { AddImageIdentityPage } from '../add-image-identity/add-image-identity';
 import { AddImageDocumentPage } from '../add-image-document/add-image-document';
-import { ImagePage } from '../image/image';
+import { CropImagePage } from '../crop-image/crop-image';
 import { CropEditPage } from '../crop-edit/crop-edit';
 
 @IonicPage()
@@ -314,7 +314,7 @@ export class FolderPage {
 		}
 		this.camera.getPicture(options).then((imageData) => {
 			let base64 = 'data:image/jpeg;base64,' + imageData;
-			this.navCtrl.push(ImagePage,{
+			this.navCtrl.push(CropImagePage,{
 				picture:base64,
 				folderid:this.folderid,
 				foldername:this.foldername
@@ -327,7 +327,7 @@ export class FolderPage {
 			imageid:imageid,
 			imagename:name,
 			path:path,
-			base64:base64
+			base64:base64 
 		});
 	}
 

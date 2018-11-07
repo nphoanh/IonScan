@@ -52,20 +52,19 @@ export class IdentityBackPage {
 			quality: 100
 		}
 		this.cameraPreview.takePicture(pictureOpts).then((imageData) => {  
-			// this.crop(imageData, 306, 224, 26, 82, cropped_img_base64 => {
-				var rect = <HTMLDivElement> document.getElementById('rectBack');
-				var rect_coords = rect.getBoundingClientRect();
-				var x_coord = rect_coords.left, y_coord = rect_coords.top;
-				var rect_width = rect.offsetWidth, rect_height = rect.offsetHeight;
-				this.crop(imageData, rect_width, rect_height, x_coord, y_coord, cropped_img_base64 => {					
-					this.navCtrl.push(CropIdentityBackPage, {
-						pictureFront:this.pictureFront,
-						pictureBack:cropped_img_base64
-					});
+			var rect = <HTMLDivElement> document.getElementById('rectBack');
+			var rect_coords = rect.getBoundingClientRect();
+			var x_coord = rect_coords.left, y_coord = rect_coords.top;
+			var rect_width = rect.offsetWidth, rect_height = rect.offsetHeight;
+			this.crop(imageData, rect_width, rect_height, x_coord, y_coord, cropped_img_base64 => {					
+				this.navCtrl.push(CropIdentityBackPage, {
+					pictureFront:this.pictureFront,
+					pictureBack:cropped_img_base64 
 				});
-			}, (err) => {
-				console.log(err);
 			});
+		}, (err) => {
+			console.log(err);
+		});
 	}
 
 	crop(imageData, rect_width, rect_height, x_coord, y_coord, callback) {
