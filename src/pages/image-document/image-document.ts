@@ -89,7 +89,10 @@ export class ImageDocumentPage {
             }).then((db: SQLiteObject) => {                
                 db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,1)', [this.image.name,this.image.date,folderPath,this.picture,this.image.type,this.image.upload]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
-                    this.navCtrl.push(InfoDocumentPage,{picture:this.picture}); 
+                    this.navCtrl.push(InfoDocumentPage,{
+                        picture:this.picture,
+                        imagename:this.image.name
+                    }); 
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));                     
         }
@@ -105,7 +108,10 @@ export class ImageDocumentPage {
             }).then((db: SQLiteObject) => {                
                 db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,1)', [this.image.name,this.image.date,folderPath,this.picture,this.image.type,this.image.upload]).then(res => {
                     this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
-                    this.navCtrl.push(InfoDocumentPage,{picture:this.picture}); 
+                    this.navCtrl.push(InfoDocumentPage,{
+                        picture:this.picture,
+                        imagename:this.image.name
+                    }); 
                 }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));   
         }                  

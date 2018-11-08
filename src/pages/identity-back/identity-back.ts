@@ -12,6 +12,7 @@ import { CropIdentityBackPage } from '../crop-identity-back/crop-identity-back';
 export class IdentityBackPage {
 
 	pictureFront = this.navParams.get('pictureFront');
+imagename = this.navParams.get("imagename");
 
 	constructor(
 		public navCtrl: NavController, 
@@ -59,7 +60,8 @@ export class IdentityBackPage {
 			this.crop(imageData, rect_width, rect_height, x_coord, y_coord, cropped_img_base64 => {					
 				this.navCtrl.push(CropIdentityBackPage, {
 					pictureFront:this.pictureFront,
-					pictureBack:cropped_img_base64 
+					pictureBack:cropped_img_base64,
+					imagename:this.imagename
 				});
 			});
 		}, (err) => {

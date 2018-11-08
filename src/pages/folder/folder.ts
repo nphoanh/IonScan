@@ -304,6 +304,7 @@ export class FolderPage {
 	}
 
 	pickImage() {
+		this.progress.start();
 		const options: CameraOptions = {
 			quality: 100,
 			destinationType: this.camera.DestinationType.DATA_URL,
@@ -319,6 +320,7 @@ export class FolderPage {
 				folderid:this.folderid,
 				foldername:this.foldername
 			});
+		this.progress.complete();
 		}, (err) => console.log('Image didn\'t pick: ' + err));
 	}
 

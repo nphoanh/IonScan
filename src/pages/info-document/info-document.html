@@ -1,15 +1,8 @@
  <ion-header>
-
+ 
  	<ion-navbar>
- 		<ion-title>Tài liệu</ion-title>
- 		<ion-buttons end> 
- 			<button class="share" ion-button icon-only> 
- 				Chia sẻ &nbsp;
- 				<ion-icon name="share"></ion-icon>
- 			</button>
- 		</ion-buttons> 
- 	</ion-navbar>
- 	<ng-progress [min]="0" [max]="1" [color]="'red'" [meteor]="true" [thick]="true" [spinner]="false"></ng-progress>
+ 		<ion-title>Tài liệu</ion-title>  		
+ 	</ion-navbar> 
 
  </ion-header>
 
@@ -17,15 +10,20 @@
 
  	<img id="img" [src]="picture" *ngIf="picture" /> 
 
-<!--  	<button ion-button round (tap)="recognizeImage();">Đọc ảnh</button>
-
-<ion-card *ngIf="imageText">
-	<ion-card-header>
-		Kết quả
-	</ion-card-header>
-	<ion-card-content>
-		{{ imageText }}
-	</ion-card-content>
-</ion-card>
- -->
  </ion-content>
+
+ <ion-footer>
+	<ion-grid class="button-group">
+		<ion-row>
+			<button class="button-group" (tap)="shareImage()">
+				<img class="rotate" src="../../assets/imgs/imageshare.png" style="width: 25px; height: 25px;">
+				<br><label>Chia sẻ ảnh</label>
+			</button>
+			<button class="button-group" (tap)="sharePdf();">
+				<img class="rotate" src="../../assets/imgs/pdf.png" style="width: 25px; height: 25px;">
+				<br><label>Chia sẻ PDF</label>
+			</button>						
+		</ion-row>
+	</ion-grid>
+
+</ion-footer>

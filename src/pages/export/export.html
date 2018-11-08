@@ -3,7 +3,6 @@
 	<ion-navbar>
 		<ion-title>Xuất ảnh</ion-title>
 	</ion-navbar>
-	<ng-progress class="folder" [min]="0" [max]="1" [color]="'red'" [meteor]="true" [thick]="true" [spinner]="true"></ng-progress>
 </ion-header>
 
 <ion-content padding>
@@ -14,5 +13,6 @@
 	<button ion-button block outline id="export" (tap)="generatePdf();">
 		Xem ảnh ở định dạng Pdf
 	</button>
+	<img id="img" [src]="picture" *ngIf="picture" style="visibility: hidden;" /> 
 
 </ion-content>

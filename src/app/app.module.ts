@@ -51,6 +51,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { FileOpener } from '@ionic-native/file-opener';
 import { Camera } from '@ionic-native/camera';
 import { NgProgressModule } from '@ngx-progressbar/core';
+import { FilePath } from '@ionic-native/file-path';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,7 @@ import { NgProgressModule } from '@ngx-progressbar/core';
   CropIdentityPage,
   CropIdentityBackPage,
   CropEditPage,
-  CropImagePage
+  CropImagePage,
   ],
   imports: [
   BrowserModule,
@@ -93,7 +94,7 @@ import { NgProgressModule } from '@ngx-progressbar/core';
   NgProgressModule.forRoot(),
   IonicModule.forRoot(MyApp),
   AngularFireModule.initializeApp(FIREBASE_CONFIG),
-  AngularFireAuthModule
+  AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -128,7 +129,7 @@ import { NgProgressModule } from '@ngx-progressbar/core';
   CropIdentityPage,
   CropIdentityBackPage,
   CropEditPage,
-  CropImagePage
+  CropImagePage,
   ],
   providers: [
   StatusBar,
@@ -140,6 +141,7 @@ import { NgProgressModule } from '@ngx-progressbar/core';
   SQLite,
   SocialSharing,
   FileOpener,
+  FilePath,
   File,
   Camera,
   {provide: ErrorHandler, useClass: IonicErrorHandler}

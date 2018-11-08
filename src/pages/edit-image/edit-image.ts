@@ -4,8 +4,6 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
 
-import { FolderPage } from '../folder/folder';
-
 declare var cv: any;
 
 @IonicPage()

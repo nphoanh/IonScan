@@ -18,6 +18,7 @@ export class ImageIdentityBackPage {
 
 	pictureFront = this.navParams.get('pictureFront');
 	pictureBack = this.navParams.get('pictureBack');
+	imagename = this.navParams.get("imagename");
 	data = this.auth.getEmail();
 	dataPhone = this.auth.getPhone();
 	thisDate: String = new Date().toISOString();
@@ -91,7 +92,8 @@ export class ImageIdentityBackPage {
 					this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
 					this.navCtrl.push(InfoIdentityPage,{
 						pictureFront:this.pictureFront,
-						pictureBack:this.pictureBack
+						pictureBack:this.pictureBack,
+						imagename:this.imagename
 					}); 
 				}).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));                     
@@ -110,7 +112,8 @@ export class ImageIdentityBackPage {
 					this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
 					this.navCtrl.push(InfoIdentityPage,{
 						pictureFront:this.pictureFront,
-						pictureBack:this.pictureBack
+						pictureBack:this.pictureBack,
+						imagename:this.imagename
 					}); 
 				}).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));   

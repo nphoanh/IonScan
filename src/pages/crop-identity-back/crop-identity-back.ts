@@ -17,6 +17,7 @@ export class CropIdentityBackPage {
 	sortableContour = [];
 	largest_contour_index = 0;
 	largest_area=0;
+imagename = this.navParams.get("imagename");
 
 	constructor(
 		public navCtrl: NavController, 
@@ -121,7 +122,8 @@ export class CropIdentityBackPage {
 	saveImage(){
 		this.navCtrl.push(ImageIdentityBackPage,{
 			pictureFront:this.pictureFront,
-			pictureBack:this.pictureBack
+			pictureBack:this.pictureBack,
+			imagename:this.imagename
 			});
 	}
 

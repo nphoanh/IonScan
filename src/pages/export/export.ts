@@ -6,7 +6,6 @@ import { File } from '@ionic-native/file';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import * as jsPDF from 'jspdf';
 import { FileOpener } from '@ionic-native/file-opener';
-import { NgProgress } from '@ngx-progressbar/core';
 
 @IonicPage()
 @Component({
@@ -18,11 +17,12 @@ export class ExportPage {
 	message: string = null;
 	subject: string = null;
 	link: string = null;
-	imageid = this.navParams.get('imageid');
+	imageid = this.navParams.get('imageid');	
 	data = this.auth.getEmail();
 	dataPhone = this.auth.getPhone();
 	image = { imageid:"", name:"", date:"", path:"", base64:"", type:"image/png", folderid:"" }; 
 	path = this.file.externalRootDirectory + 'IonScan' + '/' + 'Pdf' + '.';
+	picture: any;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -32,7 +32,6 @@ export class ExportPage {
 		private file: File,
 		private socialSharing: SocialSharing,
 		private fileOpener: FileOpener,
-		public progress: NgProgress,
 		) {
 	}
 
@@ -58,6 +57,7 @@ export class ExportPage {
 						this.image.type = res.rows.item(0).type;
 						this.image.folderid = res.rows.item(0).folderid;						
 					}		
+					this.picture = this.image.base64;
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
 		}
@@ -78,7 +78,7 @@ export class ExportPage {
 						this.image.base64 = res.rows.item(0).base64;
 						this.image.type = res.rows.item(0).type;
 						this.image.folderid = res.rows.item(0).folderid;						
-					}		
+					}	
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
 		}
@@ -89,10 +89,12 @@ export class ExportPage {
 	}
 
 	generatePdf(){
-		this.progress.start();
 		var imgData = this.image.base64;
-		var doc = new jsPDF();
-		doc.addImage(imgData, 'PNG', 10, 10);
+		let image = document.getElementById('img') as HTMLImageElement;
+		let w = image.width;
+		let h = image.height;
+		var doc = new jsPDF('p','pt','a4');
+		doc.addImage(imgData, 'PNG', 10, 10, w, h);
 		let pdfOutput = doc.output();
 		let buffer = new ArrayBuffer(pdfOutput.length);
 		let array = new Uint8Array(buffer);
@@ -100,33 +102,23 @@ export class ExportPage {
 			array[i] = pdfOutput.charCodeAt(i);
 		}
 		let namePdf = this.image.name + '.' + 'pdf';	
-
 		if (this.data != null) {
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let pathPdf = this.path + nameEmail;
 			let filePdf = pathPdf + '/' + 	namePdf;
-			this.file.checkFile(pathPdf, namePdf).then(e=> {
+			this.file.writeFile(pathPdf, namePdf, buffer).then( e => {
 				this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
-			}).catch(err => {
-				this.file.writeFile(pathPdf, namePdf, buffer).then( e => {
-					this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
-				}).catch(err => console.log('File didn\'t save: ' + err.message));       	
-			});
+			}).catch(err => this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message)));       	
 		}
 		else {
 			let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
 			let nameDBPhone = 'u' + namePhone;
 			let pathPdf = this.path + nameDBPhone;
 			let filePdf = pathPdf + '/' + 	namePdf;
-			this.file.checkFile(pathPdf, namePdf).then(e=> {
+			this.file.writeFile(pathPdf, namePdf, buffer).then( e => {
 				this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
-			}).catch(err => {
-				this.file.writeFile(pathPdf, namePdf, buffer).then( e => {
-					this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
-				}).catch(err => console.log('File didn\'t save: ' + err.message));       	
-			});
+			}).catch(err => this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message)));       			
 		}
-		this.progress.complete();
 	}
 
 }

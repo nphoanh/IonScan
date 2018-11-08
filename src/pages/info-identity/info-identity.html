@@ -1,100 +1,30 @@
  <ion-header>
-
+ 
  	<ion-navbar>
- 		<ion-title>Thông tin</ion-title>
- 		<ion-buttons end> 
- 			<button class="share" ion-button icon-only> 
- 				Chia sẻ &nbsp;
- 				<ion-icon name="share"></ion-icon>
- 			</button>
- 		</ion-buttons> 
- 	</ion-navbar>
+ 		<ion-title>Hộ chiếu</ion-title>  		
+ 	</ion-navbar> 
 
  </ion-header>
 
  <ion-content padding>
 
- 	<ion-list>
- 		<ion-item>	
- 			<ion-row>
- 				<ion-col col-4>
- 					<img id="avatar" src="../assets/imgs/image.png" style="width: 80px; height: 80px;">
- 				</ion-col>
- 				<ion-col>
- 					<h1 class="name">Họ tên</h1><br>
- 					<p class="type">Việt Nam, Hộ chiếu</p>
- 				</ion-col>
- 			</ion-row>
- 		</ion-item>
- 		<ion-item>
- 			<ion-row>
- 				<ion-col col-4>
- 					<h4 class="h4">Số Seri</h4>
- 				</ion-col>
- 				<ion-col>
- 					<p class="info">1234</p> 					
- 				</ion-col>
- 				<!-- <button class="edit">Sửa</button> -->
- 			</ion-row>
- 		</ion-item> 		
- 		<ion-item>
- 			<ion-row>
- 				<ion-col col-4>
- 					<h4 class="h4">Giới tính</h4>
- 				</ion-col>
- 				<ion-col>
- 					<p class="info">Nữ</p>
- 				</ion-col>
- 				<!-- <button class="edit">Sửa</button> -->
- 			</ion-row>
- 		</ion-item>
- 		<ion-item>
- 			<ion-row>
- 				<ion-col col-4>
- 					<h4 class="h4">Ngày sinh</h4>
- 				</ion-col>
- 				<ion-col>
- 					<p class="info">01/01/2000</p>
- 				</ion-col>
- 				<!-- <button class="edit">Sửa</button> -->
- 			</ion-row>
- 		</ion-item>
- 		<ion-item>
- 			<ion-row>
- 				<ion-col col-4>
- 					<h4 class="h4">Nơi sinh</h4>
- 				</ion-col>
- 				<ion-col>
- 					<p  class="info">Việt Nam</p>
- 				</ion-col>
- 				<!-- <button class="edit">Sửa</button> -->
- 			</ion-row>
- 		</ion-item>
- 		<ion-item>
- 			<ion-row>
- 				<ion-col col-4>
- 					<h4 class="h4">Điện thoại</h4>
- 				</ion-col>
- 				<ion-col>
- 					<p class="info">0909090909</p>
- 				</ion-col>
- 				<!-- <button class="edit">Sửa</button> -->
- 			</ion-row> 			
- 		</ion-item>
- 		<ion-item>
- 			<ion-row>
- 				<ion-col col-4>
- 					<h4 class="h4">Địa chỉ</h4>
- 				</ion-col>
- 				<ion-col>
- 					<p class="info">Việt Nam</p>
- 				</ion-col>
- 				<!-- <button class="edit">Sửa</button> -->
- 			</ion-row>
- 		</ion-item>
- 	</ion-list>
-
- 	<img id="img" [src]="pictureFront" *ngIf="pictureFront" /> 
- 	<img id="img" [src]="pictureBack" *ngIf="pictureBack" /> 
+ 	<img id="imgFront" [src]="pictureFront" *ngIf="pictureFront" /> 
+ 	<img id="imgBack" [src]="pictureBack" *ngIf="pictureBack" /> 
 
  </ion-content>
+
+ <ion-footer>
+	<ion-grid class="button-group">
+		<ion-row>
+			<button class="button-group" (tap)="shareImage()">
+				<img class="rotate" src="../../assets/imgs/imageshare.png" style="width: 25px; height: 25px;">
+				<br><label>Chia sẻ ảnh</label>
+			</button>
+			<button class="button-group" (tap)="sharePdf();">
+				<img class="rotate" src="../../assets/imgs/pdf.png" style="width: 25px; height: 25px;">
+				<br><label>Chia sẻ PDF</label>
+			</button>						
+		</ion-row>
+	</ion-grid>
+
+</ion-footer>

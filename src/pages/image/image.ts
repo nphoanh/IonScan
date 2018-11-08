@@ -88,7 +88,7 @@ export class ImagePage {
                 location: 'default'
             }).then((db: SQLiteObject) => {                
                 db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,?)', [this.image.name,this.image.date,folderPath,this.picture,this.image.type,this.image.upload,this.folderid]).then(res => {
-                    this.savebase64AsFile(folderPath, nameFile, this.picture, this.image.type); 
+                    this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
                     this.navCtrl.pop().then(()=>{
                         this.navCtrl.pop()
                     });
@@ -106,7 +106,7 @@ export class ImagePage {
                 location: 'default'
             }).then((db: SQLiteObject) => {                
                 db.executeSql('INSERT INTO image VALUES (NULL,?,?,?,?,?,?,?)', [this.image.name,this.image.date,folderPath,this.picture,this.image.type,this.image.upload,this.folderid]).then(res => {
-                    this.savebase64AsFile(folderPath, nameFile, this.picture, this.image.type); 
+                    this.savebase64AsFile(folderPath, nameFile, base, this.image.type); 
                     this.navCtrl.pop().then(()=>{
                         this.navCtrl.pop()
                     });
