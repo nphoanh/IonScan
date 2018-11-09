@@ -45,7 +45,7 @@ export class MyApp {
       this.auth.afAuth.authState
       .subscribe(
         user => {
-          if (user) {
+          if (user && user.emailVerified==true) {
             this.rootPage = HomePage;
           } else {
             this.rootPage = LoginPage;

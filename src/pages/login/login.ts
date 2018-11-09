@@ -141,17 +141,13 @@ export class LoginPage {
         this.navCtrl.setRoot(HomePage);
       }
       if (users.emailVerified == false && emailLower == users.email) {
-        this.toast.show('Email chưa được xác thực', '5000', 'bottom').subscribe(
-          toast => {
-            console.log(toast);
-          }
-          )
+        this.toast.show('Email chưa được xác thực', '5000', 'bottom').subscribe(toast => { console.log(toast);})
       }
     }
     catch(e) {
       this.toast.show(e, '5000', 'bottom').subscribe(
         toast => {
-          console.log(toast);
+          console.log(toast);          
         }
         )
     }

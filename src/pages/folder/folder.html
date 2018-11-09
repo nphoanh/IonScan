@@ -26,7 +26,7 @@
 				<button class="upload" ion-button (tap)="uploadImage(image.imageid);" *ngIf='folder.display!="no"'>
 					<img src="../../assets/imgs/upload.png" style="width: 20px; height: 20px;">
 				</button>
-				<button class="export" ion-button (tap)="exportImage(image.imageid);" *ngIf='folder.display!="no"'>
+				<button class="export" ion-button (tap)="exportImage(image.imageid,image.base64);" *ngIf='folder.display!="no"'>
 					<img src="../../assets/imgs/export.png" style="width: 20px; height: 20px;">
 				</button>		
 				<button class="delete" ion-button (tap)="deleteImage(image.imageid);">

@@ -13,7 +13,7 @@ import { FileOpener } from '@ionic-native/file-opener';
 	templateUrl: 'export.html',
 })
 export class ExportPage {
-
+ 
 	message: string = null;
 	subject: string = null;
 	link: string = null;
@@ -79,6 +79,7 @@ export class ExportPage {
 						this.image.type = res.rows.item(0).type;
 						this.image.folderid = res.rows.item(0).folderid;						
 					}	
+					this.picture = this.image.base64;
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
 		}
@@ -88,20 +89,18 @@ export class ExportPage {
 		this.socialSharing.share(this.message,this.subject,this.image.base64,this.link).catch((e) => console.log("Share unsuccess: " +e));
 	}
 
-	generatePdf(){
+	sharePdf(){
 		var imgData = this.image.base64;
-		let image = document.getElementById('img') as HTMLImageElement;
-		let w = image.width;
-		let h = image.height;
-		var doc = new jsPDF('p','pt','a4');
-		doc.addImage(imgData, 'PNG', 10, 10, w, h);
+		var doc = new jsPDF();
+		doc.addImage(imgData, 'PNG', 10, 10);
 		let pdfOutput = doc.output();
 		let buffer = new ArrayBuffer(pdfOutput.length);
 		let array = new Uint8Array(buffer);
-		for (var i = 0; i < pdfOutput.length; i++) {
+		for (var i = 0; i < pdfOutput.length; i++) { 
 			array[i] = pdfOutput.charCodeAt(i);
 		}
 		let namePdf = this.image.name + '.' + 'pdf';	
+
 		if (this.data != null) {
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let pathPdf = this.path + nameEmail;
@@ -117,8 +116,7 @@ export class ExportPage {
 			let filePdf = pathPdf + '/' + 	namePdf;
 			this.file.writeFile(pathPdf, namePdf, buffer).then( e => {
 				this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message));       	
-			}).catch(err => this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message)));       			
+			}).catch(err => this.fileOpener.open(filePdf, 'application/pdf').catch(e => console.log('File didn\'t open: ' + e.message)));       	
 		}
 	}
-
 }

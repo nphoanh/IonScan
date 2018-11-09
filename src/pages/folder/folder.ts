@@ -222,7 +222,7 @@ export class FolderPage {
 		}
 	}
 
-	exportImage(imageid) {
+	exportImage(imageid,base64) {
 		this.navCtrl.push(ExportPage,{imageid:imageid});
 	}
 

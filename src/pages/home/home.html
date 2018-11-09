@@ -17,7 +17,7 @@
 <ion-content padding>
 
 	<ion-list>
-		<ion-item-sliding class="folder-list" *ngFor="let folder of folders; let i=index">
+		<ion-item-sliding class="folder-list" *ngFor="let folder of folders">
 			<ion-item nopadding (tap)="moveToFolder(folder.folderid,folder.name);">
 				<ion-row>
 					<ion-col col-5>
@@ -30,7 +30,7 @@
 					</ion-col>
 				</ion-row>
 			</ion-item>
-			<ion-item-options side="right">
+			<ion-item-options side="right" *ngIf="folder.display!='no'">
 				<button ion-button class="edit" >
 					<img class="group" src="../../assets/imgs/edit.png" (click)="editFolder(folder.folderid,folder.name)" style="width: 20px; height: 20px;">
 				</button>
