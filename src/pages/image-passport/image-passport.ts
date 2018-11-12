@@ -92,7 +92,7 @@ export class ImagePassportPage {
                         picture:this.picture,
                         imagename:this.image.name
                     }); 
-                }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
+                }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'center').subscribe(toast => console.log(toast))});                   
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));                     
         }
 
@@ -111,7 +111,7 @@ export class ImagePassportPage {
                         picture:this.picture,
                         imagename:this.image.name
                     }); 
-                }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'bottom').subscribe(toast => console.log(toast))});                   
+                }).catch(e => { this.toast.show('Trùng tên ảnh', '5000', 'center').subscribe(toast => console.log(toast))});                   
             }).catch(e => console.log('SQLite didn\'t create: ' + e.message));   
         }                  
     }
@@ -202,7 +202,7 @@ export class ImagePassportPage {
         let src = cv.imread('imgPassport');
         let dst = new cv.Mat();
         cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
-        cv.threshold(dst, dst, 150, 255, cv.THRESH_BINARY);
+        cv.adaptiveThreshold(src, dst, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 12);
         cv.imshow('canvasOutputPassport', dst);
         src.delete(); dst.delete(); 
     }

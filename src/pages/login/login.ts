@@ -78,7 +78,7 @@ export class LoginPage {
               name: nameDB,
               location: 'default'
             }).then((db: SQLiteObject) => {
-              db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
+              db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
               db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT DEFAULT "image/png", upload INTEGER DEFAULT 0, folderid, UNIQUE(name), FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any).catch(e => console.log('Image table didn\'t create: ' + e.message));
               db.executeSql('INSERT INTO folder VALUES (3,"Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
               db.executeSql('INSERT INTO folder VALUES (2,"Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
@@ -89,12 +89,12 @@ export class LoginPage {
               this.file.createDir(this.path, pdfFolder, false).catch(e => console.log('Pdf didn\'t add to device: ' + e.message));             
             }).catch(e => console.log('SQLite didn\'t create SQLite: ' + e.message));
             this.navCtrl.setRoot(HomePage);
-          }).catch(error => {this.toast.show(error, '5000', 'bottom').subscribe(toast => {console.log(toast);})
+          }).catch(error => {this.toast.show(error, '5000', 'center').subscribe(toast => {console.log(toast);})
         });
         }}]
       });prompt.present();
       }).catch(error => {
-        this.toast.show(error, '5000', 'bottom').subscribe(
+        this.toast.show(error, '5000', 'center').subscribe(
           toast => {
             console.log(toast);
           });
@@ -102,7 +102,7 @@ export class LoginPage {
       });           
     }
     catch(e) {
-      this.toast.show(e, '5000', 'bottom').subscribe(
+      this.toast.show(e, '5000', 'center').subscribe(
         toast => {
           console.log(toast);
         }
@@ -128,7 +128,7 @@ export class LoginPage {
           name: nameDB,
           location: 'default'
         }).then((db: SQLiteObject) => {
-          db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
+          db.executeSql('CREATE TABLE IF NOT EXISTS folder(folderid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, date TEXT, type TEXT, display TEXT DEFAULT "yes", UNIQUE(name))', {} as any).catch(e => console.log('Folder table didn\'t create: ' + e.message));
           db.executeSql('CREATE TABLE IF NOT EXISTS image(imageid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, path TEXT, base64 TEXT, type TEXT DEFAULT "image/png", upload INTEGER DEFAULT 0, folderid, UNIQUE(name), FOREIGN KEY(folderid) REFERENCES folder (folderid))', {} as any).catch(e => console.log('Image table didn\'t create: ' + e.message));
           db.executeSql('INSERT INTO folder VALUES (3,"Chứng minh thư",?,"Chứng minh thư","no")', [this.thisDate]).catch(e => console.log('Identity didn\'t add to table: ' + e.message));
           db.executeSql('INSERT INTO folder VALUES (2,"Hộ chiếu",?,"Hộ chiếu","no")', [this.thisDate]).catch(e => console.log('Passport didn\'t add to table: ' + e.message));
@@ -141,11 +141,11 @@ export class LoginPage {
         this.navCtrl.setRoot(HomePage);
       }
       if (users.emailVerified == false && emailLower == users.email) {
-        this.toast.show('Email chưa được xác thực', '5000', 'bottom').subscribe(toast => { console.log(toast);})
+        this.toast.show('Email chưa được xác thực', '5000', 'center').subscribe(toast => { console.log(toast);})
       }
     }
     catch(e) {
-      this.toast.show(e, '5000', 'bottom').subscribe(
+      this.toast.show(e, '5000', 'center').subscribe(
         toast => {
           console.log(toast);          
         }

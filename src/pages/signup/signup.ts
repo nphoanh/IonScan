@@ -28,7 +28,7 @@ export class SignupPage {
 			await this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password);
 			let users = firebase.auth().currentUser;
 			users.sendEmailVerification().then(
-				() => this.toast.show('Đã gửi email xác thực', '5000', 'bottom').subscribe(
+				() => this.toast.show('Đã gửi email xác thực', '5000', 'center').subscribe(
 					toast => {
 						console.log(toast);
 						this.navCtrl.push(LoginPage);
@@ -36,7 +36,7 @@ export class SignupPage {
 				);				
 		}
 		catch(e) {
-			this.toast.show(e, '5000', 'bottom').subscribe(
+			this.toast.show(e, '5000', 'center').subscribe(
 				toast => {
 					console.log(toast);
 				}

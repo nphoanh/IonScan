@@ -29,7 +29,7 @@ export class ResetPage {
 	async resetPwd(user) {
 		try {
 			await this.afAuth.auth.sendPasswordResetEmail(user.email).then( 
-				() => this.toast.show('Đã gửi email để đặt lại mật khẩu', '5000', 'bottom').subscribe(
+				() => this.toast.show('Đã gửi email để đặt lại mật khẩu', '5000', 'center').subscribe(
 					toast => {
 						console.log(toast);
 						this.navCtrl.push(LoginPage);
@@ -38,7 +38,7 @@ export class ResetPage {
 				);
 		}
 		catch(e) {
-			this.toast.show(e, '5000', 'bottom').subscribe(
+			this.toast.show(e, '5000', 'center').subscribe(
 				toast => {
 					console.log(toast);
 				}

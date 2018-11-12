@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions } from '@ionic-native/camera-preview';
 
 import { CropPassportPage } from '../crop-passport/crop-passport';
- 
+
 @IonicPage()
 @Component({
   selector: 'page-passport',
@@ -13,9 +13,9 @@ export class PassportPage {
 
   constructor(
     public navCtrl: NavController, 
-  	public navParams: NavParams,
-  	private cameraPreview: CameraPreview
-  	) {
+    public navParams: NavParams,
+    private cameraPreview: CameraPreview
+    ) {
   }
 
   ionViewDidLoad() {
@@ -30,13 +30,14 @@ export class PassportPage {
       height: window.screen.height,
       camera: this.cameraPreview.CAMERA_DIRECTION.BACK,
       toBack: true,
-      tapPhoto: false,
       tapToFocus: true,
+      tapPhoto: false,
       previewDrag: false
     };
     this.cameraPreview.startCamera(cameraPreviewOpts).then(
       (res) => {
-        console.log(res)
+        this.cameraPreview.setFocusMode('auto');
+        console.log(res);
       },
       (err) => {
         console.log(err)

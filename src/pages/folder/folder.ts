@@ -259,13 +259,13 @@ export class FolderPage {
 					this.httpClient.post("https://jsonplaceholder.typicode.com/photos", postData, httpOptions)
 					.subscribe(data => {
 						this.progress.complete();
-						this.toast.show('Tải ảnh thành công', '5000', 'bottom').subscribe(toast => console.log(toast));
+						this.toast.show('Tải ảnh thành công', '5000', 'center').subscribe(toast => console.log(toast));
 						db.executeSql('UPDATE image SET upload=? WHERE imageid=?',[1,imageid]).catch(e => console.log('Image didn\'t upload in table: ' + e.message));					
 						this.getData(this.folderid);
 					}, error => {
 						this.progress.complete();
 						console.log(error);
-						this.toast.show(error, '5000', 'bottom').subscribe(toast => console.log(toast));				
+						this.toast.show(error, '5000', 'center').subscribe(toast => console.log(toast));				
 					});		
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));		  				
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
@@ -291,12 +291,12 @@ export class FolderPage {
 					this.httpClient.post("https://jsonplaceholder.typicode.com/photos", postData, httpOptions)
 					.subscribe(data => {
 						this.progress.complete();
-						this.toast.show('Tải ảnh thành công', '5000', 'bottom').subscribe(toast => console.log(toast));
+						this.toast.show('Tải ảnh thành công', '5000', 'center').subscribe(toast => console.log(toast));
 						db.executeSql('UPDATE image SET upload=? WHERE imageid=?',[1,imageid]).catch(e => console.log('Image didn\'t upload in table: ' + e.message));					
 						this.getData(this.folderid);
 					}, error => {
 						this.progress.complete();
-						this.toast.show(error, '5000', 'bottom').subscribe(toast => console.log(toast));				
+						this.toast.show(error, '5000', 'center').subscribe(toast => console.log(toast));				
 					});		
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));		
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
@@ -321,7 +321,10 @@ export class FolderPage {
 				foldername:this.foldername
 			});
 		this.progress.complete();
-		}, (err) => console.log('Image didn\'t pick: ' + err));
+		}, (err) => {
+			console.log('Image didn\'t pick: ' + err);
+			this.progress.complete();
+		});
 	}
 
 	editImage(imageid,name,path,base64){

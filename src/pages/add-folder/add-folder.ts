@@ -36,9 +36,14 @@ export class AddFolderPage {
 				location: 'default'
 			}).then((db: SQLiteObject) => {
 				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?,?)',[this.folder.name,this.folder.date,this.folder.type,this.folder.display]).then(res => {					
-					let name = this.folder.name + '.' + nameEmail;
-					this.file.createDir(path, name, false).catch(e => { this.toast.show('Trùng tên thư mục', '5000', 'bottom').subscribe(toast => console.log(toast))});
-					this.navCtrl.popToRoot();
+					if (this.folder.name!=null) {
+						let name = this.folder.name + '.' + nameEmail;
+						this.file.createDir(path, name, false).catch(e => { this.toast.show('Trùng tên thư mục', '5000', 'center').subscribe(toast => console.log(toast))});
+						this.navCtrl.popToRoot();
+					}
+					else {
+						this.toast.show('Tên thư mục không được để trống', '5000', 'center').subscribe(toast => console.log(toast))
+					}
 				}).catch(e => console.log('Folder didn\'t add to table: ' + e.message));					
 			}).catch(e => console.log('SQLite didn\'t create SQLite: ' + e.message));	
 		}
@@ -53,9 +58,14 @@ export class AddFolderPage {
 				location: 'default'
 			}).then((db: SQLiteObject) => {
 				db.executeSql('INSERT INTO folder VALUES(NULL,?,?,?,?)',[this.folder.name,this.folder.date,this.folder.type,this.folder.display]).then(res => {					
-					let name = this.folder.name + '.' + nameDBPhone;
-					this.file.createDir(path, name, false).catch(e => { this.toast.show('Trùng tên thư mục', '5000', 'bottom').subscribe(toast => console.log(toast))});					
-					this.navCtrl.popToRoot();
+					if (this.folder.name!=null) {
+						let name = this.folder.name + '.' + nameDBPhone;
+						this.file.createDir(path, name, false).catch(e => { this.toast.show('Trùng tên thư mục', '5000', 'center').subscribe(toast => console.log(toast))});
+						this.navCtrl.popToRoot();
+					}
+					else {
+						this.toast.show('Tên thư mục không được để trống', '5000', 'center').subscribe(toast => console.log(toast))
+					}					
 				}).catch(e => console.log('Folder didn\'t add to table: ' + e.message));					
 			}).catch(e => console.log('SQLite didn\'t create SQLite: ' + e.message));	
 		}		
