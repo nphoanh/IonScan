@@ -3,6 +3,10 @@ page-home {
 		color: white;
 	}
 	
+	ion-item.item.item-block.item-md {
+		background-color: white;
+	}
+
 	ion-item-sliding.folder-list.item-wrapper {
 		margin-left: -5px;
 	}
@@ -186,5 +190,9 @@ page-home {
 	button.edit.button.button-md.button-default.button-default-md {
 		background-color: #ffffba;
 		margin-top: 10px;
+	}
+
+	h2.titcard {
+		margin-top: 17px !important;
 	}
 }

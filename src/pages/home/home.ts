@@ -3,7 +3,7 @@ import { NavController, MenuController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
-
+ 
 import { FolderPage } from '../folder/folder';
 import { AddFolderPage } from '../add-folder/add-folder';
 import { EditFolderPage } from '../edit-folder/edit-folder';
@@ -21,6 +21,9 @@ export class HomePage {
   folder = { name:""};
   thisDate: String = new Date().toISOString();
   path = this.file.externalRootDirectory + 'IonScan';
+  totalImgPass = 0;
+  totalImgID = 0;
+  totalImgDoc = 0;
 
   constructor(public navCtrl: NavController,
     private sqlite: SQLite,
@@ -62,12 +65,12 @@ export class HomePage {
             })
           }
         }).catch(e => console.log('Select nothing from Folder table: ' + e.message));
-        db.executeSql('SELECT COUNT(folderid) AS totalFolder FROM folder', {} as any)
+        db.executeSql('SELECT COUNT(folderid) AS totalFolder FROM folder WHERE display="yes"', {} as any)
         .then(res => {
           if(res.rows.length>0) {
             this.totalFolder = parseInt(res.rows.item(0).totalFolder);
           }
-        }).catch(e => console.log('Count nothing from Folder table: ' + e.message));
+        }).catch(e => console.log('Count nothing from Folder table: ' + e.message));                         
       }).catch(e => console.log('SQLite didn\'t create SQLite: ' + e.message));
     }
 
@@ -92,12 +95,12 @@ export class HomePage {
             })
           }
         }).catch(e => console.log('Select nothing from Folder table: ' + e.message));
-        db.executeSql('SELECT COUNT(folderid) AS totalFolder FROM folder', {} as any)
+        db.executeSql('SELECT COUNT(folderid) AS totalFolder FROM folder WHERE display="yes"', {} as any)
         .then(res => {
           if(res.rows.length>0) {
             this.totalFolder = parseInt(res.rows.item(0).totalFolder);
           }
-        }).catch(e => console.log('Count nothing from Folder table: ' + e.message));
+        }).catch(e => console.log('Count nothing from Folder table: ' + e.message));         
       }).catch(e => console.log('SQLite didn\'t create SQLite: ' + e.message));
     }
   }

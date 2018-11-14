@@ -1,12 +1,12 @@
-page-folder {
+page-folder-id {
 	button.add.disable-hover.bar-button.bar-button-md.bar-button-default.bar-button-default-md {
 		font-size: 15px;
 		color: white;
 		margin-right: 10px;
 	}
 
-	button.back-button.disable-hover.bar-button.bar-button-md.back-button-md.bar-button-default.bar-button-default-md {
-		color: white;
+	ion-item.itemfolder.item.item-block.item-md {
+		background-color: white;
 	}
 
 	button.delete-no.disable-hover.button.button-md.button-outline.button-outline-md.item-button {
@@ -16,6 +16,10 @@ page-folder {
 		border-radius: 46px;
 		width: 40px;
 		border-color: #ffb3ba;
+	}
+
+	button.disable-hover.bar-buttons.bar-buttons-md.bar-button.bar-button-md.bar-button-default.bar-button-default-md.bar-button-menutoggle.bar-button-menutoggle-md {
+		color: white;
 	}
 
 	ion-fab[bottom] {

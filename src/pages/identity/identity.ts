@@ -56,6 +56,7 @@ export class IdentityPage {
 			var rect_width = rect.offsetWidth, rect_height = rect.offsetHeight;
 			this.crop(imageData, rect_width, rect_height, x_coord, y_coord, cropped_img_base64 => {
 				this.navCtrl.push(CropIdentityPage, {pictureFront:cropped_img_base64});
+				this.cameraPreview.stopCamera();
 			});
 		}, (err) => {
 			console.log(err);

@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EditImagePage } from '../edit-image/edit-image';
 
 declare var cv: any;
-
+ 
 @IonicPage()
 @Component({
 	selector: 'page-crop-edit',

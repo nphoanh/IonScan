@@ -63,6 +63,7 @@ imagename = this.navParams.get("imagename");
 					pictureBack:cropped_img_base64,
 					imagename:this.imagename
 				});
+				this.cameraPreview.stopCamera();
 			});
 		}, (err) => {
 			console.log(err);

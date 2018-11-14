@@ -1,3 +1,9 @@
+<ion-header>
+
+  <ng-progress class="folder" [min]="0" [max]="1" [color]="'red'" [meteor]="true" [thick]="true" [spinner]="true"></ng-progress>
+
+</ion-header>
+
 <ion-content padding>
 
   <img src="../../assets/imgs/logo-no.png" alt="logo" class="logo">
@@ -40,7 +46,7 @@
    <button ion-button round outline class="signin" id="sign-in-button" (click)="loginPhone(user);">Đăng nhập</button>
  </ion-list>
 </div>
-   <div id="recaptcha-container"></div>
+<div id="recaptcha-container"></div>
 
 </ion-content>
 

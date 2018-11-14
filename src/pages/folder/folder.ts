@@ -7,7 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Toast } from '@ionic-native/toast';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgProgress } from '@ngx-progressbar/core';
- 
+  
 import { ExportPage } from '../export/export';
 import { AddImagePassportPage } from '../add-image-passport/add-image-passport';
 import { AddImageIdentityPage } from '../add-image-identity/add-image-identity';
@@ -78,7 +78,7 @@ export class FolderPage {
 						this.folder.name = res.rows.item(0).name;
 						this.folder.date = res.rows.item(0).date;
 						this.folder.type = res.rows.item(0).type;	
-						this.folder.display = res.rows.item(0).display;					
+		 				this.folder.display = res.rows.item(0).display;					
 					}		
 				}).catch(e => console.log('Select nothing from Folder table: ' + e.message));
 				db.executeSql('SELECT * FROM image WHERE folderid=? ORDER BY imageid DESC', [folderid]).then(res => {
@@ -99,7 +99,7 @@ export class FolderPage {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
 					}
-				}).catch(e => console.log('Count nothing from Folder table: ' + e.message));
+				}).catch(e => console.log('Count nothing from Image table: ' + e.message));
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
 		}
 		else {

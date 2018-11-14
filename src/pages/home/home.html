@@ -18,19 +18,19 @@
 
 	<ion-list>
 		<ion-item-sliding class="folder-list" *ngFor="let folder of folders">
-			<ion-item nopadding (tap)="moveToFolder(folder.folderid,folder.name);">
+			<ion-item nopadding (tap)="moveToFolder(folder.folderid,folder.name);" *ngIf="folder.display!='no'">
 				<ion-row>
 					<ion-col col-5>
 						<ion-icon class="md-folder" name="md-folder"></ion-icon>
 					</ion-col>
 					<ion-col class="itemfolder" >
-						<h1 class="titcard">{{folder.name}}</h1>
+						<h2 class="titcard">{{folder.name}}</h2>
 						<p class="titcard">{{folder.date | date: 'H:mm dd/MM/yyyy'}}</p>
 						<p class="cate">{{folder.type}}</p>
 					</ion-col>
 				</ion-row>
 			</ion-item>
-			<ion-item-options side="right" *ngIf="folder.display!='no'">
+			<ion-item-options side="right">
 				<button ion-button class="edit" >
 					<img class="group" src="../../assets/imgs/edit.png" (click)="editFolder(folder.folderid,folder.name)" style="width: 20px; height: 20px;">
 				</button>

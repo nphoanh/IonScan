@@ -14,7 +14,6 @@ import { LoginPage } from '../login/login';
 export class ResetPage {
 
 	user = {} as User;
-	loading: any;
 
 	constructor(
 		public navCtrl: NavController, 		
@@ -28,21 +27,13 @@ export class ResetPage {
 
 	async resetPwd(user) {
 		try {
-			await this.afAuth.auth.sendPasswordResetEmail(user.email).then( 
-				() => this.toast.show('Đã gửi email để đặt lại mật khẩu', '5000', 'center').subscribe(
-					toast => {
-						console.log(toast);
-						this.navCtrl.push(LoginPage);
-					}
-					),
-				);
+			await this.afAuth.auth.sendPasswordResetEmail(user.email).then(e => {
+				this.toast.show('Đã gửi email để đặt lại mật khẩu', '5000', 'center').subscribe(toast => console.log(toast));
+				this.navCtrl.push(LoginPage);
+			}).catch(e => this.toast.show(e.message, '5000', 'center').subscribe(toast => console.log(toast)));	
 		}
 		catch(e) {
-			this.toast.show(e, '5000', 'center').subscribe(
-				toast => {
-					console.log(toast);
-				}
-				)
+			this.toast.show(e.message, '5000', 'center').subscribe(toast => console.log(toast));	
 		}
 	}
 
