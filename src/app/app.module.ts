@@ -37,6 +37,8 @@ import { CropImagePage } from '../pages/crop-image/crop-image';
 import { FolderPassPage } from '../pages/folder-pass/folder-pass';
 import { FolderIdPage } from '../pages/folder-id/folder-id';
 import { FolderDocPage } from '../pages/folder-doc/folder-doc';
+import { CropDefaultPage } from '../pages/crop-default/crop-default';
+import { EditDefaultPage } from '../pages/edit-default/edit-default';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -92,7 +94,9 @@ import { FilePath } from '@ionic-native/file-path';
   CropImagePage,
   FolderPassPage,
   FolderIdPage,
-  FolderDocPage
+  FolderDocPage,
+  CropDefaultPage,
+  EditDefaultPage
   ],
   imports: [
   BrowserModule,
@@ -138,7 +142,9 @@ import { FilePath } from '@ionic-native/file-path';
   CropImagePage,
   FolderPassPage,
   FolderIdPage,
-  FolderDocPage
+  FolderDocPage,
+  CropDefaultPage,
+  EditDefaultPage
   ],
   providers: [
   StatusBar,

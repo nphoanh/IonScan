@@ -5,13 +5,13 @@ import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
 
 declare var cv: any;
- 
+
 @IonicPage()
 @Component({
-	selector: 'page-edit-image',
-	templateUrl: 'edit-image.html',
+	selector: 'page-edit-default',
+	templateUrl: 'edit-default.html',
 })
-export class EditImagePage {
+export class EditDefaultPage {
 
 	image = { imageid:0, name:"", path:"", base64:"", type:"image/png"};  
 	imageid = this.navParams.get('imageid');
@@ -28,7 +28,7 @@ export class EditImagePage {
 		public navParams: NavParams,
 		private sqlite: SQLite,
 		private auth: AuthService,
-		private file: File,
+		private file: File
 		) {
 	}
 
@@ -79,19 +79,17 @@ export class EditImagePage {
 			let nameEmail = this.data.substr(0,this.data.lastIndexOf('@'));
 			let nameDB = nameEmail + '.db'; 	
 			let name = this.imagename + '.' + 'png';
-			let newName = this.image.name + '.' + 'png';	
+			let newName = this.image.name + '.' + 'png';
+			this.file.removeFile(this.path, name).catch(e => console.log('Image didn\'t remove: ' + e.message));					
+			this.savebase64AsFile(this.path, newName, base, this.image.type); 
 			this.sqlite.create({
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {
-				db.executeSql('UPDATE image SET name=?,base64=? WHERE imageid=?',[this.image.name,this.picture,this.imageid]).then(res => {
-					this.file.removeFile(this.path, name).then(e => {
-						this.savebase64AsFile(this.path, newName, base, this.image.type); 
-						this.navCtrl.pop().then(()=>{
-							this.navCtrl.pop()
-						});
-					}).catch(e => console.log('Image didn\'t remove: ' + e.message));					
-				}).catch(e => console.log(e));                   
+				db.executeSql('UPDATE image SET name=?,base64=? WHERE imageid=?',[this.image.name,this.picture,this.imageid]).catch(e => console.log(e));                   
+				this.navCtrl.pop().then(()=>{
+					this.navCtrl.pop()
+				});
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));	
 		}
 		else {
@@ -100,18 +98,16 @@ export class EditImagePage {
 			let nameDB = nameDBPhone + '.db';
 			let name = this.imagename + '.' + 'png';
 			let newName = this.image.name + '.' + 'png';	
+			this.file.removeFile(this.path, name).catch(e => console.log('Image didn\'t remove: ' + e.message));					
+			this.savebase64AsFile(this.path, newName, base, this.image.type); 
 			this.sqlite.create({
 				name: nameDB,
 				location: 'default'
 			}).then((db: SQLiteObject) => {
-				db.executeSql('UPDATE image SET name=?,base64=? WHERE imageid=?',[this.image.name,this.picture,this.imageid]).then(res => {
-					this.file.removeFile(this.path, name).then(e => {
-						this.savebase64AsFile(this.path, newName, base, this.image.type); 
-						this.navCtrl.pop().then(()=>{
-							this.navCtrl.pop()
-						});
-					}).catch(e => console.log('Image didn\'t remove: ' + e.message));	
-				}).catch(e => console.log(e));                   
+				db.executeSql('UPDATE image SET name=?,base64=? WHERE imageid=?',[this.image.name,this.picture,this.imageid]).catch(e => console.log(e));                   
+				this.navCtrl.pop().then(()=>{
+					this.navCtrl.pop()
+				});
 			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));	
 		}
 	}

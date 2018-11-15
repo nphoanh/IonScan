@@ -22,13 +22,13 @@
       <ion-list class="sub" >
         <ion-item text-wrap (click)="toggleGroup(i)" [ngClass]="{active: isGroupShown(i)}">
           <ion-row > 
-            <ion-col col-11 class="camera"><ion-icon name="camera"></ion-icon>&nbsp;&nbsp;Chụp ảnh</ion-col>
+            <ion-col col-11 class="camera"><ion-icon name="camera"></ion-icon>&nbsp;&nbsp;&nbsp;Chụp ảnh</ion-col>
             <ion-col col-1 class="arrow"><ion-icon color="success" item-right [name]="isGroupShown(i) ? 'ios-arrow-down-outline' : 'ios-arrow-forward'"></ion-icon></ion-col>
           </ion-row>
           <ion-row *ngIf="isGroupShown(i)">
             <ion-list>
               <button class="logo-menu" id="camera" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-                <ion-icon name="camera"></ion-icon>&nbsp;&nbsp;{{p.title}}
+                <ion-icon name="camera"></ion-icon>&nbsp;&nbsp;&nbsp;{{p.title}}
               </button>
             </ion-list>
           </ion-row>

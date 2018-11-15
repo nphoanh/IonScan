@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { EditImagePage } from '../edit-image/edit-image';
+import { EditDefaultPage } from '../edit-default/edit-default';
 
 declare var cv: any; 
- 
+
 @IonicPage()
 @Component({
-	selector: 'page-crop-edit',
-	templateUrl: 'crop-edit.html',
+  selector: 'page-crop-default',
+  templateUrl: 'crop-default.html',
 })
-export class CropEditPage {
+export class CropDefaultPage {
 
 	imageid = this.navParams.get('imageid');
 	imagename = this.navParams.get('imagename');
@@ -121,7 +121,7 @@ export class CropEditPage {
 	}
 
 	saveImage(){
-		this.navCtrl.push(EditImagePage,{
+		this.navCtrl.push(EditDefaultPage,{
 			picture:this.pictureCrop,
 			imageid:this.imageid,
 			imagename:this.imagename,

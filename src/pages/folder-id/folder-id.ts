@@ -4,7 +4,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthService } from '../../service/auth.service';
 import { File } from '@ionic-native/file';
 
-import { CropEditPage } from '../crop-edit/crop-edit';
+import { CropDefaultPage } from '../crop-default/crop-default';
 
 @IonicPage()
 @Component({
@@ -48,11 +48,12 @@ export class FolderIdPage {
 							imageid:res.rows.item(i).imageid,
 							name:res.rows.item(i).name,
 							date:res.rows.item(i).date,
+							path:res.rows.item(i).path,
 							base64:res.rows.item(i).base64,
 						})
 					}					
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));				
-				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=3 ', {} as any).then(res => {
+				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=3', {} as any).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
 					}
@@ -74,11 +75,12 @@ export class FolderIdPage {
 							imageid:res.rows.item(i).imageid,
 							name:res.rows.item(i).name,
 							date:res.rows.item(i).date,
+							path:res.rows.item(i).path,
 							base64:res.rows.item(i).base64,
 						})
 					}					
 				}).catch(e => console.log('Select nothing from Image table: ' + e.message));				
-				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=3 ', {} as any).then(res => {
+				db.executeSql('SELECT COUNT(imageid) AS totalImage FROM image WHERE folderid=3', {} as any).then(res => {
 					if(res.rows.length>0) {
 						this.totalImage = parseInt(res.rows.item(0).totalImage);
 					}
@@ -110,11 +112,10 @@ export class FolderIdPage {
 							this.image.path = res.rows.item(0).path;						
 						}		         
 						let name = this.image.name + '.' + 'png';	
-						this.file.removeFile(this.image.path, name).then(e => {
-							db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
-								this.getData();        
-							}).catch(e => console.log('Image didn\'t remove in table: ' + e.message));
-						}).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          						
+						this.file.removeFile(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          						
+						db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
+							this.getData();        
+						}).catch(e => console.log('Image didn\'t remove in table: ' + e.message));
 					}).catch(e => console.log('Image didn\'t select: ' + e.message));	
 				}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
 			}}]
@@ -124,28 +125,38 @@ export class FolderIdPage {
 			let namePhone = this.dataPhone.substr(this.dataPhone.lastIndexOf('+')+1);
 			let nameDBPhone = 'u' + namePhone;
 			let nameDB = nameDBPhone + '.db';
-			this.sqlite.create({
-				name: nameDB,
-				location: 'default'
-			}).then((db: SQLiteObject) => {
-				db.executeSql('SELECT * FROM image WHERE imageid=?', [imageid])
-				.then(res => {
-					if(res.rows.length > 0) {
-						this.image.name = res.rows.item(0).name;
-						this.image.path = res.rows.item(0).path;					
-					}		         
-					let name = this.image.name + '.' + 'png';
-					this.file.removeFile(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          
-				}).catch(e => console.log('Image didn\'t remove: ' + e.message));
-				db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
-					this.getData();        
-				}).catch(e => console.log('Folder didn\'t remove in table: ' + e.message));
-			}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
+			let prompt = this.alertCtrl.create({
+				title: 'Bạn có đồng ý xóa?',
+				buttons: [
+				{ text: 'Hủy',
+				handler: data => { console.log('Cancel clicked'); }
+			},
+			{ text: 'OK',
+			handler: data => {
+				this.sqlite.create({
+					name: nameDB,
+					location: 'default'
+				}).then((db: SQLiteObject) => {		
+					db.executeSql('SELECT name, path FROM image WHERE imageid=?', [imageid])
+					.then(res => {
+						if(res.rows.length > 0) {
+							this.image.name = res.rows.item(0).name;
+							this.image.path = res.rows.item(0).path;						
+						}		         
+						let name = this.image.name + '.' + 'png';	
+						this.file.removeFile(this.image.path, name).catch(e => console.log('Image didn\'t remove in device: ' + e.message));          						
+						db.executeSql('DELETE FROM image WHERE imageid=?', [imageid]).then(res => { 
+							this.getData();        
+						}).catch(e => console.log('Image didn\'t remove in table: ' + e.message));
+					}).catch(e => console.log('Image didn\'t select: ' + e.message));	
+				}).catch(e => console.log('SQLite didn\'t create: ' + e.message));
+			}}]
+		});prompt.present();
 		}
 	}
 
 	editImage(imageid,name,path,base64){
-		this.navCtrl.push(CropEditPage,{
+		this.navCtrl.push(CropDefaultPage,{
 			imageid:imageid,
 			imagename:name,
 			path:path,
